@@ -1,6 +1,9 @@
-@import "tailwindcss/theme" layer(theme);
-@import "tailwindcss/preflight" layer(base);
-@import "tailwindcss/utilities" layer(utilities);
+@import "tailwindcss";
+
+@theme {
+  --font-family-sans: 'Innovator Grotesk', system-ui, sans-serif;
+  --font-family-mono: ui-monospace, 'SF Mono', Menlo, Monaco, Consolas, monospace;
+}
 
 /* Dark mode initialization */
 :root {
@@ -13,8 +16,8 @@
 
 /* Custom properties */
 :root {
-  --font-sans: 'Innovator Grotesk', system-ui, sans-serif;
-  --font-mono: ui-monospace, 'SF Mono', Menlo, Monaco, Consolas, monospace;
+  --font-sans: var(--font-family-sans);
+  --font-mono: var(--font-family-mono);
 }
 
 /* Base styles */
