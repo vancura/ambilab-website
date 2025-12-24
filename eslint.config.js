@@ -50,8 +50,6 @@ export default [
       'node_modules/',
       '.histoire/',
       'histoire-dist/',
-      '*.config.js',
-      '*.config.ts',
     ],
   },
 ];
