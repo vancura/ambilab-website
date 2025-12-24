@@ -76,7 +76,7 @@ const siteDomain = Astro.url.origin;
 <meta name="generator" content={Astro.generator} />
 <meta name="robots" content="index, follow" />
 <meta name="author" content={SITE.AUTHOR} />
-<meta name="language" content={locale} />
+<meta name="language" content={locale === 'cs' ? 'cs-CZ' : 'en-US'} />
 
 <!-- Open Graph -->
 <meta property="og:type" content="website" />
