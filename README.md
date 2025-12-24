@@ -138,7 +138,7 @@ Detection priority:
 
 Option 1: Add to `/etc/hosts`:
 
-```
+```bash
 127.0.0.1 ambilab.cz
 ```
 
