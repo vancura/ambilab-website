@@ -109,6 +109,12 @@ export const onRequest: PagesFunction<Env> = async (context) => {
   // X-Content-Type-Options
   responseHeaders.set('X-Content-Type-Options', 'nosniff');
 
+  // X-Frame-Options (defense-in-depth, complements CSP frame-ancestors)
+  responseHeaders.set('X-Frame-Options', 'SAMEORIGIN');
+
+  // Referrer-Policy
+  responseHeaders.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+
   // Permissions-Policy
   responseHeaders.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
 
