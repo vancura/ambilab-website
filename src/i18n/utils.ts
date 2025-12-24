@@ -30,12 +30,11 @@ export const setLocaleCookie = (locale: Locale): string => {
   return `locale=${locale}; Path=/; Max-Age=${maxAge}; SameSite=Lax${secure}`;
 };
 
-export const getLocalizedPath = (slug: string, locale: Locale): string => {
+export const getLocalizedPath = (slug: string, _locale: Locale): string => {
+  // Since the site uses domain-based locale detection, all paths are the same
+  // regardless of locale. The locale is determined by the domain, not the URL path.
   const cleanSlug = slug.replace(/^\/+/, ''); // Remove leading slashes
-  if (locale === defaultLocale) {
-    return `/${cleanSlug}`;
-  }
-  return `/${locale}/${cleanSlug}`;
+  return `/${cleanSlug}`;
 };
 
 export const calculateReadingTime = (content: string): number => {
