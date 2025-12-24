@@ -59,7 +59,7 @@
 
   onMount(() => {
     const hostname = window.location.hostname;
-    isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '[::1]';
+    isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1';
   });
 
   const shouldShowLink = $derived(isDev && isLocalhost);
