@@ -1,15 +1,7 @@
 import { defineMiddleware } from 'astro:middleware';
 import { defaultLocale } from '@i18n/config';
 import { getLocaleFromCookie, detectLocaleFromHostname } from '@i18n/utils';
-
-/**
- * Generate a cryptographically secure nonce for CSP
- */
-function generateNonce(): string {
-  const array = new Uint8Array(16);
-  crypto.getRandomValues(array);
-  return btoa(String.fromCharCode(...array));
-}
+import { generateNonce, applySecurityHeaders } from '@config/security';
 
 /**
  * Astro middleware for locale detection and security headers.
@@ -52,25 +44,10 @@ export const onRequest = defineMiddleware(async (context, next) => {
   // Therefore, in development (where Astro dev toolbar and Vite inject scripts/styles
   // without our nonce), we use 'unsafe-inline' WITHOUT nonces.
   // In production, we use strict nonce-based CSP.
-  const isDev = import.meta.env.DEV;
-  const scriptSrc = isDev
-    ? `'self' https://plausible.io 'unsafe-inline'`
-    : `'self' https://plausible.io 'nonce-${nonce}'`;
-  const styleSrc = isDev
-    ? `'self' https://fonts.vancura.dev 'unsafe-inline' 'unsafe-hashes'`
-    : `'self' https://fonts.vancura.dev 'nonce-${nonce}' 'unsafe-hashes'`;
-  const connectSrc = isDev
-    ? `'self' https://plausible.io https://api.buttondown.email ws://localhost:* ws://127.0.0.1:*`
-    : `'self' https://plausible.io https://api.buttondown.email`;
-
-  response.headers.set(
-    'Content-Security-Policy',
-    `default-src 'self'; script-src ${scriptSrc}; style-src ${styleSrc}; img-src 'self' data: blob: https://blit-tech-demos.ambilab.com; font-src 'self' https://fonts.vancura.dev data:; connect-src ${connectSrc}; frame-src https://blit-tech-demos.ambilab.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; ${isDev ? '' : 'upgrade-insecure-requests;'}`
-  );
-  response.headers.set('X-Content-Type-Options', 'nosniff');
-  response.headers.set('X-Frame-Options', 'SAMEORIGIN');
-  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-  response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  applySecurityHeaders(response.headers, {
+    nonce,
+    isDev: import.meta.env.DEV,
+  });
 
   return response;
 });

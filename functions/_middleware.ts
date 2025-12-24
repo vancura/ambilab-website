@@ -1,17 +1,9 @@
 import type { PagesFunction } from '@cloudflare/workers-types';
+import { generateNonce, applySecurityHeaders } from '../src/config/security';
 
 type Env = {
   // Add any environment bindings here if needed
 };
-
-/**
- * Generate a cryptographically secure nonce for CSP
- */
-function generateNonce(): string {
-  const array = new Uint8Array(16);
-  crypto.getRandomValues(array);
-  return btoa(String.fromCharCode(...array));
-}
 
 /**
  * NOTE: Code Duplication Required for Cloudflare Pages Runtime
@@ -23,7 +15,10 @@ function generateNonce(): string {
  * - defaultLocale
  * - getLocaleFromCookie
  * - detectLocaleFromHostname
- * - generateNonce (for CSP)
+ *
+ * SECURITY HEADERS:
+ * Security headers and nonce generation are now centralized in src/config/security.ts
+ * and can be imported successfully in this Cloudflare Pages middleware.
  *
  * SYNCHRONIZATION REQUIREMENT:
  * When adding, removing, or modifying locales, you MUST update THREE locations:
@@ -111,28 +106,12 @@ export const onRequest: PagesFunction<Env> = async (context) => {
   const response = await context.next(newRequest);
 
   // Add security headers to the response
-  const responseHeaders = new Headers(response.headers);
-
-  // Content Security Policy
-  // Using nonce-based CSP for inline scripts and styles
-  // 'unsafe-hashes' allows inline style attributes (e.g., style="...")
   // Cloudflare Pages middleware only runs in production, so we use strict CSP
-  responseHeaders.set(
-    'Content-Security-Policy',
-    `default-src 'self'; script-src 'self' https://plausible.io 'nonce-${nonce}'; style-src 'self' https://fonts.vancura.dev 'nonce-${nonce}' 'unsafe-hashes'; img-src 'self' data: blob: https://blit-tech-demos.ambilab.com; font-src 'self' https://fonts.vancura.dev data:; connect-src 'self' https://plausible.io https://api.buttondown.email; frame-src https://blit-tech-demos.ambilab.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;`
-  );
-
-  // X-Content-Type-Options
-  responseHeaders.set('X-Content-Type-Options', 'nosniff');
-
-  // X-Frame-Options (defense-in-depth, complements CSP frame-ancestors)
-  responseHeaders.set('X-Frame-Options', 'SAMEORIGIN');
-
-  // Referrer-Policy
-  responseHeaders.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-
-  // Permissions-Policy
-  responseHeaders.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  const responseHeaders = new Headers(response.headers);
+  applySecurityHeaders(responseHeaders, {
+    nonce,
+    isDev: false, // Cloudflare Pages middleware only runs in production
+  });
 
   // Return response with security headers
   return new Response(response.body, {
