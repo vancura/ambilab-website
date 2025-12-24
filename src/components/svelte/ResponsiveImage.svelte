@@ -23,7 +23,7 @@
   {width}
   {height}
   sizes={responsiveSizes}
-  class={`rounded-lg ${className}`}
+  class="rounded-lg {className}"
   loading="lazy"
   format="avif"
 />
