@@ -5,9 +5,10 @@
     name: string;
     class?: string;
     size?: number;
+    ariaLabel?: string; // When provided, icon becomes semantic
   }
 
-  let { name, class: className = '', size }: Props = $props();
+  let { name, class: className = '', size, ariaLabel }: Props = $props();
 
   const sizeStyle = size ? `width: ${size}px; height: ${size}px;` : '';
   
@@ -64,8 +65,8 @@
 </script>
 
 {#if isLoading}
-  <span class={className} style={sizeStyle} aria-hidden="true"></span>
+  <span class={className} style={sizeStyle} aria-hidden={!ariaLabel} aria-label={ariaLabel} role={ariaLabel ? 'img' : undefined}></span>
 {:else if svgContent}
-  <span class={className} style={sizeStyle} aria-hidden="true">{@html svgContent}</span>
+  <span class={className} style={sizeStyle} aria-hidden={!ariaLabel} aria-label={ariaLabel} role={ariaLabel ? 'img' : undefined}>{@html svgContent}</span>
 {/if}
 
