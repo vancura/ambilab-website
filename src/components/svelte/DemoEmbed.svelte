@@ -16,10 +16,8 @@
   let isLocalhost = $state(false);
 
   onMount(() => {
-    if (typeof window !== 'undefined') {
-      const hostname = window.location.hostname;
-      isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1';
-    }
+    const hostname = window.location.hostname;
+    isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '[::1]';
   });
 
   const shouldShowLink = isDev && isLocalhost;
