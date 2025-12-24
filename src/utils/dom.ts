@@ -30,7 +30,24 @@ export const toggleDarkMode = (): void => {
 };
 
 export const initDarkMode = (): void => {
-  const theme = localStorage.getItem('theme');
+  // SSR guard: return early if not in a browser environment
+  if (
+    typeof window === 'undefined' ||
+    typeof window.localStorage === 'undefined' ||
+    typeof window.matchMedia !== 'function' ||
+    typeof document === 'undefined' ||
+    !document.documentElement
+  ) {
+    return;
+  }
+
+  let theme: string | null = null;
+  try {
+    theme = localStorage.getItem('theme');
+  } catch {
+    // localStorage access failed, continue without theme
+  }
+
   if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
     document.documentElement.classList.add('dark');
   }
