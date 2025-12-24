@@ -43,6 +43,42 @@ export const calculateReadingTime = (content: string): number => {
   if (!trimmed) {
     return 0;
   }
-  const words = trimmed.split(/\s+/).length;
+
+  // Remove code blocks (content between triple backticks)
+  let cleaned = trimmed.replace(/```[\s\S]*?```/g, '');
+
+  // Remove import statements (lines starting with "import")
+  cleaned = cleaned.replace(/^import\s+.*?;$/gm, '');
+
+  // Remove JSX/component tags and their attributes (content between < and >)
+  cleaned = cleaned.replace(/<[^>]+>/g, '');
+
+  // Remove frontmatter if present (content between --- at the start)
+  cleaned = cleaned.replace(/^---\s*[\s\S]*?---\s*/m, '');
+
+  // Remove inline code (content between single backticks)
+  cleaned = cleaned.replace(/`[^`]+`/g, '');
+
+  // Remove markdown links but keep the text: [text](url) -> text
+  cleaned = cleaned.replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1');
+
+  // Remove markdown images: ![alt](url)
+  cleaned = cleaned.replace(/!\[([^\]]*)\]\([^\)]+\)/g, '');
+
+  // Remove markdown headers (# ## ### etc.)
+  cleaned = cleaned.replace(/^#{1,6}\s+/gm, '');
+
+  // Remove markdown list markers (-, *, +, 1., etc.)
+  cleaned = cleaned.replace(/^[\s]*[-*+]\s+/gm, '');
+  cleaned = cleaned.replace(/^[\s]*\d+\.\s+/gm, '');
+
+  // Remove extra whitespace and normalize
+  cleaned = cleaned.replace(/\s+/g, ' ').trim();
+
+  if (!cleaned) {
+    return 0;
+  }
+
+  const words = cleaned.split(/\s+/).length;
   return Math.ceil(words / wordsPerMinute);
 };
