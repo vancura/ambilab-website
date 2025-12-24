@@ -2,6 +2,7 @@ import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
 import { SITE } from '@config/site';
 import type { APIContext } from 'astro';
+import { getBlogPostLink } from '@utils/rss';
 
 export async function GET(context: APIContext) {
   const posts = await getCollection('blog', ({ data }) => !data.draft && data.locale === 'cs');
@@ -18,7 +19,7 @@ export async function GET(context: APIContext) {
       title: post.data.title,
       description: post.data.description,
       pubDate: post.data.pubDate,
-      link: `/blog/${post.id.replace(/\.(mdx|md)$/, '').replace(/^[^/]+\//, '')}`,
+      link: getBlogPostLink(post.id),
       categories: post.data.tags,
     })),
     customData: `<language>cs-cz</language>`,
