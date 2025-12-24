@@ -69,4 +69,4 @@ We use Solar icons as our primary icon system. Custom icons should only be creat
 - No suitable Solar icon exists
 - The icon needs pixel-art styling to match the brand
 
-Browse Solar icons at: https://www.figma.com/community/file/1166831539721848736
+[Browse Solar icons](https://www.figma.com/community/file/1166831539721848736)
