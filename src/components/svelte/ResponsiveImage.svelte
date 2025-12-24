@@ -1,9 +1,10 @@
 <script lang="ts">
   import { Image } from 'astro:assets';
+  import type { ImageMetadata } from 'astro';
   import { getResponsiveSizes } from '@lib/images';
 
   interface Props {
-    src: any;
+    src: ImageMetadata | string;
     alt: string;
     sizes?: string;
     class?: string;
