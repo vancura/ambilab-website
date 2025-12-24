@@ -12,10 +12,19 @@
   const sizeStyle = size ? `width: ${size}px; height: ${size}px;` : '';
   
   // Extract icon set and icon name from format like "solar:home-bold"
-  const [iconSet, iconName] = name.split(':');
+  const parts = name.split(':');
+  const [iconSet, iconName] = parts;
+  
+  // Validate icon name format (must have exactly two parts: set:name)
+  const isValidFormat = parts.length === 2 && iconSet && iconName;
+  if (!isValidFormat) {
+    console.error(`Invalid icon name format: "${name}". Expected format: "set:name"`);
+  }
   
   // Use Iconify's CDN API to fetch SVG
-  const iconifyUrl = `https://api.iconify.design/${iconSet}/${iconName}.svg`;
+  const iconifyUrl = isValidFormat 
+    ? `https://api.iconify.design/${iconSet}/${iconName}.svg`
+    : '';
   
   // Store SVG content - starts empty for SSR
   let svgContent = $state<string>('');
@@ -23,6 +32,11 @@
   
   // Fetch SVG on client-side mount only
   onMount(() => {
+    if (!isValidFormat || !iconifyUrl) {
+      isLoading = false;
+      return;
+    }
+    
     fetch(iconifyUrl)
       .then((res) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
