@@ -26,7 +26,8 @@ export const getLocaleFromCookie = (cookieString: string): Locale | null => {
 
 export const setLocaleCookie = (locale: Locale): string => {
   const maxAge = 365 * 24 * 60 * 60; // 1 year
-  return `locale=${locale}; Path=/; Max-Age=${maxAge}; SameSite=Lax`;
+  const secure = import.meta.env.PROD ? '; Secure' : '';
+  return `locale=${locale}; Path=/; Max-Age=${maxAge}; SameSite=Lax${secure}`;
 };
 
 export const getLocalizedPath = (slug: string, locale: Locale): string => {
