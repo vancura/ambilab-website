@@ -16,6 +16,7 @@
     style="aspect-ratio: {aspectRatio}; width: 100%;"
     loading="lazy"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
+    allowfullscreen
     class="rounded-lg border border-gray-200 dark:border-gray-800"
   ></iframe>
   {#if title}
