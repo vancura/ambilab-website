@@ -23,7 +23,7 @@ export async function generateRssFeed(
   locale: Locale,
   localeLabel: string,
   languageCode: string
-) {
+): Promise<Response> {
   const posts = await getCollection('blog', ({ data }) => !data.draft && data.locale === locale);
   const sortedPosts = [...posts].sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
   const recentPosts = sortedPosts.slice(0, 20); // Limit to 20 most recent posts
