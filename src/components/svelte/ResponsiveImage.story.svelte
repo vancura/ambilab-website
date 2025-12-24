@@ -32,6 +32,18 @@
   height={800}
   sizes="(max-width: 768px) 100vw, 50vw"
 />`}</code></pre>
+      <p class="mt-4">
+        <strong>Loading behavior:</strong> Use <code>loading="eager"</code> for above-the-fold images (defaults to <code>"lazy"</code>):
+      </p>
+      <pre><code>{`<ResponsiveImage 
+  src={import('../assets/images/hero.png')} 
+  alt="Hero image"
+  loading="eager"
+  sizes="(max-width: 768px) 100vw, 50vw"
+/>`}</code></pre>
+      <p class="mt-4 text-sm text-gray-600 dark:text-gray-400">
+        <strong>Note:</strong> For ImageMetadata sources, Astro automatically handles format optimization (AVIF/WebP with fallbacks). For remote string URLs, ensure your image service provides multiple formats or use Astro's Image component in Astro files for full format support.
+      </p>
     </div>
   </Hst.Variant>
 </Hst.Story>

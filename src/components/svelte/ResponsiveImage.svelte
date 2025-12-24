@@ -10,6 +10,7 @@
         height: number;
         sizes?: string;
         class?: string;
+        loading?: 'lazy' | 'eager';
       }
     | {
         src: ImageMetadata;
@@ -18,9 +19,18 @@
         height?: number;
         sizes?: string;
         class?: string;
+        loading?: 'lazy' | 'eager';
       };
 
-  let { src, alt, sizes, class: className = '', width, height }: Props = $props();
+  let {
+    src,
+    alt,
+    sizes,
+    class: className = '',
+    width,
+    height,
+    loading = 'lazy',
+  }: Props = $props();
 
   const responsiveSizes = getResponsiveSizes(sizes);
   const imageSrc = typeof src === 'string' ? src : src.src;
@@ -35,6 +45,6 @@
   height={imageHeight}
   sizes={responsiveSizes}
   class="rounded-lg {className}"
-  loading="lazy"
+  {loading}
 />
 
