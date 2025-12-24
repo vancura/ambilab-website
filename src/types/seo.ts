@@ -3,7 +3,7 @@ export interface ISEOMetadata {
   description: string;
   permalink: string;
   ogImage?: string;
-  articlePublishedTime?: string;
-  articleModifiedTime?: string;
+  articlePublishedTime?: Date;
+  articleModifiedTime?: Date;
 }
 
