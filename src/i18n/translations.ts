@@ -36,6 +36,11 @@ export interface Translations {
     tags: string;
     author: string;
   };
+  notFound: {
+    title: string;
+    description: string;
+    goHome: string;
+  };
 }
 
 export const translations: Record<Locale, Translations> = {
@@ -75,6 +80,11 @@ export const translations: Record<Locale, Translations> = {
       tags: 'Tags',
       author: 'Author',
     },
+    notFound: {
+      title: '404',
+      description: "Oops! The page you're looking for doesn't exist.",
+      goHome: 'Go Home',
+    },
   },
   cs: {
     nav: {
@@ -111,6 +121,11 @@ export const translations: Record<Locale, Translations> = {
       minutesShort: 'min',
       tags: 'Štítky',
       author: 'Autor',
+    },
+    notFound: {
+      title: '404',
+      description: 'Ups! Stránka, kterou hledáte, neexistuje.',
+      goHome: 'Domů',
     },
   },
 };

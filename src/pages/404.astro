@@ -1,25 +1,34 @@
 ---
 import PageLayout from '@components/astro/PageLayout.astro';
+import type { Locale } from '@type/locale';
+import { defaultLocale } from '@i18n/config';
+import { getTranslation } from '@i18n/translations';
+import { getLocalizedPath } from '@i18n/utils';
+
+// Get the detected locale from middleware (via x-locale header)
+const detectedLocale = (Astro.request.headers.get('x-locale') as Locale) || defaultLocale;
+const t = getTranslation(detectedLocale);
 
 const siteUrl = Astro.url.origin;
+const homePath = getLocalizedPath('', detectedLocale);
 ---
 
 <PageLayout
-  title="404 - Page Not Found | ambilab"
-  description="The page you're looking for doesn't exist"
+  title={`404 - Page Not Found | ambilab`}
+  description={t.notFound.description}
   permalink={`${siteUrl}/404`}
-  locale="en"
+  locale={detectedLocale}
 >
   <div class="container mx-auto flex min-h-[60vh] flex-col items-center justify-center px-4 py-12 text-center">
-    <h1 class="mb-4 text-6xl font-bold">404</h1>
+    <h1 class="mb-4 text-6xl font-bold">{t.notFound.title}</h1>
     <p class="mb-8 text-xl text-gray-600 dark:text-gray-400">
-      Oops! The page you're looking for doesn't exist.
+      {t.notFound.description}
     </p>
     <a
-      href="/"
+      href={homePath}
       class="rounded-lg bg-blue-600 px-6 py-3 font-medium text-white transition-colors hover:bg-blue-700"
     >
-      Go Home
+      {t.notFound.goHome}
     </a>
   </div>
 </PageLayout>
