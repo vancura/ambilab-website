@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { fade } from 'svelte/transition';
   import { scrollToTop } from '@utils/scroll';
   import { debounce } from '@utils/debounce';
   import { COMPONENT_CONFIG } from '@config/components';
@@ -37,6 +38,7 @@
 
 {#if isVisible || forceVisible}
   <button
+    transition:fade={{ duration: 200 }}
     onclick={handleClick}
     class="fixed bottom-8 right-8 z-40 rounded-full bg-blue-600 p-3 text-white shadow-lg transition-all hover:bg-blue-700 hover:shadow-xl"
     aria-label="Go to top"
