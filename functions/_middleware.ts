@@ -45,13 +45,17 @@ const isValidLocale = (locale: string): boolean => {
 };
 
 const getLocaleFromCookie = (cookieString: string): string | null => {
+  if (!cookieString) {
+    return null;
+  }
+
   const cookies = cookieString.split(';').map((c) => c.trim());
   const localeCookie = cookies.find((c) => c.startsWith('locale='));
 
   if (localeCookie) {
-    const locale = localeCookie.split('=')[1];
+    const locale = localeCookie.split('=')[1]?.trim();
     // Use isValidLocale() instead of hard-coded check to align with src/i18n/utils.ts
-    return isValidLocale(locale) ? locale : null;
+    return locale && isValidLocale(locale) ? locale : null;
   }
 
   return null;
@@ -84,7 +88,31 @@ export const onRequest: PagesFunction<Env> = async (context) => {
     headers: newHeaders,
   });
 
-  // Continue with the modified request
-  return context.next(newRequest);
+  // Get the response
+  const response = await context.next(newRequest);
+
+  // Add security headers to the response
+  const responseHeaders = new Headers(response.headers);
+  
+  // Content Security Policy
+  // NOTE: 'unsafe-inline' is currently required for inline JSON-LD structured data script.
+  // TODO: Consider implementing nonces (Astro v5 supports this) to remove 'unsafe-inline' for better XSS protection.
+  responseHeaders.set(
+    'Content-Security-Policy',
+    "default-src 'self'; script-src 'self' https://plausible.io 'unsafe-inline'; style-src 'self' https://fonts.vancura.dev 'unsafe-inline'; img-src 'self' data: blob: https://blit-tech-demos.ambilab.com; font-src 'self' https://fonts.vancura.dev data:; connect-src 'self' https://plausible.io https://api.buttondown.email; frame-src https://blit-tech-demos.ambilab.com; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;"
+  );
+  
+  // X-Content-Type-Options
+  responseHeaders.set('X-Content-Type-Options', 'nosniff');
+  
+  // Permissions-Policy
+  responseHeaders.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+
+  // Return response with security headers
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers: responseHeaders,
+  });
 };
 

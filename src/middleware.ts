@@ -29,6 +29,18 @@ export const onRequest = defineMiddleware(async (context, next) => {
   // Store locale in context for pages to access
   context.locals.locale = locale;
 
-  return next();
+  const response = await next();
+
+  // Add security headers to the response
+  // NOTE: 'unsafe-inline' is currently required for inline JSON-LD structured data script.
+  // TODO: Consider implementing nonces (Astro v5 supports this) to remove 'unsafe-inline' for better XSS protection.
+  response.headers.set(
+    'Content-Security-Policy',
+    "default-src 'self'; script-src 'self' https://plausible.io 'unsafe-inline'; style-src 'self' https://fonts.vancura.dev 'unsafe-inline'; img-src 'self' data: blob: https://blit-tech-demos.ambilab.com; font-src 'self' https://fonts.vancura.dev data:; connect-src 'self' https://plausible.io https://api.buttondown.email; frame-src https://blit-tech-demos.ambilab.com; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;"
+  );
+  response.headers.set('X-Content-Type-Options', 'nosniff');
+  response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+
+  return response;
 });
 
