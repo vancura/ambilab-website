@@ -59,10 +59,13 @@ export const onRequest = defineMiddleware(async (context, next) => {
   const styleSrc = isDev
     ? `'self' https://fonts.vancura.dev 'unsafe-inline' 'unsafe-hashes'`
     : `'self' https://fonts.vancura.dev 'nonce-${nonce}' 'unsafe-hashes'`;
+  const connectSrc = isDev
+    ? `'self' https://plausible.io https://api.buttondown.email ws://localhost:* ws://127.0.0.1:*`
+    : `'self' https://plausible.io https://api.buttondown.email`;
 
   response.headers.set(
     'Content-Security-Policy',
-    `default-src 'self'; script-src ${scriptSrc}; style-src ${styleSrc}; img-src 'self' data: blob: https://blit-tech-demos.ambilab.com; font-src 'self' https://fonts.vancura.dev data:; connect-src 'self' https://plausible.io https://api.buttondown.email ws://localhost:* ws://127.0.0.1:*; frame-src https://blit-tech-demos.ambilab.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; ${isDev ? '' : 'upgrade-insecure-requests;'}`
+    `default-src 'self'; script-src ${scriptSrc}; style-src ${styleSrc}; img-src 'self' data: blob: https://blit-tech-demos.ambilab.com; font-src 'self' https://fonts.vancura.dev data:; connect-src ${connectSrc}; frame-src https://blit-tech-demos.ambilab.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; ${isDev ? '' : 'upgrade-insecure-requests;'}`
   );
   response.headers.set('X-Content-Type-Options', 'nosniff');
   response.headers.set('X-Frame-Options', 'SAMEORIGIN');
