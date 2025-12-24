@@ -4,10 +4,18 @@
   import { debounce } from '@utils/debounce';
   import { COMPONENT_CONFIG } from '@config/components';
 
+  interface Props {
+    forceVisible?: boolean;
+  }
+
+  let { forceVisible = false }: Props = $props();
+
   let isVisible = $state(false);
 
   const handleScroll = debounce(() => {
-    isVisible = window.scrollY > COMPONENT_CONFIG.goToTop.showAfterScroll;
+    if (!forceVisible) {
+      isVisible = window.scrollY > COMPONENT_CONFIG.goToTop.showAfterScroll;
+    }
   }, 100);
 
   const handleClick = () => {
@@ -15,12 +23,16 @@
   };
 
   onMount(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    if (forceVisible) {
+      isVisible = true;
+    } else {
+      window.addEventListener('scroll', handleScroll);
+      return () => window.removeEventListener('scroll', handleScroll);
+    }
   });
 </script>
 
-{#if isVisible}
+{#if isVisible || forceVisible}
   <button
     onclick={handleClick}
     class="fixed bottom-8 right-8 z-40 rounded-full bg-blue-600 p-3 text-white shadow-lg transition-all hover:bg-blue-700 hover:shadow-xl"

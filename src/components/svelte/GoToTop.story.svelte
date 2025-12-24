@@ -9,11 +9,7 @@
       <p>
         The GoToTop button appears after scrolling down 300px. In this demo, it's always visible.
       </p>
-      <button
-        class="fixed bottom-8 right-8 z-40 rounded-full bg-blue-600 p-3 text-white shadow-lg"
-      >
-        ↑
-      </button>
+      <GoToTop forceVisible={true} />
     </div>
   </Hst.Variant>
 </Hst.Story>
