@@ -14,12 +14,6 @@
   color-scheme: dark;
 }
 
-/* Custom properties */
-:root {
-  --font-sans: var(--font-family-sans);
-  --font-mono: var(--font-family-mono);
-}
-
 /* Base styles */
 * {
   margin: 0;
@@ -28,7 +22,7 @@
 }
 
 html {
-  font-family: var(--font-sans);
+  font-family: var(--font-family-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
