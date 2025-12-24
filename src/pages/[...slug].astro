@@ -69,7 +69,7 @@ const permalink = `${siteUrl}/${entrySlug === 'index' ? '' : entrySlug}`;
         </div>
       </article>
     </PageLayout>
-  ) : type === 'blog' && 'pubDate' in entry.data ? (
+  ) : type === 'blog' ? (
     <BlogPostLayout
       title={`${entry.data.title} | ambilab`}
       description={entry.data.description}
