@@ -31,10 +31,11 @@ export const setLocaleCookie = (locale: Locale): string => {
 };
 
 export const getLocalizedPath = (slug: string, locale: Locale): string => {
+  const cleanSlug = slug.replace(/^\/+/, ''); // Remove leading slashes
   if (locale === defaultLocale) {
-    return `/${slug}`;
+    return `/${cleanSlug}`;
   }
-  return `/${locale}/${slug}`;
+  return `/${locale}/${cleanSlug}`;
 };
 
 export const calculateReadingTime = (content: string): number => {
