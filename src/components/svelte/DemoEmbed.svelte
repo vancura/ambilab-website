@@ -61,7 +61,7 @@
     isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '[::1]';
   });
 
-  const shouldShowLink = isDev && isLocalhost;
+  const shouldShowLink = $derived(isDev && isLocalhost);
 
   // Build minimal allow attribute: only include features actually needed
   // - autoplay: required for demos that auto-start
