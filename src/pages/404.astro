@@ -20,7 +20,7 @@ const homePath = getLocalizedPath('', detectedLocale);
   permalink={`${siteUrl}/404`}
   locale={detectedLocale}
 >
-  <div
+  <main
     class="container mx-auto flex min-h-[60vh] flex-col items-center justify-center px-4 py-12 text-center"
   >
     <h1 class="mb-4 text-6xl font-bold">{t.notFound.title}</h1>
@@ -33,5 +33,5 @@ const homePath = getLocalizedPath('', detectedLocale);
     >
       {t.notFound.goHome}
     </a>
-  </div>
+  </main>
 </PageLayout>
