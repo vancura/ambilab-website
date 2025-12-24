@@ -7,11 +7,15 @@ export const detectLocaleFromHostname = (hostname: string): Locale => {
 };
 
 export const getLocaleFromCookie = (cookieString: string): Locale | null => {
+  if (!cookieString) {
+    return null;
+  }
+
   const cookies = cookieString.split(';').map((c) => c.trim());
   const localeCookie = cookies.find((c) => c.startsWith('locale='));
 
   if (localeCookie) {
-    const locale = localeCookie.split('=')[1];
+    const locale = localeCookie.split('=')[1]?.trim();
     if (locale && isValidLocale(locale)) {
       return locale;
     }
