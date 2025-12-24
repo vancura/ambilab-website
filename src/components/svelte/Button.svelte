@@ -6,7 +6,7 @@
     type?: 'button' | 'submit' | 'reset';
     disabled?: boolean;
     class?: string;
-    onclick?: () => void;
+    onclick?: (ev: MouseEvent) => void;
     children?: any;
   }
 
