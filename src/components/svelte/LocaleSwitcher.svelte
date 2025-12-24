@@ -1,8 +1,6 @@
 <script lang="ts">
   import type { Locale } from '@type/locale';
   import { localeConfigs } from '@i18n/config';
-  import { animateTextSwap, extractTextNodes } from '@lib/typewriter';
-  import { COMPONENT_CONFIG } from '@config/components';
 
   interface Props {
     currentLocale: Locale;
