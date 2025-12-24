@@ -60,6 +60,7 @@
         '.mdx-content h1, .mdx-content h2, .mdx-content h3, .mdx-content h4'
       );
 
+      let processedCount = 0;
       headings.forEach((heading) => {
         if (heading.querySelector('.anchor')) return; // Already processed
 
@@ -67,10 +68,11 @@
         if (id) {
           heading.id = id;
           heading.insertAdjacentElement('afterbegin', this.createAnchor(id));
+          processedCount++;
         }
       });
 
-      logger.info(`Processed ${headings.length} headings`);
+      logger.info(`Processed ${processedCount} new headings (${headings.length} total)`);
     }
   }
 
