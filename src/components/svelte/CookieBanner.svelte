@@ -15,14 +15,23 @@
   let isVisible = $state(false);
 
   onMount(() => {
-    const dismissed = localStorage.getItem(COMPONENT_CONFIG.cookieBanner.dismissedKey);
-    if (!dismissed) {
+    try {
+      const dismissed = localStorage.getItem(COMPONENT_CONFIG.cookieBanner.dismissedKey);
+      if (!dismissed) {
+        isVisible = true;
+      }
+    } catch {
+      // Fallback: show banner if localStorage is unavailable
       isVisible = true;
     }
   });
 
   const handleDismiss = () => {
-    localStorage.setItem(COMPONENT_CONFIG.cookieBanner.dismissedKey, 'true');
+    try {
+      localStorage.setItem(COMPONENT_CONFIG.cookieBanner.dismissedKey, 'true');
+    } catch {
+      // Silent fail - user can dismiss again on next visit
+    }
     isVisible = false;
   };
 </script>
