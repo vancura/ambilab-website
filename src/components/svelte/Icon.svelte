@@ -37,7 +37,9 @@
       return;
     }
     
-    fetch(iconifyUrl)
+    const controller = new AbortController();
+    
+    fetch(iconifyUrl, { signal: controller.signal })
       .then((res) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.text();
@@ -47,11 +49,17 @@
         isLoading = false;
       })
       .catch((err) => {
+        // Ignore AbortError when component unmounts
+        if (err.name === 'AbortError') return;
+        
         console.error(`Failed to load icon ${name}:`, err);
         isLoading = false;
         // Set empty content on error to prevent infinite loading state
         svgContent = '';
       });
+    
+    // Cleanup function called on unmount
+    return () => controller.abort();
   });
 </script>
 
