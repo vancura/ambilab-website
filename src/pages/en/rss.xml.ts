@@ -8,12 +8,13 @@ export async function GET(context: APIContext) {
   const posts = await getCollection('blog', ({ data }) => !data.draft && data.locale === 'en');
 
   const sortedPosts = posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+  const recentPosts = sortedPosts.slice(0, 20); // Limit to 20 most recent posts
 
   return rss({
     title: `${SITE.NAME} - English`,
     description: SITE.DESCRIPTION,
     site: context.site?.toString() || SITE.URL,
-    items: sortedPosts.map((post) => ({
+    items: recentPosts.map((post) => ({
       title: post.data.title,
       description: post.data.description,
       pubDate: post.data.pubDate,
