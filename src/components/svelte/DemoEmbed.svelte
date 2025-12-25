@@ -51,7 +51,7 @@
     }
   }
 
-  let { src, title, aspectRatio = '16/9', class: className = '', desktopOnly = true }: Props = $props();
+  let { src, title = 'Demo embed', aspectRatio = '16/9', class: className = '', desktopOnly = true }: Props = $props();
 
   // Validate and sanitize src URL
   const validationResult = $derived(validateSrcUrl(src));
