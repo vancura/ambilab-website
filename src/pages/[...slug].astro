@@ -43,7 +43,7 @@ if (isBlogPost) {
 
 // 404 if not found
 if (!entry) {
-  return Astro.redirect(`/404?locale=${detectedLocale}`);
+  return Astro.redirect('/404');
 }
 
 const { Content } = await entry.render();
