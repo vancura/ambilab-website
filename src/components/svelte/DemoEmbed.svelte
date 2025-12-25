@@ -62,16 +62,16 @@
   // Show a link instead of iframe to avoid CSP violations
   const isDev = import.meta.env.DEV;
   
-  // Detect localhost in browser, or assume true during SSR in dev mode
-  // This ensures consistent rendering between SSR and hydration (both show link),
-  // preventing hydration mismatches on localhost in development
+  // Detect localhost in browser, default to false during SSR
+  // SSR always renders iframe; client-side check flips to link panel only on actual localhost
+  // This prevents hydration mismatches when accessing dev builds from non-localhost hostnames
   let isLocalhost = $state(
     typeof window !== 'undefined'
       ? (() => {
           const hostname = window.location.hostname;
           return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1';
         })()
-      : isDev // Default to true in dev mode during SSR
+      : false // Default to false during SSR
   );
 
   const shouldShowLink = $derived(isDev && isLocalhost);
