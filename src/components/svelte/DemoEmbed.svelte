@@ -140,7 +140,7 @@
         loading="lazy"
         allow={allowPermissions}
         allowfullscreen
-        sandbox="allow-scripts allow-same-origin"
+        sandbox="allow-scripts"
         class="rounded-lg border border-gray-200 dark:border-gray-800"
       ></iframe>
     {/if}
