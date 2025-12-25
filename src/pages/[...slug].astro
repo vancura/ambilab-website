@@ -51,7 +51,9 @@ const { Content } = await entry.render();
 const locale: Locale = entry.data.locale;
 const siteUrl = Astro.url.origin;
 const entrySlug = entry.id.replace(/\.(mdx|md)$/, '').replace(/^[^/]+\//, '');
-const permalink = `${siteUrl}/${entrySlug === 'index' ? '' : entrySlug}`;
+const permalink = type === 'blog'
+  ? `${siteUrl}/blog/${entrySlug}`
+  : `${siteUrl}/${entrySlug === 'index' ? '' : entrySlug}`;
 ---
 
 {
