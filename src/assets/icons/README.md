@@ -65,7 +65,7 @@ import CustomIcon from '../assets/icons/pixel-heart.svg?raw';
 
 We use Solar icons as our primary icon system. Custom icons should only be created when:
 
-- The icon represents ambilab-specific branding
+- The icon represents Ambilab-specific branding
 - No suitable Solar icon exists
 - The icon needs pixel-art styling to match the brand
 

@@ -1,7 +1,7 @@
 {
-  "name": "ambilab-website",
+  "name": "Ambilab Website",
   "version": "1.0.0",
-  "description": "Marketing website and blog for ambilab - a web-based pixel art game engine for kids",
+  "description": "Marketing website and blog for Ambilab - a web-based pixel art game engine for kids",
   "type": "module",
   "scripts": {
     "dev": "astro dev --host",
