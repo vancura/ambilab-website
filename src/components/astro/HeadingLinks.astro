@@ -10,7 +10,7 @@
   const logger = createLogger({ prefix: 'HeadingLinks' });
 
   class HeadingLinksManager {
-    private usedIds: Map<string, number> = new Map();
+    private usedIds: Set<string> = new Set();
 
     constructor() {
       this.refresh = this.refresh.bind(this);
@@ -26,14 +26,22 @@
 
       if (!baseId) return '';
 
-      if (this.usedIds.has(baseId)) {
-        const count = this.usedIds.get(baseId)! + 1;
-        this.usedIds.set(baseId, count);
-        return `${baseId}-${count}`;
+      // If the base ID is available, use it
+      if (!this.usedIds.has(baseId)) {
+        this.usedIds.add(baseId);
+        return baseId;
       }
 
-      this.usedIds.set(baseId, 1);
-      return baseId;
+      // Otherwise, find the next available ID with a numeric suffix
+      let counter = 2;
+      let candidateId = `${baseId}-${counter}`;
+      while (this.usedIds.has(candidateId)) {
+        counter++;
+        candidateId = `${baseId}-${counter}`;
+      }
+
+      this.usedIds.add(candidateId);
+      return candidateId;
     }
 
     private createAnchor(id: string): HTMLAnchorElement {
