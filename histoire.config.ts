@@ -7,7 +7,7 @@ export default defineConfig({
   setupFile: './src/histoire.setup.ts',
 
   theme: {
-    title: 'ambilab Components',
+    title: 'Ambilab Components',
     favicon: '/favicon.png',
   },
 

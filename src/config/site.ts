@@ -1,8 +1,8 @@
 export const SITE = {
-  NAME: 'ambilab',
+  NAME: 'Ambilab',
   DESCRIPTION: 'A web-based pixel art game engine and editor for kids to learn programming',
   URL: 'https://ambilab.com',
-  AUTHOR: 'ambilab',
+  AUTHOR: 'Ambilab',
   DEFAULT_OG_IMAGE: 'https://ambilab.com/og-default.png',
 
   SOCIAL: {

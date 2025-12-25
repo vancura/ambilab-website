@@ -1,6 +1,6 @@
-# ambilab Marketing Website
+# Ambilab Marketing Website
 
-A bilingual (English/Czech) marketing website and blog for **ambilab** — a web-based pixel art game engine and editor for kids to learn programming.
+A bilingual (English/Czech) marketing website and blog for **Ambilab** — a web-based pixel art game engine and editor for kids to learn programming.
 
 ## Overview
 
@@ -348,7 +348,7 @@ slug: 'my-post'
 locale: 'en'
 translationSlug: 'muj-prispevek'
 pubDate: 2024-01-15T00:00:00.000Z
-author: 'ambilab'
+author: 'Ambilab'
 tags: ['tutorial', 'games']
 ---
 
@@ -511,7 +511,7 @@ pnpm tsx src/scripts/validate-security-headers.ts
 
 ## License
 
-Copyright © 2024 ambilab. All rights reserved.
+Copyright © 2024 Ambilab. All rights reserved.
 
 ## Links
 

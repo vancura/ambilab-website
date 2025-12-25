@@ -21,7 +21,7 @@
       </div>
       <pre><code>{`<ResponsiveImage 
   src={import('../assets/images/hero.png')} 
-  alt="ambilab editor"
+  alt="Ambilab Editor"
   sizes="(max-width: 768px) 100vw, 50vw"
 />`}</code></pre>
       <p class="mt-4">

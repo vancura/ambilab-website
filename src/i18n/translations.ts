@@ -66,7 +66,7 @@ export const translations: Record<Locale, Translations> = {
     },
     newsletter: {
       title: 'Subscribe to Our Newsletter',
-      description: 'Get the latest updates from ambilab delivered to your inbox.',
+      description: 'Get the latest updates from Ambilab delivered to your inbox.',
       emailPlaceholder: 'Enter your email',
       subscribing: 'Subscribing...',
       success: 'Thanks for subscribing!',
@@ -110,7 +110,7 @@ export const translations: Record<Locale, Translations> = {
     },
     newsletter: {
       title: 'Odebírejte náš newsletter',
-      description: 'Získejte nejnovější aktualizace z ambilab přímo do své e-mailové schránky.',
+      description: 'Získejte nejnovější aktualizace z Ambilab přímo do své e-mailové schránky.',
       emailPlaceholder: 'Zadejte svůj e-mail',
       subscribing: 'Odesílám...',
       success: 'Děkujeme za odběr!',
