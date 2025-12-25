@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
 
   /**
    * DemoEmbed component for embedding interactive demos.
@@ -62,12 +61,17 @@
   // In development, the demo site blocks localhost due to CSP frame-ancestors
   // Show a link instead of iframe to avoid CSP violations
   const isDev = import.meta.env.DEV;
-  let isLocalhost = $state(false);
-
-  onMount(() => {
-    const hostname = window.location.hostname;
-    isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1';
-  });
+  
+  // Detect localhost immediately if in browser, otherwise default to false for SSR
+  // This prevents the iframe from briefly rendering during SSR before hydration
+  let isLocalhost = $state(
+    typeof window !== 'undefined'
+      ? (() => {
+          const hostname = window.location.hostname;
+          return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1';
+        })()
+      : false
+  );
 
   const shouldShowLink = $derived(isDev && isLocalhost);
 
