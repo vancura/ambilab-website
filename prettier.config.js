@@ -1,5 +1,5 @@
 /**
- * Prettier setup for Blit-Tech
+ * Prettier setup for Ambilab Website
  *
  * Please note: Prettier is used exclusively for Markdown and YAML files.
  * Biome handles the formatting for TypeScript, JavaScript, JSON, and CSS.
