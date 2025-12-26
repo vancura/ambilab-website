@@ -77,6 +77,8 @@ export default [
         rules: {
             'simple-import-sort/imports': 'error',
             'simple-import-sort/exports': 'error',
+            'svelte/valid-compile': 'off',
+            'svelte/no-at-html-tags': 'warn',
         },
     },
 
