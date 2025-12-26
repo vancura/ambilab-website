@@ -75,15 +75,29 @@ export default [
         },
         plugins: {
             'simple-import-sort': simpleImportSort,
+            security: security,
+            promise: promise,
         },
         rules: {
+            ...security.configs.recommended.rules,
+            ...promise.configs.recommended.rules,
+
             'simple-import-sort/imports': 'error',
             'simple-import-sort/exports': 'error',
 
-            // Disabled: Svelte compilation errors are already caught by `astro check` and build process
-            // Enabling this can cause duplicate errors and performance issues during development
-            'svelte/valid-compile': 'off',
+            'svelte/valid-compile': 'warn',
             'svelte/no-at-html-tags': 'warn',
+
+            // Security rule overrides
+            'security/detect-object-injection': 'off',
+            'security/detect-non-literal-regexp': 'warn',
+
+            // Promise rule overrides
+            'promise/always-return': 'warn',
+            'promise/no-return-wrap': 'error',
+            'promise/param-names': 'error',
+            'promise/catch-or-return': 'warn',
+            'promise/no-nesting': 'warn',
         },
     },
 
