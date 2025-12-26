@@ -504,7 +504,7 @@ pnpm tsx src/scripts/validate-security-headers.ts
 - Chrome/Edge (last 2 versions)
 - Firefox (last 2 versions)
 - Safari (last 2 versions)
-- Mobile browsers (iOS, Safari, Chrome, Android)
+- Mobile browsers (Safari on iOS, Chrome on Android)
 
 ## Architecture Highlights
 
