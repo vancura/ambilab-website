@@ -82,7 +82,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "biome format --write . && prettier --write \"**/*.{astro,md,mdx,yaml,yml}\"",
-    "format:check": "biome format . && prettier --check \"**/*.{astro,md,mdx,yaml,yml}\"",
+    "format:check": "biome format --check . && prettier --check \"**/*.{astro,md,mdx,yaml,yml}\"",
     "format:biome": "biome format --write .",
     "format:prettier": "prettier --write \"**/*.{astro,md,mdx,yaml,yml}\"",
     "typecheck": "tsc --noEmit && astro check",
