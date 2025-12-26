@@ -52,8 +52,6 @@ export default [
         files: ['**/*.js', '**/*.mjs', '**/*.cjs'],
         plugins: {
             'simple-import-sort': simpleImportSort,
-            security: security,
-            promise: promise,
         },
         rules: {
             'simple-import-sort/imports': 'error',
