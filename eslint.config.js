@@ -7,6 +7,20 @@ import security from 'eslint-plugin-security';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import eslintPluginSvelte from 'eslint-plugin-svelte';
 
+// Shared rule overrides for security and promise plugins
+const sharedSecurityPromiseRules = {
+    // Security rule overrides
+    'security/detect-object-injection': 'off',
+    'security/detect-non-literal-regexp': 'warn',
+
+    // Promise rule overrides
+    'promise/always-return': 'warn',
+    'promise/no-return-wrap': 'error',
+    'promise/param-names': 'error',
+    'promise/catch-or-return': 'warn',
+    'promise/no-nesting': 'warn',
+};
+
 export default [
     // TypeScript files
     {
@@ -28,6 +42,7 @@ export default [
             ...tseslint.configs.recommended.rules,
             ...security.configs.recommended.rules,
             ...promise.configs.recommended.rules,
+            ...sharedSecurityPromiseRules,
             '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
             '@typescript-eslint/no-explicit-any': 'warn',
             '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
@@ -35,17 +50,6 @@ export default [
             // Import sorting
             'simple-import-sort/imports': 'error',
             'simple-import-sort/exports': 'error',
-
-            // Security rule overrides
-            'security/detect-object-injection': 'off',
-            'security/detect-non-literal-regexp': 'warn',
-
-            // Promise rule overrides
-            'promise/always-return': 'warn',
-            'promise/no-return-wrap': 'error',
-            'promise/param-names': 'error',
-            'promise/catch-or-return': 'warn',
-            'promise/no-nesting': 'warn',
         },
     },
 
@@ -60,20 +64,10 @@ export default [
         rules: {
             ...security.configs.recommended.rules,
             ...promise.configs.recommended.rules,
+            ...sharedSecurityPromiseRules,
 
             'simple-import-sort/imports': 'error',
             'simple-import-sort/exports': 'error',
-
-            // Security rule overrides
-            'security/detect-object-injection': 'off',
-            'security/detect-non-literal-regexp': 'warn',
-
-            // Promise rule overrides
-            'promise/always-return': 'warn',
-            'promise/no-return-wrap': 'error',
-            'promise/param-names': 'error',
-            'promise/catch-or-return': 'warn',
-            'promise/no-nesting': 'warn',
         },
     },
 
@@ -97,23 +91,13 @@ export default [
         rules: {
             ...security.configs.recommended.rules,
             ...promise.configs.recommended.rules,
+            ...sharedSecurityPromiseRules,
 
             'simple-import-sort/imports': 'error',
             'simple-import-sort/exports': 'error',
 
             'svelte/valid-compile': 'warn',
             'svelte/no-at-html-tags': 'warn',
-
-            // Security rule overrides
-            'security/detect-object-injection': 'off',
-            'security/detect-non-literal-regexp': 'warn',
-
-            // Promise rule overrides
-            'promise/always-return': 'warn',
-            'promise/no-return-wrap': 'error',
-            'promise/param-names': 'error',
-            'promise/catch-or-return': 'warn',
-            'promise/no-nesting': 'warn',
         },
     },
 
