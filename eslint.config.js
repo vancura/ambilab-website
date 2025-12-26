@@ -22,6 +22,24 @@ const sharedSecurityPromiseRules = {
 };
 
 export default [
+    // Ignore patterns (placed first for clarity)
+    {
+        ignores: [
+            'dist/',
+            '.astro/',
+            'node_modules/',
+            '.histoire/',
+            'histoire-dist/',
+            '.wrangler/',
+            '*.min.js',
+            '*.min.css',
+            '.env',
+            '.env.*',
+            'CLAUDE.md',
+            '.rules',
+        ],
+    },
+
     // TypeScript files
     {
         files: ['**/*.ts', '**/*.tsx'],
@@ -73,6 +91,21 @@ export default [
 
     // Astro files
     ...eslintPluginAstro.configs.recommended,
+    {
+        files: ['**/*.astro'],
+        plugins: {
+            'simple-import-sort': simpleImportSort,
+            security: security,
+            promise: promise,
+        },
+        rules: {
+            ...security.configs.recommended.rules,
+            ...promise.configs.recommended.rules,
+            ...sharedSecurityPromiseRules,
+            'simple-import-sort/imports': 'error',
+            'simple-import-sort/exports': 'error',
+        },
+    },
 
     // Svelte files
     ...eslintPluginSvelte.configs['flat/recommended'],
@@ -103,22 +136,4 @@ export default [
 
     // Prettier config (must be last)
     eslintConfigPrettier,
-
-    // Ignore patterns
-    {
-        ignores: [
-            'dist/',
-            '.astro/',
-            'node_modules/',
-            '.histoire/',
-            'histoire-dist/',
-            '.wrangler/',
-            '*.min.js',
-            '*.min.css',
-            '.env',
-            '.env.*',
-            'CLAUDE.md',
-            '.rules',
-        ],
-    },
 ];
