@@ -21,7 +21,6 @@ CHANGELOG.md
 
 # JSON is handled by Biome
 *.json
-!.prettierrc
 
 # Temporarily ignored due to prettier-plugin-astro parser issue
 # (HTML comments inside JSX fragments cause parsing errors)
