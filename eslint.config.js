@@ -54,10 +54,26 @@ export default [
         files: ['**/*.js', '**/*.mjs', '**/*.cjs'],
         plugins: {
             'simple-import-sort': simpleImportSort,
+            security: security,
+            promise: promise,
         },
         rules: {
+            ...security.configs.recommended.rules,
+            ...promise.configs.recommended.rules,
+
             'simple-import-sort/imports': 'error',
             'simple-import-sort/exports': 'error',
+
+            // Security rule overrides
+            'security/detect-object-injection': 'off',
+            'security/detect-non-literal-regexp': 'warn',
+
+            // Promise rule overrides
+            'promise/always-return': 'warn',
+            'promise/no-return-wrap': 'error',
+            'promise/param-names': 'error',
+            'promise/catch-or-return': 'warn',
+            'promise/no-nesting': 'warn',
         },
     },
 
