@@ -62,16 +62,15 @@
     const isDev = import.meta.env.DEV;
 
     // Detect localhost in browser, default to false during SSR
-    // SSR always renders iframe; client-side check flips to the link panel only on actual localhost
-    // This prevents hydration mismatches when accessing dev builds from non-localhost hostnames
-    let isLocalhost = $state(
-        typeof window === 'undefined'
-            ? false
-            : (() => {
-                  const hostname = window.location.hostname;
-                  return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1';
-              })(), // Default to false during SSR
-    );
+    // Initialize false to match SSR, then update client-side after hydration
+    let isLocalhost = $state(false);
+
+    $effect(() => {
+        if (typeof window !== 'undefined') {
+            const hostname = window.location.hostname;
+            isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1';
+        }
+    });
 
     const shouldShowLink = $derived(isDev && isLocalhost);
 
