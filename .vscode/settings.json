@@ -2,6 +2,18 @@
   "editor.formatOnSave": true,
   "editor.defaultFormatter": null,
 
+  // Disable built-in formatters to avoid conflicts with Prettier
+  "html.format.enable": false,
+
+  // Associate SVG files with HTML for proper Prettier formatting
+  "files.associations": {
+    "*.svg": "html"
+  },
+
+  // Prettier configuration
+  "prettier.enable": true,
+  "prettier.requireConfig": false,
+
   // Biome for TypeScript/JavaScript/JSON/CSS
   "[typescript]": {
     "editor.defaultFormatter": "biomejs.biome"
@@ -19,8 +31,14 @@
     "editor.defaultFormatter": "biomejs.biome"
   },
 
-  // Prettier for Astro/Markdown/YAML
+  // Prettier for Astro/HTML/SVG/Markdown/YAML
   "[astro]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[svg]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[markdown]": {
@@ -33,7 +51,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
 
-  // Svelte - use ESLint for now (Prettier plugin incompatible with Svelte 5)
+  // Svelte - use Svelte extension formatter
   "[svelte]": {
     "editor.defaultFormatter": "svelte.svelte-vscode"
   },

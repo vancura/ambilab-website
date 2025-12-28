@@ -17,14 +17,18 @@
         }
 
         private generateId(text: string | null): string {
-            if (!text) return '';
+            if (!text) {
+                return '';
+            }
 
             const baseId = text
                 .toLowerCase()
                 .replace(/[^a-z0-9]+/g, '-')
                 .replace(/^-|-$/g, '');
 
-            if (!baseId) return '';
+            if (!baseId) {
+                return '';
+            }
 
             // If the base ID is available, use it
             if (!this.usedIds.has(baseId)) {
@@ -35,6 +39,7 @@
             // Otherwise, find the next available ID with a numeric suffix
             let counter = 2;
             let candidateId = `${baseId}-${counter}`;
+
             while (this.usedIds.has(candidateId)) {
                 counter++;
                 candidateId = `${baseId}-${counter}`;
@@ -46,6 +51,7 @@
 
         private createAnchor(id: string): HTMLAnchorElement {
             const anchor = document.createElement('a');
+
             anchor.className = 'anchor';
             anchor.href = `#${id}`;
             anchor.setAttribute('aria-hidden', 'true');
@@ -53,7 +59,9 @@
 
             anchor.addEventListener('click', (e) => {
                 e.preventDefault();
+
                 smoothScrollTo({ targetId: id });
+
                 history.pushState(null, '', `#${id}`);
                 navigator.clipboard.writeText(window.location.href).catch(() => {});
             });
@@ -70,13 +78,16 @@
 
             let processedCount = 0;
             headings.forEach((heading) => {
-                if (heading.querySelector('.anchor')) return; // Already processed
+                if (heading.querySelector('.anchor')) {
+                    return;
+                } else {
+                    const id = this.generateId(heading.textContent);
 
-                const id = this.generateId(heading.textContent);
-                if (id) {
-                    heading.id = id;
-                    heading.insertAdjacentElement('afterbegin', this.createAnchor(id));
-                    processedCount++;
+                    if (id) {
+                        heading.id = id;
+                        heading.insertAdjacentElement('afterbegin', this.createAnchor(id));
+                        processedCount++;
+                    }
                 }
             });
 

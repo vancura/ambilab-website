@@ -1,7 +1,7 @@
 /**
  * Prettier setup for Ambilab Website
  *
- * Please note: Prettier is used for Astro, Markdown, and YAML files.
+ * Please note: Prettier is used for Astro, Svelte, SVG, Markdown, and YAML files.
  * Biome handles the formatting for TypeScript, JavaScript, JSON, and CSS.
  *
  * @type {import('prettier').Config}
@@ -18,13 +18,25 @@ export default {
     endOfLine: 'lf',
     proseWrap: 'always',
     htmlWhitespaceSensitivity: 'css',
-    plugins: ['prettier-plugin-astro', 'prettier-plugin-tailwindcss'],
+    plugins: ['prettier-plugin-astro', 'prettier-plugin-svelte', 'prettier-plugin-tailwindcss'],
 
     overrides: [
         {
             files: '*.astro',
             options: {
                 parser: 'astro',
+            },
+        },
+        {
+            files: '*.svelte',
+            options: {
+                parser: 'svelte',
+            },
+        },
+        {
+            files: '*.svg',
+            options: {
+                parser: 'html',
             },
         },
         {

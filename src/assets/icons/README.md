@@ -1,6 +1,6 @@
 # Custom Icons Guidelines
 
-This directory contains custom SVG icons for brand-specific needs that aren't covered by the Solar icon set.
+This directory contains custom SVG icons for brand-specific needs that aren’t covered by the Solar icon set.
 
 ## Design Guidelines
 
@@ -25,7 +25,7 @@ To ensure consistency with Solar icons, follow these guidelines:
 
 - **Linear variants**: 1.5px stroke weight
 - **Bold variants**: 2px stroke weight
-- Use round line caps and joins for smoother appearance
+- Use round line caps and joins for a smoother appearance
 
 ```xml
 stroke-width="1.5"
@@ -41,7 +41,7 @@ stroke-linejoin="round"
 
 ## Usage in Components
 
-### In Astro files:
+### In Astro files
 
 ```astro
 ---
@@ -51,7 +51,7 @@ import CustomIcon from '../assets/icons/pixel-heart.svg?raw';
 <Fragment set:html={CustomIcon} />
 ```
 
-### In Svelte files:
+### In Svelte files
 
 ```svelte
 <script>
@@ -63,7 +63,7 @@ import CustomIcon from '../assets/icons/pixel-heart.svg?raw';
 
 ## Solar Icons Reference
 
-We use Solar icons as our primary icon system. Custom icons should only be created when:
+Solar icons are used as the primary icon system. Custom icons should only be created when:
 
 - The icon represents Ambilab-specific branding
 - No suitable Solar icon exists
