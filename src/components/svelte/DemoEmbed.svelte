@@ -6,11 +6,13 @@
      * validated against an explicit allowlist of hostnames and must use HTTPS.
      * Invalid URLs will fall back to a safe default or be rejected.
      *
-     * The iframe sandbox includes:
+     * The iframe sandbox includes by default:
      * - allow-scripts: Execute JavaScript
      * - allow-same-origin: Access localStorage, cookies, and same-origin APIs
      * - allow-forms: Submit forms within the iframe
-     * - allow-top-navigation: Navigate the top-level browsing context
+     *
+     * Optional permissions (must be explicitly enabled):
+     * - allow-top-navigation: Navigate the top-level browsing context (requires allowTopNavigation=true)
      *
      * These permissions are safe because all sources are explicitly allowlisted.
      */
@@ -20,6 +22,8 @@
         aspectRatio?: string;
         class?: string;
         desktopOnly?: boolean;
+        /** Enable top-level navigation. Only enable if the demo explicitly requires it. */
+        allowTopNavigation?: boolean;
     }
 
     // Allowlist of trusted hostnames for demo embeds
@@ -58,7 +62,14 @@
         }
     }
 
-    let { src, title, aspectRatio = '16/9', class: className = '', desktopOnly = true }: Props = $props();
+    let {
+        src,
+        title,
+        aspectRatio = '16/9',
+        class: className = '',
+        desktopOnly = true,
+        allowTopNavigation = false,
+    }: Props = $props();
 
     // Validate and sanitize src URL
     const validationResult = $derived(validateSrcUrl(src));
@@ -86,6 +97,11 @@
     // - autoplay: required for demos that auto-start
     // - accelerometer/gyroscope: only for mobile demos (when not desktop-only)
     const allowPermissions = $derived(desktopOnly ? 'autoplay' : 'autoplay; accelerometer; gyroscope');
+
+    // Build sandbox permissions: start with safe defaults, add top-navigation only if explicitly requested
+    const sandboxPermissions = $derived(
+        `allow-scripts allow-same-origin allow-forms${allowTopNavigation ? ' allow-top-navigation' : ''}`,
+    );
 </script>
 
 <figure class={`demo-embed ${className}`}>
@@ -140,7 +156,7 @@
             loading="lazy"
             allow={allowPermissions}
             allowfullscreen
-            sandbox="allow-scripts allow-same-origin allow-forms allow-top-navigation"
+            sandbox={sandboxPermissions}
             class="rounded-lg border border-gray-200 dark:border-gray-800"
         ></iframe>
     {/if}
