@@ -8,7 +8,6 @@
 
     interface Props {
         currentLocale: Locale;
-        currentPath: string;
     }
 
     let { currentLocale }: Props = $props();
