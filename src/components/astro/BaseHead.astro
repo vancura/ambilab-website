@@ -4,11 +4,11 @@ import type { Locale } from '@type/locale';
 import type { ISEOMetadata } from '@type/seo';
 
 export interface Props extends ISEOMetadata {
-  title: string;
-  description: string;
-  permalink: string;
-  ogImage?: string;
-  locale?: Locale;
+    title: string;
+    description: string;
+    permalink: string;
+    ogImage?: string;
+    locale?: Locale;
 }
 
 const { title, description, ogImage, permalink, locale = 'en' } = Astro.props;
@@ -19,54 +19,63 @@ const currentDomain = Astro.url.hostname;
 
 // Get the nonce from context for inline scripts/styles (CSP requirement)
 const nonce = Astro.locals.nonce;
+
+/*
+NOTE: All security headers (CSP, X-Content-Type-Options, Permissions-Policy, etc.)
+are set via HTTP headers in middleware for better security. HTTP headers are:
+  - Enforced before HTML parsing begins
+  - Cannot be modified by injected content
+  - More consistently honored across browsers
+
+See: src/middleware.ts and functions/_middleware.ts
+
+NOTE: Only load external font in production to avoid CORS issues in development
+*/
 ---
 
-<!-- Security headers -->
-<!-- NOTE: All security headers (CSP, X-Content-Type-Options, Permissions-Policy, etc.)
-     are set via HTTP headers in middleware for better security. HTTP headers are:
-     - Enforced before HTML parsing begins
-     - Cannot be modified by injected content
-     - More consistently honored across browsers
-     See: src/middleware.ts and functions/_middleware.ts -->
-
-<!-- Font preconnect and prefetch (critical for performance) -->
-<!-- Only load external font in production to avoid CORS issues in development -->
 {
-  import.meta.env.PROD && (
-    <>
-      <link rel="preconnect" href="https://fonts.vancura.dev" crossorigin />
-      <link rel="dns-prefetch" href="https://fonts.vancura.dev" />
+    import.meta.env.PROD && (
+        <>
+            <link rel="preconnect" href="https://fonts.vancura.dev" crossorigin />
+            <link rel="dns-prefetch" href="https://fonts.vancura.dev" />
 
-      <!-- Prefetch Innovator Grotesk font -->
-      <link
-        rel="preload"
-        href="https://fonts.vancura.dev/InnovatorGrotesk-Medium.woff2"
-        as="font"
-        type="font/woff2"
-        crossorigin
-      />
-    </>
-  )
+            <link
+                rel="preload"
+                href="https://fonts.vancura.dev/InnovatorGrotesk-Medium.woff2"
+                as="font"
+                type="font/woff2"
+                crossorigin
+            />
+        </>
+    )
 }
 
-<!-- Font stylesheet with non-blocking load -->
+<!-- Font stylesheet with a non-blocking load -->
 <!-- In development, use system font fallback to avoid CORS issues -->
-<style is:inline nonce={nonce}>
-  {
-    import.meta.env.PROD
-      ? `@font-face {
-    font-family: 'Innovator Grotesk';
-    src: url('https://fonts.vancura.dev/InnovatorGrotesk-Medium.woff2') format('woff2');
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-  }`
-      : `/* Using system font fallback in development to avoid CORS issues */
-  :root {
-    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  }`
-  }
-</style>
+{
+    import.meta.env.PROD ? (
+        <style
+            is:inline
+            nonce={nonce}
+            set:html={`@font-face {
+        font-family: 'Innovator Grotesk';
+        src: url('https://fonts.vancura.dev/InnovatorGrotesk-Medium.woff2') format('woff2');
+        font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+      }`}
+        />
+    ) : (
+        <style
+            is:inline
+            nonce={nonce}
+            set:html={`/* Using system font fallback in development to avoid CORS issues */
+      :root {
+        --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      }`}
+        />
+    )
+}
 
 <!-- Analytics preconnect -->
 <link rel="preconnect" href="https://plausible.io" />
@@ -77,12 +86,7 @@ const nonce = Astro.locals.nonce;
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="canonical" href={canonical} />
 <link rel="sitemap" href="/sitemap-index.xml" />
-<link
-  rel="alternate"
-  type="application/rss+xml"
-  href={`/${locale}/rss.xml`}
-  title={`${SITE.NAME} RSS`}
-/>
+<link rel="alternate" type="application/rss+xml" href={`/${locale}/rss.xml`} title={`${SITE.NAME} RSS`} />
 
 <title>{title}</title>
 
@@ -120,34 +124,30 @@ const nonce = Astro.locals.nonce;
 
 <!-- Structured Data -->
 <script
-  is:inline
-  type="application/ld+json"
-  nonce={nonce}
-  set:html={JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: SITE.NAME,
-    description: SITE.DESCRIPTION,
-    url: siteDomain,
-    author: {
-      '@type': 'Organization',
-      name: SITE.AUTHOR,
-      url: SITE.URL,
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: SITE.NAME,
-      logo: {
-        '@type': 'ImageObject',
-        url: `${siteDomain}/logo-placeholder.png`,
-      },
-    },
-  })}
+    is:inline
+    type="application/ld+json"
+    nonce={nonce}
+    set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: SITE.NAME,
+        description: SITE.DESCRIPTION,
+        url: siteDomain,
+        author: {
+            '@type': 'Organization',
+            name: SITE.AUTHOR,
+            url: SITE.URL,
+        },
+        publisher: {
+            '@type': 'Organization',
+            name: SITE.NAME,
+            logo: {
+                '@type': 'ImageObject',
+                url: `${siteDomain}/logo-placeholder.png`,
+            },
+        },
+    })}
 />
 
-<!-- Plausible Analytics (production only) -->
-{
-  import.meta.env.PROD && (
-    <script is:inline defer data-domain={currentDomain} src="https://plausible.io/js/script.js" />
-  )
-}
+<!-- Plausible Analytics -->
+{import.meta.env.PROD && <script is:inline defer data-domain={currentDomain} src="https://plausible.io/js/script.js" />}

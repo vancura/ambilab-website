@@ -16,6 +16,10 @@
   "engines": {
     "node": ">=20.0.0"
   },
+  "overrides": {
+    "vite-node": "^5.2.0",
+    "esbuild": "^0.25.0"
+  },
   "dependencies": {
     "@astrojs/cloudflare": "^12.6.12",
     "@astrojs/mdx": "^4.3.13",
@@ -27,6 +31,7 @@
     "astro-expressive-code": "^0.41.5",
     "astro-icon": "^1.1.5",
     "gsap": "^3.14.2",
+    "isomorphic-dompurify": "^2.35.0",
     "nanostores": "^1.1.0",
     "remark-gfm": "^4.0.1",
     "remark-smartypants": "^3.0.2",
@@ -77,10 +82,10 @@
     "check": "astro check",
     "lint": "biome lint . && eslint .",
     "lint:fix": "biome lint --write . && eslint . --fix",
-    "format": "biome format --write . && prettier --write \"**/*.{astro,md,mdx,yaml,yml}\"",
-    "format:check": "biome format . && prettier --check \"**/*.{astro,md,mdx,yaml,yml}\"",
+    "format": "biome format --write . && prettier --write \"**/*.{astro,svelte,svg,md,mdx,yaml,yml}\"",
+    "format:check": "biome format . && prettier --check \"**/*.{astro,svelte,svg,md,mdx,yaml,yml}\"",
     "format:biome": "biome format --write .",
-    "format:prettier": "prettier --write \"**/*.{astro,md,mdx,yaml,yml}\"",
+    "format:prettier": "prettier --write \"**/*.{astro,svelte,svg,md,mdx,yaml,yml}\"",
     "typecheck": "tsc --noEmit && astro check",
     "spellcheck": "cspell \"**/*.{ts,tsx,js,md,mdx,astro,svelte}\" --no-progress",
     "preflight": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm spellcheck",
