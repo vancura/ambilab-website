@@ -80,14 +80,14 @@
             headings.forEach((heading) => {
                 if (heading.querySelector('.anchor')) {
                     return;
-                } else {
-                    const id = this.generateId(heading.textContent);
+                }
 
-                    if (id) {
-                        heading.id = id;
-                        heading.insertAdjacentElement('afterbegin', this.createAnchor(id));
-                        processedCount++;
-                    }
+                const id = this.generateId(heading.textContent);
+
+                if (id) {
+                    heading.id = id;
+                    heading.insertAdjacentElement('afterbegin', this.createAnchor(id));
+                    processedCount++;
                 }
             });
 
