@@ -67,7 +67,7 @@
             .then((svg) => {
                 // Only update if this controller is still active
                 if (controller.signal.aborted) {
-                    return undefined;
+                    return;
                 }
 
                 // Sanitize SVG content to prevent XSS attacks
@@ -75,7 +75,6 @@
                     USE_PROFILES: { svg: true, svgFilters: true },
                 });
                 isLoading = false;
-                return undefined;
             })
             .catch((err) => {
                 // Ignore AbortError when effect reruns or component unmounts
