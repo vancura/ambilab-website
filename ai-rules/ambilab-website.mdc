@@ -57,7 +57,7 @@ ambilab-website/
     assets/              # Images (Git LFS) and icons
     components/
       astro/             # Astro-only components
-      svelte/            # Interactive Svelte components + stories
+      svelte/            # Interactive Svelte components
     config/              # Site, security, component config
     content/
       blog/              # Blog posts by locale (en/, cs/)
@@ -123,7 +123,6 @@ import Button from '@components/svelte/Button.svelte';
 Located in `src/components/svelte/`:
 
 - Interactive, hydratable components
-- Each component should have a `.story.svelte` file for Histoire
 - Use TypeScript with strict typing
 - Props should be typed and documented
 
@@ -323,7 +322,6 @@ pnpm dev              # Start development server
 pnpm build            # Build for production
 pnpm preview          # Preview production build
 pnpm check            # Run Astro check
-pnpm story:dev        # Start Histoire
 pnpm lint             # Lint code
 pnpm lint:fix         # Fix linting issues
 pnpm format           # Format code

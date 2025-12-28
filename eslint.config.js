@@ -28,8 +28,6 @@ export default [
             'dist/',
             '.astro/',
             'node_modules/',
-            '.histoire/',
-            'histoire-dist/',
             '.wrangler/',
             '*.min.js',
             '*.min.css',

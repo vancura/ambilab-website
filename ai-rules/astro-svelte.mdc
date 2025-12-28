@@ -261,34 +261,6 @@ Svelte 5 uses runes for reactivity:
 </form>
 ```
 
-## Component Stories (Histoire)
-
-Each Svelte component should have a story file:
-
-```svelte
-<!-- Button.story.svelte -->
-<script lang="ts">
-    import type { Hst } from '@histoire/plugin-svelte';
-    import Button from './Button.svelte';
-
-    export let Hst: Hst;
-</script>
-
-<Hst.Story title="Components/Button">
-    <Hst.Variant title="Primary">
-        <Button variant="primary">Primary Button</Button>
-    </Hst.Variant>
-
-    <Hst.Variant title="Secondary">
-        <Button variant="secondary">Secondary Button</Button>
-    </Hst.Variant>
-
-    <Hst.Variant title="Disabled">
-        <Button disabled>Disabled Button</Button>
-    </Hst.Variant>
-</Hst.Story>
-```
-
 ## Content Collections
 
 ### Querying Collections

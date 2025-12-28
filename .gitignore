@@ -19,10 +19,6 @@ dist/
 # Cloudflare
 .wrangler/
 
-# Histoire
-.histoire/
-histoire-dist/
-
 # Generated AI assistant rules (source of truth: ai-rules/*.mdc)
 .cursor/rules/
 .aiassistant/

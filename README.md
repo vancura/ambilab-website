@@ -27,7 +27,6 @@ This project establishes complete foundational scaffolding for an SSR-first Astr
 - **Fonts**: Innovator Grotesk from fonts.vancura.dev
 - **Package Manager**: pnpm
 - **Deployment**: Cloudflare Pages with edge functions
-- **Component Development**: Histoire for Svelte component documentation
 - **Linting & Formatting**: Biome (TS/JS/JSON/CSS), Prettier (Astro/Svelte/Markdown), ESLint (TS/Astro/Svelte)
 - **Version Control**: Git LFS for images
 
@@ -85,7 +84,7 @@ This project establishes complete foundational scaffolding for an SSR-first Astr
 
 ## Component Library
 
-All components are written in Svelte with TypeScript and include Histoire stories.
+All components are written in Svelte with TypeScript.
 
 ### UI Primitives
 
@@ -144,7 +143,7 @@ ambilab-website/
 │   │   │   ├── PageLayout.astro
 │   │   │   ├── BlogPostLayout.astro
 │   │   │   └── HeadingLinks.astro
-│   │   └── svelte/             # Interactive Svelte components + stories
+│   │   └── svelte/             # Interactive Svelte components
 │   ├── config/
 │   │   ├── site.ts             # Site constants (SITE config)
 │   │   ├── components.ts       # Component config presets
@@ -196,7 +195,6 @@ ambilab-website/
 ├── astro.config.ts
 ├── biome.json
 ├── eslint.config.js
-├── histoire.config.ts
 ├── prettier.config.js
 ├── svelte.config.js
 ├── tailwind.config.ts
@@ -219,12 +217,9 @@ pnpm install
 
 # Start dev server
 pnpm dev
-
-# Open Histoire (component library)
-pnpm story:dev
 ```
 
-The dev server will be available at `http://localhost:4321`
+The dev server will be available at `http://localhost:4321`.
 
 ### Workspace Setup
 
@@ -252,9 +247,6 @@ pnpm dev              # Start development server
 pnpm build            # Build for production
 pnpm preview          # Preview production build
 pnpm check            # Run Astro check
-pnpm story:dev        # Start Histoire
-pnpm story:build      # Build Histoire
-pnpm story:preview    # Preview Histoire build
 pnpm lint             # Lint code
 pnpm lint:fix         # Fix linting issues
 pnpm format           # Format code with Biome and Prettier
@@ -429,29 +421,6 @@ POST-endpoint that proxies to Buttondown:
 - Robust error handling
 - Uses `BUTTONDOWN_API_KEY` environment variable
 
-## Component Development
-
-### Histoire
-
-Histoire is used for developing and documenting Svelte components:
-
-```bash
-pnpm story:dev
-```
-
-Each component has a `.story.svelte` file alongside it:
-
-```text
-Button.svelte
-Button.story.svelte
-```
-
-### Creating a New Component
-
-1. Create the component in `src/components/svelte/`
-2. Create a story file: `ComponentName.story.svelte`
-3. Import and use in Astro pages with `client:` directive
-
 ## Fonts
 
 Fonts are loaded from `https://fonts.vancura.dev`:
@@ -544,7 +513,7 @@ pnpm tsx src/scripts/validate-security-headers.ts
 - **Type-Safe**: Comprehensive TypeScript interfaces throughout
 - **Accessibility-Focused**: ARIA labels, focus styles, keyboard navigation
 - **Performance-Optimized**: Lazy loading, font preloading, image optimization
-- **Developer Experience**: Component stories, path aliases, consistent formatting
+- **Developer Experience**: Path aliases, consistent formatting
 
 ## License
 
