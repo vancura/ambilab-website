@@ -110,10 +110,15 @@
     const shouldShowLink = $derived(isDev && isLocalhost);
 
     // Build minimal allow attribute: only include features explicitly requested
-    const allowPermissions = $derived(() => {
+    // Each feature needs an allowlist - we use 'src' to allow from the iframe's origin
+    // Note: 'autoplay' is not included as it's not widely supported in Permissions Policy
+    // and autoplay works by default with allow-scripts + allow-same-origin sandbox
+    const allowPermissions = $derived.by(() => {
         const permissions: string[] = [];
-        if (allowAutoplay) permissions.push('autoplay');
-        if (allowMotionSensors) permissions.push('accelerometer', 'gyroscope');
+        if (allowMotionSensors) {
+            permissions.push("accelerometer 'src'");
+            permissions.push("gyroscope 'src'");
+        }
         return permissions.join('; ');
     });
 
