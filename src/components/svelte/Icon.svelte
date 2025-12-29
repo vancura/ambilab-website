@@ -1,5 +1,8 @@
 <script lang="ts">
+    import { createLogger } from '@utils/logger';
     import DOMPurify from 'isomorphic-dompurify';
+
+    const logger = createLogger({ prefix: 'Icon' });
 
     interface Props {
         name: string;
@@ -23,7 +26,7 @@
 
     $effect(() => {
         if (!iconMeta.isValid) {
-            console.error(`Invalid icon name format: "${name}". The expected format: "set:name"`);
+            logger.error(`Invalid icon name format: "${name}". The expected format: "set:name"`);
         }
     });
 
@@ -87,7 +90,7 @@
                     return;
                 }
 
-                console.error(`Failed to load icon ${name}:`, err);
+                logger.error(`Failed to load icon ${name}`, err);
                 isLoading = false;
 
                 // Set fallback SVG to show an indicator when the icon fails to load

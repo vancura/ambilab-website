@@ -1,6 +1,9 @@
 <script lang="ts">
     import { getTranslation } from '@i18n/translations';
     import type { Locale } from '@type/locale';
+    import { createLogger } from '@utils/logger';
+
+    const logger = createLogger({ prefix: 'NewsletterForm' });
 
     interface Props {
         locale?: Locale;
@@ -41,10 +44,12 @@
                 const data = await response.json();
                 status = 'error';
                 message = data.error || t.newsletter.error;
+                logger.warn(`Newsletter subscription failed: ${data.error || 'Unknown error'}`);
             }
         } catch (error) {
             status = 'error';
             message = t.newsletter.error;
+            logger.error('Failed to submit newsletter form', error);
         }
     };
 </script>

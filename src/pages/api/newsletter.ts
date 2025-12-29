@@ -1,4 +1,7 @@
+import { createLogger } from '@utils/logger';
 import type { APIRoute } from 'astro';
+
+const logger = createLogger({ prefix: 'Newsletter API' });
 
 const jsonResponse = (data: object, status: number) => {
     return new Response(JSON.stringify(data), {
@@ -25,7 +28,7 @@ export const POST: APIRoute = async ({ request }) => {
         const buttondownApiKey = import.meta.env.BUTTONDOWN_API_KEY;
 
         if (!buttondownApiKey) {
-            console.error('BUTTONDOWN_API_KEY is not set');
+            logger.error('BUTTONDOWN_API_KEY is not set');
             return jsonResponse({ error: 'Newsletter service is not configured' }, 500);
         }
 
@@ -43,7 +46,7 @@ export const POST: APIRoute = async ({ request }) => {
 
         if (!response.ok) {
             // Log only the status code to avoid exposing sensitive information
-            console.error(`Buttondown API error: Status ${response.status}`);
+            logger.error(`Buttondown API error: Status ${response.status}`);
 
             // Optionally extract a safe error message if available
             try {
@@ -52,7 +55,7 @@ export const POST: APIRoute = async ({ request }) => {
                     const errorData = JSON.parse(errorText) as { message?: string; error?: string };
                     // Only log sanitized error identifiers, not the full response
                     if (errorData.message || errorData.error) {
-                        console.error(`Buttondown API error message: ${errorData.message || errorData.error}`);
+                        logger.error(`Buttondown API error message: ${errorData.message || errorData.error}`);
                     }
                 } catch {
                     // JSON parsing failed, don't log raw text to avoid exposing sensitive data
@@ -66,7 +69,7 @@ export const POST: APIRoute = async ({ request }) => {
 
         return jsonResponse({ success: true, message: 'Successfully subscribed!' }, 200);
     } catch (error) {
-        console.error('Newsletter API error:', error);
+        logger.error('Newsletter API error', error);
 
         return jsonResponse({ error: 'An unexpected error occurred' }, 500);
     }
