@@ -1,0 +1,29 @@
+---
+import { iconMap, type IconName } from '@config/icons';
+
+export interface Props {
+    /** Icon name (filename without .svg extension) */
+    name: IconName;
+    /** CSS classes to apply to the SVG */
+    class?: string;
+    /** Whether the icon is decorative (adds aria-hidden="true") */
+    decorative?: boolean;
+    /** Accessible label for the icon (makes it semantic) */
+    ariaLabel?: string;
+}
+
+const { name, class: className = '', decorative = true, ariaLabel } = Astro.props;
+
+const svgContent = iconMap[name];
+if (!svgContent) {
+    throw new Error(`Icon "${name}" not found. Available icons: ${Object.keys(iconMap).join(', ')}`);
+}
+---
+
+<span
+    class={className}
+    aria-hidden={decorative && !ariaLabel ? 'true' : undefined}
+    aria-label={ariaLabel}
+    role={ariaLabel ? 'img' : undefined}
+    set:html={svgContent}
+/>
