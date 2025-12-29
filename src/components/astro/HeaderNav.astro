@@ -1,0 +1,44 @@
+---
+import { getTranslation } from '@i18n/translations';
+import type { Locale } from '@type/locale';
+
+export interface Props {
+    locale: Locale;
+    currentPath: string;
+}
+
+const { locale, currentPath } = Astro.props;
+const t = getTranslation(locale);
+
+// Define navigation items
+const navItems = [
+    {
+        href: '/',
+        label: t.nav.home,
+        isActive: currentPath === '/',
+    },
+    {
+        href: locale === 'en' ? '/about' : '/o-projektu',
+        label: t.nav.about,
+        isActive: currentPath === '/about' || currentPath === '/o-projektu',
+    },
+    {
+        href: '/blog',
+        label: t.nav.blog,
+        isActive: currentPath.startsWith('/blog'),
+    },
+];
+---
+
+<div class="flex items-center gap-6">
+    {
+        navItems.map((item) => (
+            <a
+                href={item.href}
+                class:list={['transition-colors hover:text-blue-600', item.isActive && 'font-semibold text-blue-600']}
+            >
+                {item.label}
+            </a>
+        ))
+    }
+</div>
