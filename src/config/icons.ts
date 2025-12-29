@@ -11,7 +11,7 @@ export const iconMap = {
     refresh: refreshIcon,
     clock: clockIcon,
     tag: tagIcon,
-    'pixel-heart': pixelHeartIcon,
+    pixelHeart: pixelHeartIcon,
 } as const;
 
 export type IconName = keyof typeof iconMap;
