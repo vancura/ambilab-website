@@ -42,7 +42,6 @@ All code must pass strict TypeScript checks:
 - **Language**: TypeScript (strict mode)
 - **Content**: MDX via Astro Content Collections
 - **State Management**: Nanostores
-- **Animation**: GSAP (reduced-motion aware)
 - **Icons**: Solar icons via Iconify + custom SVGs
 - **Package Manager**: pnpm
 - **Deployment**: Cloudflare Pages
@@ -63,7 +62,7 @@ ambilab-website/
       blog/              # Blog posts by locale (en/, cs/)
       pages/             # Static pages by locale
     i18n/                # Locale config, translations, utils
-    lib/                 # Reusable libraries (typewriter, images)
+    lib/                 # Reusable libraries (images)
     pages/               # Astro pages and API routes
     scripts/             # Utility scripts
     stores/              # Nanostores for state
