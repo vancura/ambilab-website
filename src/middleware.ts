@@ -57,6 +57,14 @@ export const onRequest = defineMiddleware(async (context, next) => {
         // Log the error but don't expose sensitive details
         logger.error('Middleware error', error);
 
+        // Prevent infinite redirect loop if already on error page
+        const url = new URL(context.request.url);
+
+        if (url.pathname === '/404' || url.pathname === '/500' || url.pathname === '/503') {
+            // Return a basic error response instead of redirecting
+            return new Response('Internal Server Error', { status: 500 });
+        }
+
         // Set default locale in case of error
         context.locals.locale = defaultLocale;
         context.locals.nonce = generateNonce();
