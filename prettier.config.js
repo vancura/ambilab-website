@@ -22,7 +22,7 @@ export default {
     // IMPORTANT: Tailwind plugin must be loaded last to wrap other plugins
     plugins: ['prettier-plugin-svelte', 'prettier-plugin-astro', 'prettier-plugin-tailwindcss'],
     tailwindConfig: './tailwind.config.ts',
-    tailwindFunctions: ['clsx', 'cn'],
+    tailwindFunctions: [],
 
     overrides: [
         {
