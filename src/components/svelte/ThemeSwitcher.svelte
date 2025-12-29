@@ -52,7 +52,7 @@
 
 <button
     onclick={handleThemeToggle}
-    class="flex cursor-pointer items-center gap-2 rounded-lg border border-gray-200 px-3 py-2 transition-all hover:bg-gray-100 disabled:opacity-50 dark:border-gray-800 dark:hover:bg-gray-800"
+    class="flex cursor-pointer items-center gap-2 rounded-lg border border-gray-200 px-3 py-2 transition-all duration-200 hover:bg-gray-100 disabled:opacity-50 dark:border-gray-800 dark:hover:bg-gray-800"
     class:opacity-0={!mounted}
     class:opacity-100={mounted}
     aria-label="Toggle theme"
