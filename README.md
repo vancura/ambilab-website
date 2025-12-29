@@ -430,9 +430,17 @@ To update font files, change the URLs in `src/components/astro/BaseHead.astro`.
 
 ### Custom Icons
 
-The website uses custom inline SVG icons throughout. Icons are embedded directly in components as SVG elements for
-maximum flexibility and performance. Place additional custom SVG icons in `src/assets/icons/` if needed. See README.md
-in that directory for guidelines.
+The website uses both inline SVG icons and separate icon files, depending on usage patterns:
+
+- **Separate icon files** (`src/assets/icons/`): Use for frequently reused icons that appear across multiple components.
+  These icons are loaded via the `Icon` component (`src/components/astro/Icon.astro`) for better maintainability and
+  reduced duplication. Examples include user, calendar, clock, tag, and refresh icons used in blog post layouts.
+
+- **Inline SVG icons**: Use for component-specific icons that are unique to a single component and unlikely to be reused
+  elsewhere. Inline SVGs provide maximum flexibility and avoid unnecessary file overhead for one-off icons.
+
+When adding a new icon, consider its reusability: if it will be used in multiple places, add it to `src/assets/icons/`
+and use the `Icon` component. If it's specific to one component, keep it inline.
 
 ## Utilities
 

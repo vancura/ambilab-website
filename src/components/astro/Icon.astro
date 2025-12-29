@@ -1,0 +1,41 @@
+---
+import calendarIcon from '@assets/icons/calendar.svg?raw';
+import clockIcon from '@assets/icons/clock.svg?raw';
+import refreshIcon from '@assets/icons/refresh.svg?raw';
+import tagIcon from '@assets/icons/tag.svg?raw';
+import userIcon from '@assets/icons/user.svg?raw';
+
+const iconMap: Record<string, string> = {
+    user: userIcon,
+    calendar: calendarIcon,
+    refresh: refreshIcon,
+    clock: clockIcon,
+    tag: tagIcon,
+};
+
+export interface Props {
+    /** Icon name (filename without .svg extension) */
+    name: keyof typeof iconMap;
+    /** CSS classes to apply to the SVG */
+    class?: string;
+    /** Whether the icon is decorative (adds aria-hidden="true") */
+    decorative?: boolean;
+    /** Accessible label for the icon (makes it semantic) */
+    ariaLabel?: string;
+}
+
+const { name, class: className = '', decorative = true, ariaLabel } = Astro.props;
+
+const svgContent = iconMap[name];
+if (!svgContent) {
+    throw new Error(`Icon "${name}" not found. Available icons: ${Object.keys(iconMap).join(', ')}`);
+}
+---
+
+<span
+    class={className}
+    aria-hidden={decorative && !ariaLabel ? 'true' : undefined}
+    aria-label={ariaLabel}
+    role={ariaLabel ? 'img' : undefined}
+    set:html={svgContent}
+/>

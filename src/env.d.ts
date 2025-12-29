@@ -2,6 +2,12 @@
 
 import type { Locale } from '@type/locale';
 
+// Type definition for Vite's ?raw import suffix
+declare module '*?raw' {
+    const content: string;
+    export default content;
+}
+
 interface ImportMetaEnv {
     readonly BUTTONDOWN_API_KEY?: string;
 }
