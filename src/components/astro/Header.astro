@@ -57,7 +57,7 @@ const t = getTranslation(locale);
             </a>
 
             <ThemeSwitcher client:load />
-            <LocaleSwitcher client:load currentLocale={locale} translationPath={translationPath} />
+            <LocaleSwitcher client:load currentLocale={locale} {...translationPath ? { translationPath } : {}} />
         </div>
     </nav>
 </header>
