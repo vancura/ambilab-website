@@ -24,13 +24,14 @@
     }: Props = $props();
 
     const baseClasses =
-        'inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+        'inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-page-bg dark:focus:ring-offset-page-bg-dark disabled:opacity-50 disabled:cursor-not-allowed';
 
     const variantClasses = {
-        primary: 'bg-button-primary text-button-primary-text hover:bg-button-primary-hover focus:ring-blue-500',
-        secondary: 'bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500',
+        primary:
+            'bg-button-primary text-button-primary-text hover:bg-button-primary-hover focus:ring-link dark:focus:ring-link-dark',
+        secondary: 'bg-gray-600 text-white hover:bg-gray-700 focus:ring-link dark:focus:ring-link-dark',
         outline:
-            'border-2 border-link text-link hover:bg-blue-50 focus:ring-blue-500 dark:text-link-dark dark:hover:bg-blue-950',
+            'border-2 border-link text-link hover:bg-surface-hover focus:ring-link dark:text-link-dark dark:hover:bg-surface-hover-dark dark:focus:ring-link-dark',
     };
 
     const sizeClasses = {

@@ -152,7 +152,7 @@
                     href={validatedSrc}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="bg-button-primary text-button-primary-text hover:bg-button-primary-hover inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                    class="bg-button-primary text-button-primary-text hover:bg-button-primary-hover focus:ring-link focus:ring-offset-page-bg dark:focus:ring-link-dark dark:focus:ring-offset-page-bg-dark inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2"
                 >
                     Open Demo in New Tab
                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">

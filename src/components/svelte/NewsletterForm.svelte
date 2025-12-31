@@ -67,7 +67,7 @@
             placeholder={t.newsletter.emailPlaceholder}
             required
             disabled={status === 'loading'}
-            class="border-border-medium dark:border-border-medium-dark dark:bg-surface-dark flex-1 rounded-lg border px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+            class="border-border-medium dark:border-border-medium-dark dark:bg-surface-dark focus:border-link focus:ring-link dark:focus:border-link-dark dark:focus:ring-link-dark flex-1 rounded-lg border px-4 py-2 focus:outline-none focus:ring-2 disabled:opacity-50"
         />
         <button
             type="submit"
