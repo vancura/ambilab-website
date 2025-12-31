@@ -10,7 +10,15 @@ export interface Props {
 const { locale, currentPath } = Astro.props;
 const t = getTranslation(locale);
 
-// Define navigation items
+/**
+ * Navigation items with active state matching.
+ *
+ * Note on matching strategies:
+ * - Locale is domain-based (ambilab.com vs ambilab.cz), so currentPath never contains /en/ or /cs/ prefixes
+ * - Astro does not add trailing slashes by default to canonical URLs
+ * - Blog uses startsWith() to match nested routes (e.g., /blog/post-slug)
+ * - Home and About use exact equality (===) as they have no nested routes
+ */
 const navItems = [
     {
         href: '/',
