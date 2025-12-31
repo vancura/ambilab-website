@@ -114,6 +114,47 @@ const { title, description } = Astro.props;
 </html>
 ```
 
+### Class Composition
+
+Use `class:list` for composing classes instead of template literals. This handles empty/falsy values gracefully and is the recommended Astro pattern:
+
+```astro
+---
+interface Props {
+    class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<!-- Avoid: Template literals can produce extra whitespace -->
+<div class={`base-class ${className}`}>
+    Content
+</div>
+
+<!-- Preferred: class:list filters falsy values and is more maintainable -->
+<div
+    class:list={[
+        'base-class',
+        className,
+    ]}
+>
+    Content
+</div>
+
+<!-- Also supports conditional classes and objects -->
+<div
+    class:list={[
+        'base-class',
+        { 'is-active': isActive },
+        someCondition && 'conditional-class',
+        className,
+    ]}
+>
+    Content
+</div>
+```
+
 ### Accessing Locals
 
 Use `Astro.locals` for middleware-injected data:
