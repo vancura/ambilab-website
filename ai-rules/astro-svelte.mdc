@@ -1,6 +1,6 @@
 ---
 description: Astro and Svelte conventions for the Ambilab website
-globs: ["**/*.astro", "**/*.svelte", "src/pages/**/*", "src/components/**/*"]
+globs: ['**/*.astro', '**/*.svelte', 'src/pages/**/*', 'src/components/**/*']
 alwaysApply: false
 ---
 
@@ -35,11 +35,12 @@ const posts = await getCollection('blog');
 </Layout>
 
 <style>
-    h1 { color: var(--heading-color); }
+    h1 {
+        color: var(--heading-color);
+    }
 </style>
 ```
 
-<<<<<<< Updated upstream
 ### Page Components
 
 Pages in `src/pages/` handle routing:
@@ -47,68 +48,8 @@ Pages in `src/pages/` handle routing:
 ```astro
 ---
 // src/pages/[...slug].astro
-import { getCollection } from 'astro:content';
-import BlogPostLayout from '@components/astro/BlogPostLayout.astro';
-
-export async function getStaticPaths() {
-    const posts = await getCollection('blog');
-    return posts.map((post) => ({
-        params: { slug: `${post.data.locale}/blog/${post.data.slug}` },
-        props: { post },
-    }));
-}
-
-const { post } = Astro.props;
-const { Content } = await post.render();
----
-
-<BlogPostLayout {...post.data}>
-    <Content />
-</BlogPostLayout>
-```
-
-### Layout Components
-
-Layouts wrap page content:
-
-```astro
----
-// src/components/astro/PageLayout.astro
-import BaseHead from './BaseHead.astro';
-import Header from './Header.astro';
-import Footer from './Footer.astro';
-
-interface Props {
-    title: string;
-    description: string;
-}
-
-const { title, description } = Astro.props;
----
-
-<!doctype html>
-<html lang={Astro.locals.locale}>
-    <head>
-        <BaseHead {title} {description} />
-    </head>
-    <body>
-        <Header />
-        <main>
-            <slot />
-        </main>
-        <Footer />
-    </body>
-</html>
-```
-
-||||||| Stash base
-### Page Components
-
-Pages in `src/pages/` handle routing:
-
-```astro
----
-// src/pages/[...slug].astro
+// This file uses a rest parameter [...slug] to capture nested paths
+// like: en/blog/hello-world
 import { getCollection } from 'astro:content';
 import BlogPostLayout from '@components/astro/BlogPostLayout.astro';
 
@@ -165,7 +106,8 @@ const { title, description } = Astro.props;
 
 ### Class Composition
 
-Use `class:list` for composing classes instead of template literals. This handles empty/falsy values gracefully and is the recommended Astro pattern:
+Use `class:list` for composing classes instead of template literals. This handles empty/falsy values gracefully and is
+the recommended Astro pattern:
 
 ```astro
 ---
@@ -177,51 +119,23 @@ const { class: className = '' } = Astro.props;
 ---
 
 <!-- Avoid: Template literals can produce extra whitespace -->
-<div class={`base-class ${className}`}>
-    Content
-</div>
+<div class={`base-class ${className}`}>Content</div>
 
 <!-- Preferred: class:list filters falsy values and is more maintainable -->
-<div
-    class:list={[
-        'base-class',
-        className,
-    ]}
->
-    Content
-</div>
+<div class:list={['base-class', className]}>Content</div>
 
 <!-- Also supports conditional classes and objects -->
-<div
-    class:list={[
-        'base-class',
-        { 'is-active': isActive },
-        someCondition && 'conditional-class',
-        className,
-    ]}
->
+<div class:list={['base-class', { 'is-active': isActive }, someCondition && 'conditional-class', className]}>
     Content
 </div>
 ```
 
-=======
-### Class Composition
-
-Use `class:list` instead of template literals:
-
-```astro
-<div class:list={['base-class', { 'is-active': isActive }, className]}>
-    Content
-</div>
-```
-
->>>>>>> Stashed changes
 ### Accessing Locals
 
 ```astro
 ---
-const locale = Astro.locals.locale;  // From middleware
-const nonce = Astro.locals.nonce;    // CSP nonce
+const locale = Astro.locals.locale; // From middleware
+const nonce = Astro.locals.nonce; // CSP nonce
 ---
 ```
 
@@ -313,13 +227,26 @@ export const POST: APIRoute = async ({ request }) => {
 
 ## Hydration Strategies
 
-| Strategy | Use Case | Example |
-|----------|----------|---------|
-| `client:load` | Immediate interactivity | Theme toggle, nav |
-| `client:idle` | Not urgent | Newsletter form |
-| `client:visible` | Below fold | Comments |
-| `client:media` | Media query | Mobile menu |
-| `client:only` | Skip SSR | Browser-only |
+Hydration directives are only needed for Svelte components imported into Astro components. Astro components are
+server-rendered by default and do not require hydration directives. When importing Svelte components, add `client:*`
+directives to hydrate them:
+
+```astro
+---
+import Button from '@components/svelte/Button.svelte';
+---
+
+<!-- Svelte component needs client:* directive to be interactive -->
+<Button client:load>Click me</Button>
+```
+
+| Strategy         | Use Case                | Example           |
+| ---------------- | ----------------------- | ----------------- |
+| `client:load`    | Immediate interactivity | Theme toggle, nav |
+| `client:idle`    | Not urgent              | Newsletter form   |
+| `client:visible` | Below fold              | Comments          |
+| `client:media`   | Media query             | Mobile menu       |
+| `client:only`    | Skip SSR                | Browser-only      |
 
 ## Accessibility
 
@@ -329,7 +256,9 @@ Use CSS for simple cases:
 
 ```css
 @media (prefers-reduced-motion: reduce) {
-    .animate-fade-in { animation: none; }
+    .animate-fade-in {
+        animation: none;
+    }
 }
 ```
 
@@ -351,13 +280,7 @@ import { Image } from 'astro:assets';
 import heroImage from '@assets/hero.png';
 ---
 
-<Image
-    src={heroImage}
-    alt="Description"
-    widths={[400, 800, 1200]}
-    format="avif"
-    loading="lazy"
-/>
+<Image src={heroImage} alt="Description" widths={[400, 800, 1200]} format="avif" loading="lazy" />
 ```
 
 Icons: Use SVGs in `src/assets/icons/` with the `Icon` component.
@@ -366,6 +289,11 @@ Icons: Use SVGs in `src/assets/icons/` with the `Icon` component.
 
 ```astro
 <link rel="preconnect" href="https://fonts.vancura.dev" />
-<link rel="preload" as="font" type="font/woff2"
-    href="https://fonts.vancura.dev/innovator-grotesk/InnovatorGrotesk-Medium.woff2" crossorigin />
+<link
+    rel="preload"
+    as="font"
+    type="font/woff2"
+    href="https://fonts.vancura.dev/innovator-grotesk/InnovatorGrotesk-Medium.woff2"
+    crossorigin
+/>
 ```

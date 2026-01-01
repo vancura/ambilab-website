@@ -180,7 +180,44 @@ Configured in `src/config/security.ts` and applied via `src/middleware.ts`:
 
 ### Demo Embeds
 
-Use the `DemoEmbed` component for sandboxed iframes with strict URL allowlist.
+Use the `DemoEmbed` component for sandboxed iframes with strict URL allowlist. The component provides security validation and automatically applies safe iframe sandbox permissions.
+
+#### Basic Usage
+
+```astro
+---
+import DemoEmbed from '@components/svelte/DemoEmbed.svelte';
+---
+
+<DemoEmbed
+    src="https://blit-tech-demos.ambilab.com/demo/example"
+    title="Interactive Example Demo"
+    client:visible
+/>
+```
+
+#### Configuration Options
+
+```astro
+<DemoEmbed
+    src="https://blit-tech-demos.ambilab.com/demo/example"
+    title="Demo caption"
+    aspectRatio="4/3"
+    class="my-custom-class"
+    desktopOnly={false}
+    allowAutoplay={true}
+    allowMotionSensors={false}
+    allowTopNavigation={false}
+    client:visible
+/>
+```
+
+#### Security Notes
+
+- Only URLs from allowlisted hostnames are accepted (currently: `blit-tech-demos.ambilab.com`)
+- All URLs must use HTTPS protocol
+- To add new hostnames, update `ALLOWED_HOSTNAMES` in the component after security review
+- Invalid URLs will display a warning message instead of embedding
 
 ## Styling
 
