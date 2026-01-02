@@ -23,6 +23,7 @@
       "!**/*.svelte",
       "!**/*.md",
       "!**/*.mdx",
+      "!**/*.mdc",
       "!**/pnpm-lock.yaml",
       "!**/src/styles/global.css"
     ]
