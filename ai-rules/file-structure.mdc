@@ -18,12 +18,12 @@ alwaysApply: false
 
 ## Standard Region Order
 
-1. **Imports** - No region needed
-2. **Type Definitions** - Interfaces, type aliases
-3. **Configuration** - Constants, settings
-4. **Helper Functions** - Pure utilities
-5. **Main Logic** - Primary functions/classes
-6. **Exports** - Public API
+1. **Imports** – No region needed
+2. **Type Definitions** – Interfaces, type aliases
+3. **Configuration** – Constants, settings
+4. **Helper Functions** – Pure utilities
+5. **Main Logic** – Primary functions/classes
+6. **Exports** – Public API
 
 ## Common Region Names
 
@@ -43,8 +43,8 @@ import type { Locale } from '@type/locale';
 // #region Type Definitions
 
 export interface FormatOptions {
-    locale: Locale;
-    relative?: boolean;
+  locale: Locale;
+  relative?: boolean;
 }
 
 // #endregion
@@ -52,8 +52,8 @@ export interface FormatOptions {
 // #region Configuration
 
 const DATE_FORMATS: Record<Locale, Intl.DateTimeFormatOptions> = {
-    en: { year: 'numeric', month: 'long', day: 'numeric' },
-    cs: { year: 'numeric', month: 'long', day: 'numeric' },
+  en: { year: 'numeric', month: 'long', day: 'numeric' },
+  cs: { year: 'numeric', month: 'long', day: 'numeric' },
 };
 
 // #endregion
@@ -61,7 +61,7 @@ const DATE_FORMATS: Record<Locale, Intl.DateTimeFormatOptions> = {
 // #region Formatting Functions
 
 export function formatDate(date: Date, locale: Locale): string {
-    return new Intl.DateTimeFormat(locale, DATE_FORMATS[locale]).format(date);
+  return new Intl.DateTimeFormat(locale, DATE_FORMATS[locale]).format(date);
 }
 
 // #endregion
@@ -77,18 +77,20 @@ import { atom } from 'nanostores';
 export const $currentLocale = atom<Locale>(defaultLocale);
 
 export const setLocale = (locale: Locale): void => {
-    $currentLocale.set(locale);
+  $currentLocale.set(locale);
 };
 ```
 
 ## When to Create Regions
 
 Create when:
+
 - Logical grouping of related code
 - Section exceeds ~30 lines
 - Navigation benefit for developers
 
 Skip for:
+
 - Single functions (unless 100+ lines)
 - Import statements
 - Temporary/debug code
