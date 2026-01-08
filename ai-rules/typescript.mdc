@@ -1,6 +1,6 @@
 ---
 description: TypeScript conventions for the Ambilab website
-globs: ["**/*.ts", "**/*.tsx"]
+globs: ['**/*.ts', '**/*.tsx']
 alwaysApply: false
 ---
 
@@ -30,7 +30,7 @@ import { createLogger } from '@utils/logger';
 
 ```typescript
 function process<T extends { value: unknown }>(data: T): T['value'] {
-    return data.value;
+  return data.value;
 }
 ```
 
@@ -39,7 +39,7 @@ function process<T extends { value: unknown }>(data: T): T['value'] {
 ```typescript
 const value = array[index];
 if (value !== undefined) {
-    console.log(value.property);
+  console.log(value.property);
 }
 // Or: array[index]?.property
 ```
@@ -53,12 +53,12 @@ if (!element) throw new Error('Game element not found');
 
 ## Naming Conventions
 
-| Type | Convention | Examples |
-|------|------------|----------|
-| Interfaces/Types | PascalCase | `BlogPost`, `Locale` |
-| Variables/Functions | camelCase | `blogPosts`, `formatDate` |
-| Constants | UPPER_SNAKE | `DEFAULT_LOCALE` |
-| Unused params | `_prefix` | `_event` |
+| Type                | Convention  | Examples                  |
+| ------------------- | ----------- | ------------------------- |
+| Interfaces/Types    | PascalCase  | `BlogPost`, `Locale`      |
+| Variables/Functions | camelCase   | `blogPosts`, `formatDate` |
+| Constants           | UPPER_SNAKE | `DEFAULT_LOCALE`          |
+| Unused params       | `_prefix`   | `_event`                  |
 
 ## Async Patterns
 
@@ -66,8 +66,8 @@ Use async/await, load in parallel when possible:
 
 ```typescript
 const [posts, pages] = await Promise.all([
-    getCollection('blog', ({ data }) => data.locale === locale),
-    getCollection('pages', ({ data }) => data.locale === locale),
+  getCollection('blog', ({ data }) => data.locale === locale),
+  getCollection('pages', ({ data }) => data.locale === locale),
 ]);
 ```
 
@@ -77,9 +77,9 @@ Use guard clauses with descriptive errors:
 
 ```typescript
 function formatPost(post: BlogPost | null): string {
-    if (!post) return '';
-    if (!post.title) return 'Untitled';
-    return `${post.title} - ${formatDate(post.pubDate)}`;
+  if (!post) return '';
+  if (!post.title) return 'Untitled';
+  return `${post.title} - ${formatDate(post.pubDate)}`;
 }
 ```
 
@@ -95,9 +95,9 @@ function formatPost(post: BlogPost | null): string {
 Use named exports (not default):
 
 ```typescript
-export function formatDate(date: Date): string { }
+export function formatDate(date: Date): string {}
 export const DEFAULT_LOCALE = 'en';
-export interface BlogPost { }
+export interface BlogPost {}
 ```
 
 ## Utility Types
@@ -108,20 +108,20 @@ type PostPreview = Pick<BlogPost, 'title' | 'pubDate'>;
 type PostWithoutId = Omit<BlogPost, 'id'>;
 
 const LOCALES = ['en', 'cs'] as const;
-type Locale = typeof LOCALES[number];  // 'en' | 'cs'
+type Locale = (typeof LOCALES)[number]; // 'en' | 'cs'
 ```
 
 ## Zod Schemas
 
 ```typescript
 const blogPostSchema = z.object({
-    title: z.string().min(1),
-    description: z.string().max(160),
-    locale: z.enum(['en', 'cs']),
-    pubDate: z.coerce.date(),
-    author: z.string().default('Ambilab'),
-    tags: z.array(z.string()).default([]),
-    draft: z.boolean().default(false),
+  title: z.string().min(1),
+  description: z.string().max(160),
+  locale: z.enum(['en', 'cs']),
+  pubDate: z.coerce.date(),
+  author: z.string().default('Ambilab'),
+  tags: z.array(z.string()).default([]),
+  draft: z.boolean().default(false),
 });
 
 type BlogPost = z.infer<typeof blogPostSchema>;
