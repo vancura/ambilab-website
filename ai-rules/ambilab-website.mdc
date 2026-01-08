@@ -6,7 +6,7 @@ alwaysApply: true
 
 # Ambilab Website Project Rules
 
-Ambilab Website is a bilingual (English/Czech) marketing website and blog for Ambilab - a web-based pixel art game
+Ambilab Website is a bilingual (English/Czech) marketing website and blog for Ambilab – a web-based pixel art game
 engine and editor for kids to learn programming.
 
 ## CRITICAL RULES
@@ -16,7 +16,7 @@ engine and editor for kids to learn programming.
 NEVER use emoji in:
 
 - Source code (comments, strings, identifiers)
-- Documentation (markdown files, JSDoc)
+- Documentation (Markdown files, JSDoc)
 - Commit messages
 - Pull request titles and descriptions
 - Error messages or log output
@@ -38,7 +38,7 @@ This rule has no exceptions. Use plain text descriptions instead.
 **Why this matters:**
 
 - Screen reader experience: Emoji may be announced inconsistently or verbosely
-- Visual consistency: Emoji render differently across platforms and fonts
+- Visual consistency: Emoji renders differently across platforms and fonts
 - Professionalism: Plain text is clearer and more maintainable
 
 ### TypeScript Strict Mode
@@ -56,7 +56,7 @@ All code must pass strict TypeScript checks:
 
 - **Framework**: Astro 5 with SSR (Cloudflare adapter)
 - **UI Components**: Svelte 5 (hydratable)
-- **Styling**: Tailwind CSS 4 with custom theme
+- **Styling**: Tailwind CSS 4 with a custom theme
 - **Language**: TypeScript (strict mode)
 - **Content**: MDX via Astro Content Collections
 - **State Management**: Nanostores
@@ -138,11 +138,11 @@ Located in `src/components/svelte/`. Interactive, hydratable, typed with `$props
 
 ```svelte
 <script lang="ts">
-    interface Props {
-        variant?: 'primary' | 'secondary';
-        disabled?: boolean;
-    }
-    let { variant = 'primary', disabled = false }: Props = $props();
+  interface Props {
+    variant?: 'primary' | 'secondary';
+    disabled?: boolean;
+  }
+  let { variant = 'primary', disabled = false }: Props = $props();
 </script>
 ```
 
@@ -161,18 +161,18 @@ Schema defined in `src/content/config.ts`:
 
 ```typescript
 const blogCollection = defineCollection({
-    type: 'content',
-    schema: z.object({
-        title: z.string(),
-        description: z.string(),
-        locale: z.enum(['en', 'cs']),
-        translationSlug: z.string().optional(),
-        pubDate: z.coerce.date(),
-        updatedDate: z.coerce.date().optional(),
-        author: z.string().default('Ambilab'),
-        tags: z.array(z.string()).default([]),
-        draft: z.boolean().default(false),
-    }),
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    locale: z.enum(['en', 'cs']),
+    translationSlug: z.string().optional(),
+    pubDate: z.coerce.date(),
+    updatedDate: z.coerce.date().optional(),
+    author: z.string().default('Ambilab'),
+    tags: z.array(z.string()).default([]),
+    draft: z.boolean().default(false),
+  }),
 });
 ```
 
@@ -198,7 +198,8 @@ Configured in `src/config/security.ts` and applied via `src/middleware.ts`:
 
 ### Demo Embeds
 
-Use the `DemoEmbed` component for sandboxed iframes with strict URL allowlist. The component provides security validation and automatically applies safe iframe sandbox permissions.
+Use the `DemoEmbed` component for sandboxed iframes with strict URL allowlist. The component provides security
+validation and automatically applies safe iframe sandbox permissions.
 
 #### Basic Usage
 
@@ -207,26 +208,22 @@ Use the `DemoEmbed` component for sandboxed iframes with strict URL allowlist. T
 import DemoEmbed from '@components/svelte/DemoEmbed.svelte';
 ---
 
-<DemoEmbed
-    src="https://blit-tech-demos.ambilab.com/demo/example"
-    title="Interactive Example Demo"
-    client:visible
-/>
+<DemoEmbed src="https://blit-tech-demos.ambilab.com/demo/example" title="Interactive Example Demo" client:visible />
 ```
 
 #### Configuration Options
 
 ```astro
 <DemoEmbed
-    src="https://blit-tech-demos.ambilab.com/demo/example"
-    title="Demo caption"
-    aspectRatio="4/3"
-    class="my-custom-class"
-    desktopOnly={false}
-    allowAutoplay={true}
-    allowMotionSensors={false}
-    allowTopNavigation={false}
-    client:visible
+  src="https://blit-tech-demos.ambilab.com/demo/example"
+  title="Demo caption"
+  aspectRatio="4/3"
+  class="my-custom-class"
+  desktopOnly={false}
+  allowAutoplay={true}
+  allowMotionSensors={false}
+  allowTopNavigation={false}
+  client:visible
 />
 ```
 
@@ -234,14 +231,14 @@ import DemoEmbed from '@components/svelte/DemoEmbed.svelte';
 
 - Only URLs from allowlisted hostnames are accepted (currently: `blit-tech-demos.ambilab.com`)
 - All URLs must use HTTPS protocol
-- To add new hostnames, update `ALLOWED_HOSTNAMES` in the component after security review
+- To add new hostnames, update `allowedHostnames` in the component after security review
 - Invalid URLs will display a warning message instead of embedding
 
 ## Styling
 
 ### Tailwind CSS 4
 
-- Dark mode with class strategy
+- A dark mode with class strategy
 - Custom theme in `tailwind.config.ts`
 - Typography plugin for prose content
 
@@ -257,7 +254,7 @@ import DemoEmbed from '@components/svelte/DemoEmbed.svelte';
 
 Enforced by Biome (TS/JS/JSON/CSS) and Prettier (Astro/Svelte/Markdown):
 
-- **Indent**: 4 spaces (2 for JSON/YAML/Markdown)
+- **Indent**: four spaces (two for JSON/YAML/Markdown)
 - **Line width**: 120 characters max
 - **Quotes**: Single quotes for strings
 - **Semicolons**: Always required
@@ -290,7 +287,7 @@ import { createLogger } from '@utils/logger';
 
 Format: `<type>(<scope>): <description>`
 
-**Rules:** Header max 100 chars, lowercase subject, no period at end, body wraps at 72 chars.
+**Rules:** Header max 100 chars, lowercase subject, no period at the end, body wraps at 72 chars.
 
 **Types:** `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`
 
@@ -319,11 +316,11 @@ pnpm sync-rules       # Sync AI rules to editor configs
 
 ## Common Mistakes to Avoid
 
-1. **Using emoji** - Never allowed anywhere
-2. **Forgetting hydration directives** - Svelte components need `client:*`
-3. **Missing translations** - Always create both en/cs versions
-4. **Skipping frontmatter fields** - Required fields must be present
-5. **Using `any` type** - Use proper types or `unknown`
-6. **Hardcoding strings** - Use `src/i18n/translations.ts`
-7. **Missing alt text** - All images need alt attributes
-8. **Ignoring reduced motion** - Animations must respect `prefers-reduced-motion`
+1. **Using emoji** – Never allowed anywhere
+2. **Forgetting hydration directives** – Svelte components need `client:*`
+3. **Missing translations** – Always create both en/cs versions
+4. **Skipping frontmatter fields** – Required fields must be present
+5. **Using `any` type** – Use proper types or `unknown`
+6. **Hardcoding strings** – Use `src/i18n/translations.ts`
+7. **Missing alt text** – All images need alt attributes
+8. **Ignoring reduced motion** – Animations must respect `prefers-reduced-motion`
