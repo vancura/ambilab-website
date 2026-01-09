@@ -6,11 +6,16 @@ export const toggleDarkMode = (): void => {
     const isBrowser =
         typeof window === 'object' &&
         typeof document === 'object' &&
-        typeof localStorage === 'object' &&
+        typeof window.localStorage !== 'undefined' &&
         document.documentElement !== null;
 
     if (isBrowser) {
         const isDarkNow = document.documentElement.classList.toggle('dark');
-        localStorage.setItem('theme', isDarkNow ? 'dark' : 'light');
+
+        try {
+            localStorage.setItem('theme', isDarkNow ? 'dark' : 'light');
+        } catch {
+            // Silently fail in privacy mode or when storage is unavailable
+        }
     }
 };
