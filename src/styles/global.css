@@ -4,10 +4,7 @@
 
 @theme {
     --font-family-sans: 'Innovator Grotesk', system-ui, sans-serif;
-    --font-family-mono: 'PragmataPro Mono', ui-monospace, 'SF Mono', Menlo, Monaco, Consolas, monospace;
-
-    /* Debug colors */
-    --color-debug: #f0f;
+    --font-family-mono: ui-monospace, 'SF Mono', Menlo, Monaco, Consolas, monospace;
 
     /* Semantic Colors - Page & Surface Backgrounds */
     --color-page-bg: theme('colors.gray.200');
