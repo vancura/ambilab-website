@@ -44,9 +44,17 @@ export default {
             },
         },
         {
-            files: ['*.md', '*.mdx'],
+            files: ['*.md', '*.mdc'],
             options: {
                 parser: 'markdown',
+                proseWrap: 'always',
+                tabWidth: 2,
+            },
+        },
+        {
+            files: ['*.mdx'],
+            options: {
+                parser: 'mdx',
                 proseWrap: 'always',
                 tabWidth: 2,
             },

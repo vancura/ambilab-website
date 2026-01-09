@@ -1,0 +1,58 @@
+---
+import { getRoute, isRouteActive } from '@config/routes';
+import { getTranslation } from '@i18n/translations';
+import type { Locale } from '@type/locale';
+
+export interface Props {
+    locale: Locale;
+    currentPath: string;
+}
+
+const { locale, currentPath } = Astro.props as Props;
+const t = getTranslation(locale);
+
+/**
+ * Navigation items with active state matching.
+ *
+ * Note on matching strategies:
+ * - Locale is domain-based (ambilab.com vs ambilab.cz), so currentPath never contains /en/ or /cs/ prefixes
+ * - Astro does not add trailing slashes by default to canonical URLs
+ * - Blog uses startsWith() to match nested routes (e.g., /blog/post-slug)
+ * - Home and About use exact equality (===) as they have no nested routes
+ */
+const navItems = [
+    {
+        href: getRoute('home', locale),
+        label: t.nav.home,
+        isActive: isRouteActive(currentPath, 'home'),
+    },
+    {
+        href: getRoute('about', locale),
+        label: t.nav.about,
+        isActive: isRouteActive(currentPath, 'about'),
+    },
+    {
+        href: getRoute('blog', locale),
+        label: t.nav.blog,
+        isActive: isRouteActive(currentPath, 'blog'),
+    },
+];
+---
+
+<div class="flex items-center gap-6">
+    {
+        navItems.map((item) => (
+            <a
+                href={item.href}
+                aria-current={item.isActive ? 'page' : undefined}
+                class:list={[
+                    'focus-visible:ring-link/40 transition-colors hover:text-link-hover focus-visible:outline-none focus-visible:ring-2 dark:hover:text-link-hover-dark',
+                    item.isActive &&
+                        'underline-offset-10 font-semibold text-link-active underline decoration-2 dark:text-link-active-dark',
+                ]}
+            >
+                {item.label}
+            </a>
+        ))
+    }
+</div>

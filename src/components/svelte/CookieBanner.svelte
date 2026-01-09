@@ -38,15 +38,15 @@
 
 {#if isVisible}
     <div
-        class="fixed bottom-0 left-0 right-0 z-50 border-t border-gray-200 bg-white p-4 shadow-lg dark:border-gray-800 dark:bg-gray-900"
+        class="fixed bottom-0 left-0 right-0 z-50 border-t border-border-default bg-surface p-4 shadow-lg dark:border-border-default-dark dark:bg-surface-dark"
     >
         <div class="container mx-auto flex flex-col items-center justify-between gap-4 sm:flex-row">
-            <p class="text-sm text-gray-700 dark:text-gray-300">
+            <p class="text-sm text-text-secondary dark:text-text-secondary-dark">
                 {t.cookie.message}
             </p>
             <button
                 onclick={handleDismiss}
-                class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+                class="rounded-lg bg-button-primary px-4 py-2 text-sm font-medium text-button-primary-text transition-colors hover:bg-button-primary-hover dark:bg-button-primary-dark dark:text-button-primary-text-dark dark:hover:bg-button-primary-hover-dark"
             >
                 {t.cookie.button}
             </button>

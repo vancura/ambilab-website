@@ -31,18 +31,26 @@ export const smoothScrollTo = async ({ targetId, offset = 0, onComplete }: Scrol
     // Wait for scroll completion with 'scrollend' event and fallback timeout
     return new Promise<ScrollResult>((resolve) => {
         let scrollEndResolved = false;
-        const FALLBACK_TIMEOUT = 2000; // 2 seconds fallback timeout
+
+        const FALLBACK_TIMEOUT = 2_000; // 2-second fallback timeout
         const POLL_INTERVAL = 50; // Check scroll position every 50ms
         const STABILITY_THRESHOLD = 1; // Consider stable if within 1px
 
         const resolveOnce = (success: boolean) => {
-            if (scrollEndResolved) return;
-            scrollEndResolved = true;
-            clearTimeout(timeoutId);
-            clearInterval(pollInterval);
-            window.removeEventListener('scrollend', handleScrollEnd);
-            onComplete?.();
-            resolve({ success, element });
+            if (scrollEndResolved) {
+                return;
+            } else {
+                scrollEndResolved = true;
+
+                clearTimeout(timeoutId);
+                clearInterval(pollInterval);
+
+                window.removeEventListener('scrollend', handleScrollEnd);
+
+                onComplete?.();
+
+                resolve({ success, element });
+            }
         };
 
         // Listen for 'scrollend' event (modern browsers)

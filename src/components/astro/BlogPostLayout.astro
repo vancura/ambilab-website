@@ -1,11 +1,11 @@
 ---
 import '@/styles/mdx-content.css';
 
-import { localeToIntl } from '@i18n/config';
 import { getTranslation } from '@i18n/translations';
 import { calculateReadingTime } from '@i18n/utils';
 import type { Locale } from '@type/locale';
 import type { ISEOMetadata } from '@type/seo';
+import { formatDate } from '@utils/formatDate';
 
 import HeadingLinks from './HeadingLinks.astro';
 import Icon from './Icon.astro';
@@ -22,25 +22,36 @@ export interface Props extends ISEOMetadata {
     translationPath?: string;
 }
 
-const { locale, title, pubDate, updatedDate, author, tags = [], content, translationPath, ...seoProps } = Astro.props;
+const {
+    locale,
+    title,
+    description,
+    permalink,
+    pubDate,
+    updatedDate,
+    author,
+    tags = [],
+    content,
+    translationPath,
+    ...seoProps
+} = Astro.props as Props;
 const t = getTranslation(locale);
 const readingTime = calculateReadingTime(content);
-
-const formatDate = (date: Date) => {
-    return new Intl.DateTimeFormat(localeToIntl[locale], {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-    }).format(date);
-};
 ---
 
-<PageLayout locale={locale} title={title} {...translationPath ? { translationPath } : {}} {...seoProps}>
+<PageLayout
+    locale={locale}
+    title={title}
+    description={description}
+    permalink={permalink}
+    {...translationPath ? { translationPath } : {}}
+    {...seoProps}
+>
     <article class="container mx-auto px-4 py-12">
         <header class="mb-12">
             <h1 class="mb-4 text-4xl font-bold md:text-5xl">{title}</h1>
 
-            <div class="flex flex-wrap items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
+            <div class="flex flex-wrap items-center gap-4 text-sm text-text-muted dark:text-text-muted-dark">
                 <div class="flex items-center gap-2">
                     <Icon name="user" class="h-4 w-4" />
                     <span>{author}</span>
@@ -50,7 +61,7 @@ const formatDate = (date: Date) => {
                     <Icon name="calendar" class="h-4 w-4" />
                     <time datetime={pubDate.toISOString()}>
                         {t.blog.publishedOn}
-                        {formatDate(pubDate)}
+                        {formatDate(pubDate, locale)}
                     </time>
                 </div>
 
@@ -59,7 +70,7 @@ const formatDate = (date: Date) => {
                         <div class="flex items-center gap-2">
                             <Icon name="refresh" class="h-4 w-4" />
                             <time datetime={updatedDate.toISOString()}>
-                                {t.blog.updatedOn} {formatDate(updatedDate)}
+                                {t.blog.updatedOn} {formatDate(updatedDate, locale)}
                             </time>
                         </div>
                     )
@@ -77,9 +88,9 @@ const formatDate = (date: Date) => {
             {
                 tags.length > 0 && (
                     <div class="mt-4 flex flex-wrap items-center gap-2">
-                        <Icon name="tag" class="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                        <Icon name="tag" class="h-4 w-4 text-text-muted dark:text-text-muted-dark" />
                         {tags.map((tag) => (
-                            <span class="rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                            <span class="rounded-full bg-tag-bg px-3 py-1 text-xs font-medium text-tag-text dark:bg-tag-bg-dark dark:text-tag-text-dark">
                                 {tag}
                             </span>
                         ))}

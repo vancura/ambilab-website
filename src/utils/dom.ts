@@ -1,19 +1,21 @@
 export const prefersReducedMotion = (): boolean => {
-    if (typeof window === 'undefined') return false;
-    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    return typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 };
 
 export const toggleDarkMode = (): void => {
-    // SSR guard: return early if not in a browser environment
-    if (
-        typeof window === 'undefined' ||
-        typeof document === 'undefined' ||
-        !document.documentElement ||
-        typeof localStorage === 'undefined'
-    ) {
-        return;
-    }
+    const isBrowser =
+        typeof window === 'object' &&
+        typeof document === 'object' &&
+        typeof window.localStorage !== 'undefined' &&
+        document.documentElement !== null;
 
-    document.documentElement.classList.toggle('dark');
-    localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+    if (isBrowser) {
+        const isDarkNow = document.documentElement.classList.toggle('dark');
+
+        try {
+            localStorage.setItem('theme', isDarkNow ? 'dark' : 'light');
+        } catch {
+            // Silently fail in privacy mode or when storage is unavailable
+        }
+    }
 };

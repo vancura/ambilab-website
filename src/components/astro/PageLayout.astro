@@ -15,7 +15,7 @@ export interface Props extends ISEOMetadata {
     translationPath?: string;
 }
 
-const { locale, translationPath, ...seoProps } = Astro.props;
+const { locale, translationPath, ...seoProps } = Astro.props as Props;
 const currentPath = Astro.url.pathname;
 ---
 
@@ -46,10 +46,10 @@ const currentPath = Astro.url.pathname;
         <Head {...seoProps} locale={locale} />
     </head>
 
-    <body class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100">
+    <body class="bg-page-bg text-text-primary transition-colors dark:bg-page-bg-dark dark:text-text-primary-dark">
         <Header locale={locale} currentPath={currentPath} {...translationPath ? { translationPath } : {}} />
 
-        <main class="min-h-screen">
+        <main class="bg-dots min-h-screen transition-all">
             <slot />
         </main>
 

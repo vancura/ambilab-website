@@ -1,5 +1,5 @@
 ---
-// Auto-generates anchor links for headings in MDX content
+
 ---
 
 <script>
@@ -30,13 +30,12 @@
                 return '';
             }
 
-            // If the base ID is available, use it
             if (!this.usedIds.has(baseId)) {
                 this.usedIds.add(baseId);
                 return baseId;
             }
 
-            // Otherwise, find the next available ID with a numeric suffix
+            // Find the next available ID with a numeric suffix
             let counter = 2;
             let candidateId = `${baseId}-${counter}`;
 
@@ -63,6 +62,7 @@
                 smoothScrollTo({ targetId: id });
 
                 history.pushState(null, '', `#${id}`);
+
                 navigator.clipboard.writeText(window.location.href).catch(() => {});
             });
 
@@ -77,17 +77,17 @@
             );
 
             let processedCount = 0;
+
             headings.forEach((heading) => {
-                if (heading.querySelector('.anchor')) {
-                    return;
-                }
+                if (!heading.querySelector('.anchor')) {
+                    const id = this.generateId(heading.textContent);
 
-                const id = this.generateId(heading.textContent);
+                    if (id) {
+                        heading.id = id;
+                        heading.insertAdjacentElement('afterbegin', this.createAnchor(id));
 
-                if (id) {
-                    heading.id = id;
-                    heading.insertAdjacentElement('afterbegin', this.createAnchor(id));
-                    processedCount++;
+                        processedCount++;
+                    }
                 }
             });
 
@@ -123,7 +123,7 @@
         opacity: 0;
         transition: opacity 0.2s;
         text-decoration: none;
-        color: #9ca3af;
+        color: var(--color-anchor);
     }
 
     :global(.mdx-content h1:hover .anchor),
@@ -134,6 +134,6 @@
     }
 
     :global(.dark .mdx-content .anchor) {
-        color: #6b7280;
+        color: var(--color-anchor-dark);
     }
 </style>

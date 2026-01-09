@@ -1,0 +1,16 @@
+---
+export interface Props {
+    title?: string;
+    class?: string;
+}
+
+const { title, class: className = '' } = Astro.props as Props;
+---
+
+<div class:list={['border-2 border-border-default p-6 transition-all dark:border-border-default-dark', className]}>
+    {title && <h3 class="mt-0 text-xl">{title}</h3>}
+
+    <div>
+        <slot />
+    </div>
+</div>

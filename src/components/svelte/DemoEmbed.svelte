@@ -41,14 +41,14 @@
      *
      * Do not add third-party domains without explicit approval.
      */
-    const ALLOWED_HOSTNAMES = ['blit-tech-demos.ambilab.com'] as const;
-    const SAFE_FALLBACK_URL = 'about:blank';
+    const allowedHostnames = ['blit-tech-demos.ambilab.com'] as const;
+    const safeFallbackURL = 'about:blank';
 
     /**
      * Type guard to check if a hostname is in the allowlist.
      */
-    function isAllowedHostname(hostname: string): hostname is (typeof ALLOWED_HOSTNAMES)[number] {
-        return ALLOWED_HOSTNAMES.includes(hostname as (typeof ALLOWED_HOSTNAMES)[number]);
+    function isAllowedHostname(hostname: string): hostname is (typeof allowedHostnames)[number] {
+        return allowedHostnames.includes(hostname as (typeof allowedHostnames)[number]);
     }
 
     /**
@@ -89,7 +89,7 @@
 
     // Validate and sanitize src URL
     const validationResult = $derived(validateSrcUrl(src));
-    const validatedSrc = $derived(validationResult ?? SAFE_FALLBACK_URL);
+    const validatedSrc = $derived(validationResult ?? safeFallbackURL);
     const isValidSrc = $derived(validationResult !== null);
 
     // In development, the demo site blocks localhost due to CSP frame-ancestors
@@ -141,10 +141,10 @@
     {#if shouldShowLink}
         <!-- Show link in development/localhost to avoid CSP frame-ancestors violation -->
         <div
-            class="flex min-h-[200px] flex-col items-center justify-center rounded-lg border border-gray-200 bg-gray-50 p-8 text-center dark:border-gray-800 dark:bg-gray-900"
+            class="flex min-h-[200px] flex-col items-center justify-center rounded-lg border border-border-default bg-page-bg-muted p-8 text-center dark:border-border-default-dark dark:bg-page-bg-muted-dark"
             style={aspectRatioStyle}
         >
-            <p class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+            <p class="mb-4 text-sm text-text-muted dark:text-text-muted-dark">
                 Demo preview is not available in development due to CSP restrictions.
             </p>
             {#if isValidSrc}
@@ -152,7 +152,7 @@
                     href={validatedSrc}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                    class="inline-flex items-center gap-2 rounded-lg bg-button-primary px-4 py-2 text-sm font-medium text-button-primary-text transition-colors hover:bg-button-primary-hover focus:outline-none focus:ring-2 focus:ring-link focus:ring-offset-2 focus:ring-offset-page-bg dark:bg-button-primary-dark dark:text-button-primary-text-dark dark:hover:bg-button-primary-hover-dark dark:focus:ring-link-dark dark:focus:ring-offset-page-bg-dark"
                 >
                     Open Demo in New Tab
                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -165,19 +165,19 @@
                     </svg>
                 </a>
             {:else}
-                <p class="text-sm text-red-600 dark:text-red-400">Invalid demo source URL</p>
+                <p class="text-sm text-error-text dark:text-error-text-dark">Invalid demo source URL</p>
             {/if}
         </div>
     {:else if !isValidSrc}
         <!-- Show warning if src URL is invalid/not allowlisted -->
         <div
-            class="flex min-h-[200px] flex-col items-center justify-center rounded-lg border border-yellow-200 bg-yellow-50 p-8 text-center dark:border-yellow-900 dark:bg-yellow-950"
+            class="flex min-h-[200px] flex-col items-center justify-center rounded-lg border border-warning-border bg-warning-bg p-8 text-center dark:border-warning-border-dark dark:bg-warning-bg-dark"
             style={aspectRatioStyle}
         >
-            <p class="mb-2 text-sm font-medium text-yellow-800 dark:text-yellow-200">
+            <p class="mb-2 text-sm font-medium text-warning-heading dark:text-warning-heading-dark">
                 Invalid or untrusted demo source
             </p>
-            <p class="text-xs text-yellow-600 dark:text-yellow-400">
+            <p class="text-xs text-warning-text dark:text-warning-text-dark">
                 Only allowlisted sources are allowed for security reasons.
             </p>
         </div>
@@ -190,11 +190,11 @@
             allow={allowPermissions}
             allowfullscreen
             sandbox={sandboxPermissions}
-            class="rounded-lg border border-gray-200 dark:border-gray-800"
+            class="rounded-lg border border-border-default dark:border-border-default-dark"
         ></iframe>
     {/if}
     {#if title}
-        <figcaption class="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
+        <figcaption class="mt-2 text-center text-sm text-text-muted dark:text-text-muted-dark">
             {title}
         </figcaption>
     {/if}

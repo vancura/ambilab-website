@@ -54,9 +54,9 @@
     };
 </script>
 
-<div class="rounded-lg bg-blue-50 p-6 dark:bg-blue-950">
+<div class="rounded-lg bg-info-bg p-6 dark:bg-info-bg-dark">
     <h3 class="mb-2 text-xl font-semibold">{t.newsletter.title}</h3>
-    <p class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+    <p class="mb-4 text-sm text-text-muted dark:text-text-muted-dark">
         {t.newsletter.description}
     </p>
 
@@ -67,12 +67,12 @@
             placeholder={t.newsletter.emailPlaceholder}
             required
             disabled={status === 'loading'}
-            class="flex-1 rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900"
+            class="flex-1 rounded-lg border border-border-medium px-4 py-2 focus:border-link focus:outline-none focus:ring-2 focus:ring-link disabled:opacity-50 dark:border-border-medium-dark dark:bg-surface-dark dark:focus:border-link-dark dark:focus:ring-link-dark"
         />
         <button
             type="submit"
             disabled={status === 'loading'}
-            class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition-colors hover:bg-blue-700 disabled:opacity-50"
+            class="inline-flex items-center gap-2 rounded-lg bg-button-primary px-4 py-2 font-medium text-button-primary-text transition-colors hover:bg-button-primary-hover disabled:opacity-50 dark:bg-button-primary-dark dark:text-button-primary-text-dark dark:hover:bg-button-primary-hover-dark"
         >
             {#if status === 'loading'}
                 <svg class="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -92,7 +92,13 @@
     </form>
 
     {#if message}
-        <p class="mt-2 text-sm" class:text-green-600={status === 'success'} class:text-red-600={status === 'error'}>
+        <p
+            class="mt-2 text-sm"
+            class:text-success-text={status === 'success'}
+            class:dark:text-success-text-dark={status === 'success'}
+            class:text-error-text={status === 'error'}
+            class:dark:text-error-text-dark={status === 'error'}
+        >
             {message}
         </p>
     {/if}

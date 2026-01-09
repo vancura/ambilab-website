@@ -1,13 +1,14 @@
 ---
+import type { Locale } from '@type/locale';
 import type { ISEOMetadata } from '@type/seo';
 
 import BaseHead from './BaseHead.astro';
 
 export interface Props extends ISEOMetadata {
-    locale?: 'en' | 'cs';
+    locale?: Locale;
 }
 
-const props = Astro.props;
+const props = Astro.props as Props;
 ---
 
 <head>

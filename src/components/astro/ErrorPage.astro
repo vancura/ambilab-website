@@ -23,7 +23,7 @@ interface Props {
     locale: Locale;
 }
 
-const { code, title, description, homeButtonText, homeLink = '/', locale } = Astro.props;
+const { code, title, description, homeButtonText, homeLink = '/', locale } = Astro.props as Props;
 ---
 
 <PageLayout
@@ -33,15 +33,15 @@ const { code, title, description, homeButtonText, homeLink = '/', locale } = Ast
     locale={locale}
 >
     <main class="container mx-auto flex min-h-[60vh] flex-col items-center justify-center px-4 py-12 text-center">
-        <h1 class="mb-4 text-6xl font-bold text-gray-900 dark:text-gray-100">{code}</h1>
+        <h1 class="mb-4 text-6xl font-bold text-text-primary dark:text-text-primary-dark">{code}</h1>
 
-        <p class="mb-8 text-xl text-gray-600 dark:text-gray-400">
+        <p class="mb-8 text-xl text-text-muted dark:text-text-muted-dark">
             {description}
         </p>
 
         <a
             href={homeLink}
-            class="rounded-lg bg-blue-600 px-6 py-3 font-medium text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+            class="rounded-lg bg-button-primary px-6 py-3 font-medium text-button-primary-text transition-colors hover:bg-button-primary-hover focus:outline-none focus:ring-2 focus:ring-link focus:ring-offset-2 focus:ring-offset-page-bg dark:bg-button-primary-dark dark:text-button-primary-text-dark dark:hover:bg-button-primary-hover-dark dark:focus:ring-link-dark dark:focus:ring-offset-page-bg-dark"
         >
             {homeButtonText}
         </a>
