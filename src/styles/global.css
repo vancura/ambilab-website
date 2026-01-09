@@ -93,19 +93,17 @@
     --color-selection-text: theme('colors.lime.800');
     --color-selection-bg-dark: theme('colors.lime.700');
     --color-selection-text-dark: theme('colors.lime.100');
+
+    /* Dot pattern background */
+    --bg-dots-image: radial-gradient(circle, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
 }
 
 /* Dot Background Utilities */
 @layer utilities {
     .bg-dots {
-        background-image: radial-gradient(circle, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+        background-image: var(--bg-dots-image);
         background-size: 8px 8px;
         background-position: 0 0;
-    }
-
-    .dark .bg-dots,
-    .dark.bg-dots {
-        background-image: radial-gradient(circle, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
     }
 }
 
@@ -115,6 +113,9 @@
 
 .dark {
     color-scheme: dark;
+
+    /* Dot pattern background for dark mode */
+    --bg-dots-image: radial-gradient(circle, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
 }
 
 html {
