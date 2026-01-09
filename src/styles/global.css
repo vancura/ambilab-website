@@ -120,9 +120,7 @@
 }
 
 html {
-    /*noinspection CssNoGenericFontName*/
     font-family: var(--font-family-sans);
-
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -130,7 +128,7 @@ html {
 body {
     min-height: 100vh;
     text-rendering: optimizeLegibility;
-    font-variant-ligatures: contextual common-ligatures;
+    font-variant-ligatures: common-ligatures;
 
     /**
      * OpenType font features for Innovator Grotesk.
