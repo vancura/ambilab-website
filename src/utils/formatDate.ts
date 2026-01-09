@@ -37,7 +37,12 @@ function getFormatter(locale: Locale): Intl.DateTimeFormat {
  * @param date - The date object to format
  * @param locale - The locale code ('en' or 'cs')
  * @returns A formatted date string (e.g., "January 15, 2024" or "15. ledna 2024")
+ * @throws Error if the date is invalid
  */
 export function formatDate(date: Date, locale: Locale): string {
+    if (Number.isNaN(date.getTime())) {
+        throw new Error(`formatDate received an invalid Date for locale "${locale}".`);
+    }
+
     return getFormatter(locale).format(date);
 }
