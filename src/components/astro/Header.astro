@@ -10,7 +10,7 @@ export interface Props {
     translationPath?: string;
 }
 
-const { locale, currentPath, translationPath } = Astro.props;
+const { locale, currentPath, translationPath } = Astro.props as Props;
 ---
 
 <header

@@ -8,7 +8,7 @@ export interface Props extends ISEOMetadata {
     locale?: Locale;
 }
 
-const props = Astro.props;
+const props = Astro.props as Props;
 ---
 
 <head>

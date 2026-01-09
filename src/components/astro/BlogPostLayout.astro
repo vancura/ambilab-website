@@ -34,7 +34,7 @@ const {
     content,
     translationPath,
     ...seoProps
-} = Astro.props;
+} = Astro.props as Props;
 const t = getTranslation(locale);
 const readingTime = calculateReadingTime(content);
 ---

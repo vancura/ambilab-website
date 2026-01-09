@@ -23,7 +23,7 @@ interface Props {
     locale: Locale;
 }
 
-const { code, title, description, homeButtonText, homeLink = '/', locale } = Astro.props;
+const { code, title, description, homeButtonText, homeLink = '/', locale } = Astro.props as Props;
 ---
 
 <PageLayout

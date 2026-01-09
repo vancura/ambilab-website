@@ -4,7 +4,7 @@ export interface Props {
     class?: string;
 }
 
-const { title, class: className = '' } = Astro.props;
+const { title, class: className = '' } = Astro.props as Props;
 ---
 
 <div class:list={['border-border-default dark:border-border-default-dark border-2 p-6 transition-all', className]}>

@@ -15,7 +15,7 @@ export interface Props extends ISEOMetadata {
     translationPath?: string;
 }
 
-const { locale, translationPath, ...seoProps } = Astro.props;
+const { locale, translationPath, ...seoProps } = Astro.props as Props;
 const currentPath = Astro.url.pathname;
 ---
 

@@ -12,7 +12,7 @@ export interface Props extends ISEOMetadata {
     locale?: Locale;
 }
 
-const { title, description, ogImage, permalink, locale = 'en' } = Astro.props;
+const { title, description, ogImage, permalink, locale = 'en' } = Astro.props as Props;
 
 const canonical = permalink.endsWith('/') ? permalink.slice(0, -1) : permalink;
 const siteDomain = Astro.url.origin;

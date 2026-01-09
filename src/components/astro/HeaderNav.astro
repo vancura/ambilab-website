@@ -8,7 +8,7 @@ export interface Props {
     currentPath: string;
 }
 
-const { locale, currentPath } = Astro.props;
+const { locale, currentPath } = Astro.props as Props;
 const t = getTranslation(locale);
 
 /**
