@@ -1,15 +1,10 @@
-export const IMAGE_BREAKPOINTS = {
+const IMAGE_BREAKPOINTS = {
     sm: 640, // Mobile
     md: 768, // Tablet
     lg: 1024, // Small desktop
     xl: 1280, // Desktop
     '2xl': 1536, // Large desktop
 } as const;
-
-export const IMAGE_FORMATS = ['avif', 'webp'] as const;
-export const FALLBACK_FORMAT = 'png' as const;
-
-export type ImageFormat = (typeof IMAGE_FORMATS)[number] | typeof FALLBACK_FORMAT;
 
 export const getResponsiveSizes = (sizes?: string): string => {
     return (
