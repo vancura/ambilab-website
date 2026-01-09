@@ -38,6 +38,13 @@ export function getRoute(route: keyof typeof ROUTES, locale: Locale): string {
 }
 
 /**
+ * Normalize a path by removing trailing slashes (preserving "/" for root).
+ */
+function normalizePath(p: string): string {
+    return p.length > 1 ? p.replace(/\/+$/, '') : p;
+}
+
+/**
  * Check if a path matches a route in any locale.
  *
  * @param path - The path to check
@@ -45,12 +52,17 @@ export function getRoute(route: keyof typeof ROUTES, locale: Locale): string {
  * @returns True if the path matches the route in any locale
  */
 export function isRouteActive(path: string, route: keyof typeof ROUTES): boolean {
+    const normalizedPath = normalizePath(path);
+
     return Object.values(ROUTES[route]).some((routePath) => {
-        // For blog, use startsWith to match nested routes
+        const normalizedRoutePath = normalizePath(routePath);
+
+        // For blog, match exact path or nested routes (boundary-aware)
         if (route === 'blog') {
-            return path.startsWith(routePath);
+            return normalizedPath === normalizedRoutePath || normalizedPath.startsWith(`${normalizedRoutePath}/`);
         }
+
         // For other routes, use exact match
-        return path === routePath;
+        return normalizedPath === normalizedRoutePath;
     });
 }
