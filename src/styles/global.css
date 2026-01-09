@@ -262,7 +262,7 @@ html {
 }
 
 .expressive-code {
-    @apply -mx-6 pb-4;
+    @apply -mx-3 pb-4 sm:-mx-6;
 }
 
 /* Print styles */
