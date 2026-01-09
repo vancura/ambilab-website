@@ -3,7 +3,11 @@ export const prefersReducedMotion = (): boolean => {
 };
 
 export const toggleDarkMode = (): void => {
-    const isBrowser = typeof window === 'object' && typeof document === 'object' && typeof localStorage === 'object';
+    const isBrowser =
+        typeof window === 'object' &&
+        typeof document === 'object' &&
+        typeof localStorage === 'object' &&
+        document.documentElement !== null;
 
     if (isBrowser) {
         const isDarkNow = document.documentElement.classList.toggle('dark');
