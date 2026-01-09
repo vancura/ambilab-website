@@ -106,7 +106,8 @@
         background-position: 0 0;
     }
 
-    .dark .bg-dots {
+    .dark .bg-dots,
+    .dark.bg-dots {
         background-image: radial-gradient(circle, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
     }
 }
