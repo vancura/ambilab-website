@@ -169,6 +169,9 @@
 
     safeExecute(
         () => {
+            if ((window as any).__headingLinksInitialized) return;
+            (window as any).__headingLinksInitialized = true;
+
             const manager = new HeadingLinksManager();
 
             if (document.readyState === 'loading') {
