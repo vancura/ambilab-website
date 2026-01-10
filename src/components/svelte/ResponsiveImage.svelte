@@ -142,6 +142,17 @@
           };
     let { src, alt, sizes, class: className = '', width, height, loading = 'lazy' }: Props = $props();
 
+    // Dev-time guard: keep runtime behavior aligned with the "string src requires width/height" contract.
+    if (import.meta.env?.DEV && typeof src === 'string' && (width == null || height == null)) {
+        const truncatedSrc = src.length > 80 ? `${src.slice(0, 77)}...` : src;
+        console.warn(
+            `ResponsiveImage: width and height are required when src is a string URL.\n` +
+                `  src: "${truncatedSrc}"\n` +
+                `  width: ${width}\n` +
+                `  height: ${height}`,
+        );
+    }
+
     /**
      * Responsive sizes attribute for the image.
      *

@@ -6,6 +6,9 @@
  *
  * It also includes a `cancel` method to cancel any delayed executions.
  *
+ * Note: The debounced function does not preserve `this` binding and does not
+ * return the wrapped function's return value.
+ *
  * @template T - A function type that specifies the signature of the function being debounced.
  * @param {T} func - The original function to debounce.
  * @param {number} wait - The number of milliseconds to wait before invoking the function
@@ -23,18 +26,21 @@ export const debounce = <T extends (...args: unknown[]) => unknown>(
     let timeout: ReturnType<typeof setTimeout> | null = null;
 
     const wrapped = (...args: Parameters<T>) => {
-        if (timeout) {
+        if (timeout !== null) {
             clearTimeout(timeout);
         }
 
         timeout = setTimeout(() => {
-            func(...args);
-            timeout = null;
+            try {
+                func(...args);
+            } finally {
+                timeout = null;
+            }
         }, wait);
     };
 
     wrapped.cancel = () => {
-        if (timeout) {
+        if (timeout !== null) {
             clearTimeout(timeout);
         }
 
