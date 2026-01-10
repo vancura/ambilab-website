@@ -125,8 +125,6 @@ function runCommand(command, args, options = {}) {
         proc.on('error', (error) => {
             reject(new Error(`Failed to spawn command: ${error.message}`));
         });
-
-        return proc;
     });
 }
 
