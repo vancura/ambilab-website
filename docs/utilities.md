@@ -9,20 +9,23 @@ safe for server-side rendering (SSR) where applicable.
 
 ### smoothScrollTo
 
-Smooth scroll to an element with offset support and completion callbacks.
+Smooth scroll to an element with offset support and completion callbacks. Returns a Promise that resolves when the
+scroll completes.
 
 ```typescript
 import { smoothScrollTo } from '@utils/scroll';
 
-smoothScrollTo({
-  target: '#section-id', // Element selector or HTMLElement
+const result = await smoothScrollTo({
+  targetId: 'section-id', // Element ID without '#' prefix
   offset: 80, // Offset from top (e.g., for sticky header)
-  behavior: 'smooth', // 'smooth' | 'instant' | 'auto'
   onComplete: () => {
     // Optional callback when scroll completes
     console.log('Scroll finished');
   },
 });
+
+// Returns Promise<ScrollResult>
+// { success: boolean, element: HTMLElement | null }
 ```
 
 ### scrollToTop
@@ -39,18 +42,6 @@ scrollToTop(false); // Instant scroll
 ## DOM Utilities
 
 **Location**: [`src/utils/dom.ts`](../src/utils/dom.ts)
-
-### prefersReducedMotion
-
-Check if the user prefers reduced motion. SSR-safe (returns `false` on the server).
-
-```typescript
-import { prefersReducedMotion } from '@utils/dom';
-
-if (prefersReducedMotion()) {
-  // Skip animations
-}
-```
 
 ### toggleDarkMode
 
@@ -81,24 +72,10 @@ import { getResponsiveSizes } from '@lib/images';
 
 // Use default sizes (full width on mobile, max 1200px on large screens)
 const sizes = getResponsiveSizes();
-// Returns: "(max-width: 640px) 100vw, (max-width: 768px) 100vw, ..."
+// Returns: "(max-width: 640px) 100vw, (max-width: 768px) 90vw, (max-width: 1024px) 80vw, 1200px"
 
 // Or provide custom sizes
 const customSizes = getResponsiveSizes('(max-width: 768px) 100vw, 50vw');
-```
-
-### IMAGE_BREAKPOINTS
-
-Standard responsive breakpoints matching Tailwind CSS.
-
-```typescript
-const IMAGE_BREAKPOINTS = {
-  sm: 640, // Mobile
-  md: 768, // Tablet
-  lg: 1024, // Desktop
-  xl: 1280, // Large desktop
-  '2xl': 1536, // Extra large desktop
-} as const;
 ```
 
 ## i18n Utilities
@@ -107,47 +84,54 @@ const IMAGE_BREAKPOINTS = {
 
 For detailed internationalization documentation, see [Internationalization](i18n.md).
 
-### detectLocaleFromUrl
+### detectLocaleFromHostname
 
-Detect the locale from the URL hostname.
+Detect the locale from a hostname string.
 
 ```typescript
-import { detectLocaleFromUrl } from '@i18n/utils';
+import { detectLocaleFromHostname } from '@i18n/utils';
 
-const locale = detectLocaleFromUrl(new URL('https://ambilab.cz/about'));
+const locale = detectLocaleFromHostname('ambilab.cz');
 // Returns: 'cs'
+
+const locale2 = detectLocaleFromHostname('www.ambilab.com');
+// Returns: 'en' (www prefix is automatically removed)
 ```
 
 ### getLocaleFromCookie
 
-Get locale from request cookie.
+Get locale from a cookie string.
 
 ```typescript
 import { getLocaleFromCookie } from '@i18n/utils';
 
-const locale = getLocaleFromCookie(request);
+const cookieString = request.headers.get('cookie') || '';
+const locale = getLocaleFromCookie(cookieString);
 // Returns: 'en' | 'cs' | null
 ```
 
 ### setLocaleCookie
 
-Set the locale preference cookie (client-side).
+Generate a Set-Cookie header value for the locale preference (server-side).
 
 ```typescript
 import { setLocaleCookie } from '@i18n/utils';
 
-setLocaleCookie('cs'); // Sets locale cookie to Czech
+const setCookieHeader = setLocaleCookie('cs');
+// Returns: 'locale=cs; Path=/; Max-Age=31536000; SameSite=Lax; Secure'
 ```
 
 ### getLocalizedPath
 
-Generate localized URL paths.
+Generate localized URL paths. Since the site uses domain-based locale detection, paths are the same regardless of
+locale.
 
 ```typescript
 import { getLocalizedPath } from '@i18n/utils';
 
 const path = getLocalizedPath('/about', 'cs');
-// Returns: '/cs/about' or similar based on routing config
+// Returns: '/about'
+// Note: Locale is determined by domain (ambilab.com vs ambilab.cz), not URL path
 ```
 
 ### calculateReadingTime
