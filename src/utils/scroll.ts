@@ -15,6 +15,8 @@ export interface ScrollOptions {
     targetId: string;
     offset?: number;
     onComplete?: () => void;
+    stabilityThreshold?: number;
+    nearTargetThreshold?: number;
 }
 
 /**
@@ -44,7 +46,13 @@ export interface ScrollResult {
  * @param options.onComplete - Optional callback invoked when scroll completes
  * @returns Promise resolving to scroll result with success status and element
  */
-export const smoothScrollTo = async ({ targetId, offset = 0, onComplete }: ScrollOptions): Promise<ScrollResult> => {
+export const smoothScrollTo = async ({
+    targetId,
+    offset = 0,
+    onComplete,
+    stabilityThreshold,
+    nearTargetThreshold,
+}: ScrollOptions): Promise<ScrollResult> => {
     // SSR guard: return failure if the window or document is undefined
     if (typeof window === 'undefined' || typeof document === 'undefined') {
         return { success: false, element: null };
@@ -69,28 +77,29 @@ export const smoothScrollTo = async ({ targetId, offset = 0, onComplete }: Scrol
 
         const FALLBACK_TIMEOUT = 2_000; // 2-second fallback timeout
         const POLL_INTERVAL = 50; // Check scroll position every 50ms
-        const STABILITY_THRESHOLD = 1; // Consider stable if within 1px
+        const STABILITY_THRESHOLD = stabilityThreshold ?? 1; // Consider stable if within 1px
+
+        // Declare timeout/interval IDs upfront to avoid TDZ issues in resolveOnce
+        let timeoutId: ReturnType<typeof setTimeout> | undefined;
+        let pollInterval: ReturnType<typeof setInterval> | undefined;
+
+        // Define handleScrollEnd before resolveOnce references it
+        const handleScrollEnd = () => resolveOnce(true);
 
         const resolveOnce = (success: boolean) => {
             if (scrollEndResolved) {
                 return;
-            } else {
-                scrollEndResolved = true;
-
-                clearTimeout(timeoutId);
-                clearInterval(pollInterval);
-
-                window.removeEventListener('scrollend', handleScrollEnd);
-
-                onComplete?.();
-
-                resolve({ success, element });
             }
-        };
+            scrollEndResolved = true;
 
-        // Listen for the 'scrollend' event (modern browsers)
-        const handleScrollEnd = () => {
-            resolveOnce(true);
+            if (timeoutId) clearTimeout(timeoutId);
+            if (pollInterval) clearInterval(pollInterval);
+
+            window.removeEventListener('scrollend', handleScrollEnd);
+
+            onComplete?.();
+
+            resolve({ success, element });
         };
 
         // Fallback: poll scroll position for stability
@@ -98,7 +107,7 @@ export const smoothScrollTo = async ({ targetId, offset = 0, onComplete }: Scrol
         let stableCount = 0;
         const STABLE_COUNT_REQUIRED = 3; // Require 3 consecutive stable checks
 
-        const pollInterval = setInterval(() => {
+        pollInterval = setInterval(() => {
             const currentScrollY = window.scrollY;
             const diff = Math.abs(currentScrollY - lastScrollY);
 
@@ -113,9 +122,10 @@ export const smoothScrollTo = async ({ targetId, offset = 0, onComplete }: Scrol
             }
         }, POLL_INTERVAL);
 
-        // Fallback timeout
-        const timeoutId = setTimeout(() => {
-            resolveOnce(true); // Resolve anyway after timeout
+        // Fallback timeout: check if we're near the target before resolving
+        timeoutId = setTimeout(() => {
+            const nearTarget = Math.abs(window.scrollY - target) < (nearTargetThreshold ?? 5);
+            resolveOnce(nearTarget);
         }, FALLBACK_TIMEOUT);
 
         // Check if 'scrollend' is supported
