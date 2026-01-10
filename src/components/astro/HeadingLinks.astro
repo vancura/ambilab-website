@@ -30,6 +30,12 @@
     import { safeExecute } from '@utils/safe-execute';
     import { smoothScrollTo } from '@utils/scroll';
 
+    declare global {
+        interface Window {
+            __headingLinksInitialized?: boolean;
+        }
+    }
+
     const logger = createLogger({ prefix: 'HeadingLinks' });
 
     /**
@@ -169,8 +175,11 @@
 
     safeExecute(
         () => {
-            if ((window as any).__headingLinksInitialized) return;
-            (window as any).__headingLinksInitialized = true;
+            if (window.__headingLinksInitialized) {
+                return;
+            }
+
+            window.__headingLinksInitialized = true;
 
             const manager = new HeadingLinksManager();
 
