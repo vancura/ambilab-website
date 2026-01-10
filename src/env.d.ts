@@ -41,10 +41,15 @@ declare global {
             /**
              * The current locale for the application.
              *
-             * Set by middleware on most requests, but optional to handle
-             * edge cases where middleware errors occur.
+             * Set by middleware on most requests to a detected value or DEFAULT_LOCALE.
+             * Will be absent in two scenarios:
+             * 1. Prerendered/static routes where middleware does not run at build time
+             * 2. Edge cases where middleware errors occur during request processing
+             *
+             * Code should provide fallback handling for these cases, though they are rare
+             * in normal application flow.
              */
-            locale?: Locale;
+            locale: Locale;
 
             /**
              * A nonce value for content security policies.
