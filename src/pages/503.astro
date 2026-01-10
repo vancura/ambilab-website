@@ -8,12 +8,13 @@
  * Uses locale-aware translations and provides a link back to the home page.
  */
 import ErrorPage from '@components/astro/ErrorPage.astro';
+import { DEFAULT_LOCALE } from '@i18n/config';
 import { getTranslation } from '@i18n/translations';
 import { getLocalizedPath } from '@i18n/utils';
 
 // Get the detected locale from middleware (via context.locals)
-// Middleware guarantees this is always defined
-const detectedLocale = Astro.locals.locale;
+// Use DEFAULT_LOCALE as fallback if middleware didn't set it
+const detectedLocale = Astro.locals.locale ?? DEFAULT_LOCALE;
 const t = getTranslation(detectedLocale);
 
 const homePath = getLocalizedPath('', detectedLocale);

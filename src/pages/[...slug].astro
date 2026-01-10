@@ -21,6 +21,7 @@
  */
 import BlogPostLayout from '@components/astro/BlogPostLayout.astro';
 import PageLayout from '@components/astro/PageLayout.astro';
+import { DEFAULT_LOCALE } from '@i18n/config';
 import { getTranslation } from '@i18n/translations';
 import type { Locale } from '@type/locale';
 import { formatDate } from '@utils/formatDate';
@@ -31,8 +32,8 @@ import { getCollection } from 'astro:content';
 const logger = createLogger({ prefix: 'ContentPage' });
 
 // Get the detected locale from middleware (via context.locals)
-// Middleware guarantees this is always defined
-const detectedLocale = Astro.locals.locale;
+// Use DEFAULT_LOCALE as fallback if middleware didn't set it
+const detectedLocale = Astro.locals.locale ?? DEFAULT_LOCALE;
 
 // Get the slug from URL
 const { slug } = Astro.params;
