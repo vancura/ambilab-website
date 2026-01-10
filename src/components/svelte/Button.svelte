@@ -80,8 +80,6 @@
 
         /**
          * Click event handler function. Called when the button is clicked.
-         *
-         * @param ev - The mouse event object
          */
         onclick?: (ev: MouseEvent) => void;
 
