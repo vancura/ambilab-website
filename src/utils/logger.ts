@@ -103,7 +103,9 @@ class Logger implements ILogger {
      * @param {unknown} [error] - The error object to be logged along with the message.
      */
     public error(message: string, error?: unknown): void {
-        console.error(this.prefix ? `${this.prefix} ${message}` : message, error || '');
+        if (this.shouldLog('error')) {
+            console.error(this.prefix ? `${this.prefix} ${message}` : message, error || '');
+        }
     }
 }
 
