@@ -40,13 +40,19 @@ declare global {
         interface Locals {
             /**
              * The current locale for the application.
+             *
+             * Set by middleware on most requests, but optional to handle
+             * edge cases where middleware errors occur.
              */
-            locale: Locale;
+            locale?: Locale;
 
             /**
              * A nonce value for content security policies.
+             *
+             * Set by middleware on most requests, but optional to handle
+             * edge cases where middleware errors occur.
              */
-            nonce: string;
+            nonce?: string;
         }
     }
 }
