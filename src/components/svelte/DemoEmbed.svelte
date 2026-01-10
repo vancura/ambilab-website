@@ -213,8 +213,16 @@
         `allow-scripts allow-same-origin allow-forms${allowTopNavigation ? ' allow-top-navigation-by-user-activation' : ''}`,
     );
 
+    // Validate and sanitize aspect ratio to prevent CSS injection
+    // Only allow numeric ratios in the format "number/number" (e.g., "16/9", "4/3", "21.5/9")
+    const safeAspectRatio = $derived.by(() => {
+        const normalized = aspectRatio?.trim() ?? '16/9';
+        const isValid = /^\d+(\.\d+)?\/\d+(\.\d+)?$/.test(normalized);
+        return isValid ? normalized : '16/9';
+    });
+
     // Extract aspect-ratio style to avoid repetition
-    const aspectRatioStyle = $derived(`aspect-ratio: ${aspectRatio}; width: 100%;`);
+    const aspectRatioStyle = $derived(`aspect-ratio: ${safeAspectRatio}; width: 100%;`);
 </script>
 
 <figure class={`demo-embed ${className}`}>
