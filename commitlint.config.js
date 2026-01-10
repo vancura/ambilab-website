@@ -21,7 +21,7 @@ export default {
                 'build', // Build system or dependencies
                 'ci', // CI/CD changes
                 'chore', // Other changes (maintenance, etc.)
-                'revert', // Revert previous commit
+                'revert', // Revert the previous commit
             ],
         ],
 
