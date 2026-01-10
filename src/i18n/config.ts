@@ -3,9 +3,9 @@
  *
  * Configuration for locale detection, mapping, and formatting.
  *
- * Supports domain-based locale detection
- * (ambilab.com for English, ambilab.cz for Czech) and provides utilities
- * for locale validation and Intl API integration.
+ * Supports domain-based locale detection (ambilab.com for English,
+ * ambilab.cz for Czech) and provides utilities for locale validation
+ * and Intl API integration.
  */
 import type { Locale, LocaleConfig } from '@type/locale';
 
