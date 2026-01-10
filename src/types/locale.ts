@@ -2,7 +2,7 @@
  * Locale Type Definitions.
  *
  * TypeScript types and interfaces for locale handling, including
- * locale codes, configuration objects, and translation linking.
+ * locale codes and configuration objects.
  */
 
 /**
@@ -24,24 +24,3 @@ export interface LocaleConfig {
      */
     name: string;
 }
-
-/**
- * Link information for translated content.
- */
-// Currently unused - uncomment when needed for translation features
-// export interface TranslationLink {
-//     /**
-//      * The locale of the translation.
-//      */
-//     locale: Locale;
-//
-//     /**
-//      * The slug of the translated content.
-//      */
-//     slug: string;
-//
-//     /**
-//      * The full URL to the translated content.
-//      */
-//     url: string;
-// }
