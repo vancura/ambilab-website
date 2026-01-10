@@ -79,9 +79,7 @@
         class?: string;
 
         /**
-         * Click the event handler function.
-         *
-         * Called when the button is clicked.
+         * Click event handler function. Called when the button is clicked.
          *
          * @param ev - The mouse event object
          */

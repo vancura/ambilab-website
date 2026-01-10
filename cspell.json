@@ -21,6 +21,7 @@
     "Čeština",
     "Chilaquiles",
     "Churros",
+    "clanek",
     "cloudflare",
     "commitlint",
     "cotija",
@@ -46,6 +47,7 @@
     "Molletes",
     "noreply",
     "nosniff",
+    "oznameni",
     "Pambazo",
     "Peneques",
     "pico",
@@ -57,6 +59,7 @@
     "prettierignore",
     "prispevek",
     "projektu",
+    "prvni",
     "pubdate",
     "queso",
     "roja",
@@ -86,7 +89,8 @@
     "Vančura",
     "vaso",
     "WCAG",
-    "wrangler"
+    "wrangler",
+    "zacatek"
   ],
   "flagWords": ["hte", "teh", "dont", "cant", "wont"],
   "ignorePaths": [
