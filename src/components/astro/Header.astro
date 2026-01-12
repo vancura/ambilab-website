@@ -10,8 +10,9 @@
  *
  * Features:
  * - Sticky positioning at the top of the page
- * - Logo/brand link
- * - Navigation menu via HeaderNav component
+ * - Logo/brand link with Vancura-style typography
+ * - Mobile hamburger menu with slide-down navigation
+ * - Desktop horizontal navigation
  * - Theme switcher (light/dark mode)
  * - Locale switcher (English/Czech)
  * - Active navigation highlighting
@@ -51,38 +52,119 @@ const { locale, currentPath, translationPath } = Astro.props as Props;
 ---
 
 <header
-    class="sticky top-0 z-10 select-none border-b border-border-default bg-page-bg dark:border-border-default-dark dark:bg-page-bg-dark"
+    class="relative z-50 border-b border-border-default bg-page-bg dark:border-border-default-dark dark:bg-page-bg-dark"
 >
-    <div class="container mx-auto max-w-4xl px-4 py-4">
-        <!-- Mobile & Tablet: justify-between layout -->
-        <nav class="flex items-center justify-between gap-4 md:hidden">
-            <a href={getRoute('home', locale)} class="flex items-center gap-2 text-xl font-bold">
-                <span>Ambilab</span>
-            </a>
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="flex h-16 items-center justify-between sm:h-20">
+            <!-- Logo/Name -->
+            <div class="shrink-0">
+                <a
+                    href={getRoute('home', locale)}
+                    class="text-sm font-medium uppercase tracking-wider text-text-primary transition-colors hover:text-text-secondary sm:text-base dark:text-text-primary-dark dark:hover:text-text-secondary-dark"
+                >
+                    Ambilab
+                </a>
+            </div>
 
-            <div class="flex items-center gap-4 text-sm">
+            <!-- Desktop Navigation with Controls -->
+            <nav id="desktop-nav" class="hidden items-center gap-6 md:flex lg:gap-8">
                 <HeaderNav locale={locale} currentPath={currentPath} />
-                <div class="flex items-center gap-2">
+                <div
+                    class="flex items-center gap-2 border-l border-border-default pl-6 lg:pl-8 dark:border-border-default-dark"
+                >
                     <ThemeSwitcher client:load />
                     <LocaleSwitcher client:load currentLocale={locale} translationPath={translationPath} />
                 </div>
-            </div>
-        </nav>
+            </nav>
 
-        <!-- Desktop: centered layout with absolute-positioned controls -->
-        <nav class="relative hidden items-center justify-center gap-12 md:flex">
-            <a href={getRoute('home', locale)} class="flex items-center gap-2 text-xl font-bold">
-                <span>Ambilab</span>
-            </a>
+            <!-- Mobile Menu Button -->
+            <button
+                id="mobile-menu-button"
+                type="button"
+                class="p-2 text-text-secondary transition-colors hover:text-text-primary md:hidden dark:text-text-secondary-dark dark:hover:text-text-primary-dark"
+                aria-label="Toggle menu"
+            >
+                <svg
+                    id="menu-icon"
+                    class="h-6 w-6"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path d="M3 12h18M3 6h18M3 18h18"></path>
+                </svg>
+                <svg
+                    id="close-icon"
+                    class="hidden h-6 w-6"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path d="M18 6L6 18M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+</header>
 
-            <div class="flex items-center text-sm">
-                <HeaderNav locale={locale} currentPath={currentPath} />
-            </div>
+<!-- Mobile Menu Dropdown -->
+<div
+    id="mobile-menu"
+    class="fixed left-0 right-0 top-16 z-40 -translate-y-full transform border-t border-border-default bg-page-bg opacity-0 transition-all duration-300 ease-in-out sm:top-20 md:hidden dark:border-border-default-dark dark:bg-page-bg-dark"
+>
+    <nav class="mx-auto max-w-7xl px-4 py-8 sm:px-6">
+        <div class="flex flex-col gap-6">
+            <HeaderNav locale={locale} currentPath={currentPath} mobile={true} />
 
-            <div class="absolute right-0 top-1/2 flex -translate-y-1/2 items-center gap-2 text-sm">
+            <!-- Mobile Controls -->
+            <div class="flex items-center gap-2 border-t border-border-default pt-6 dark:border-border-default-dark">
                 <ThemeSwitcher client:load />
                 <LocaleSwitcher client:load currentLocale={locale} translationPath={translationPath} />
             </div>
-        </nav>
-    </div>
-</header>
+        </div>
+    </nav>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const menuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        const closeIcon = document.getElementById('close-icon');
+
+        if (menuButton && mobileMenu) {
+            menuButton.addEventListener('click', () => {
+                const isOpen = mobileMenu.classList.contains('translate-y-0');
+
+                if (isOpen) {
+                    // Close menu - slide up
+                    mobileMenu.classList.remove('translate-y-0', 'opacity-100');
+                    mobileMenu.classList.add('-translate-y-full', 'opacity-0');
+                    menuIcon?.classList.remove('hidden');
+                    closeIcon?.classList.add('hidden');
+                } else {
+                    // Open menu - slide down
+                    mobileMenu.classList.remove('-translate-y-full', 'opacity-0');
+                    mobileMenu.classList.add('translate-y-0', 'opacity-100');
+                    menuIcon?.classList.add('hidden');
+                    closeIcon?.classList.remove('hidden');
+                }
+            });
+
+            // Close menu when clicking a link
+            const menuLinks = mobileMenu.querySelectorAll('a');
+            menuLinks.forEach((link) => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('translate-y-0', 'opacity-100');
+                    mobileMenu.classList.add('-translate-y-full', 'opacity-0');
+                    menuIcon?.classList.remove('hidden');
+                    closeIcon?.classList.add('hidden');
+                });
+            });
+        }
+    });
+</script>

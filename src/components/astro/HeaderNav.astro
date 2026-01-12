@@ -13,11 +13,12 @@ import { getRoute, isRouteActive } from '@config/routes';
  * - Locale-aware route generation
  * - Exact matching for home and about pages
  * - Prefix matching for blog (supports nested routes)
- * - Responsive layout
+ * - Responsive layout with mobile and desktop variants
+ * - Vancura-style typography (uppercase, tracking-wide)
  *
  * Navigation Matching Strategy:
  * - Locale is domain-based (ambilab.com vs. ambilab.cz),
-     so the currentPath never contains /en/ or /cs/ prefixes
+ *     so the currentPath never contains /en/ or /cs/ prefixes
  * - Astro does not add trailing slashes by default to canonical URLs
  * - Blog uses startsWith() to match nested routes (e.g., /blog/post-slug)
  * - Home and About use exact equality (===) as they have no nested routes
@@ -26,6 +27,7 @@ import { getRoute, isRouteActive } from '@config/routes';
  * @example
  * ```astro
  * <HeaderNav locale="en" currentPath="/blog" />
+ * <HeaderNav locale="en" currentPath="/blog" mobile={true} />
  * ```
  */
 import { getTranslation } from '@i18n/translations';
@@ -40,9 +42,12 @@ export interface Props {
 
     /** The current page path used to determine which navigation item is active. */
     currentPath: string;
+
+    /** Whether this is the mobile menu variant (larger text, vertical layout). */
+    mobile?: boolean;
 }
 
-const { locale, currentPath } = Astro.props as Props;
+const { locale, currentPath, mobile = false } = Astro.props as Props;
 const t = getTranslation(locale);
 
 /**
@@ -74,20 +79,42 @@ const navItems = [
 ];
 ---
 
-<div class="flex items-center gap-6">
-    {
-        navItems.map((item) => (
-            <a
-                href={item.href}
-                aria-current={item.isActive ? 'page' : undefined}
-                class:list={[
-                    'focus-visible:ring-link/40 transition-colors hover:text-link-hover focus-visible:outline-none focus-visible:ring-2 dark:hover:text-link-hover-dark',
-                    item.isActive &&
-                        'underline-offset-10 font-semibold text-link-active underline decoration-2 dark:text-link-active-dark',
-                ]}
-            >
-                {item.label}
-            </a>
-        ))
-    }
-</div>
+{
+    mobile ? (
+        // Mobile menu: vertical layout with larger text
+        <>
+            {navItems.map((item) => (
+                <a
+                    href={item.href}
+                    aria-current={item.isActive ? 'page' : undefined}
+                    class:list={[
+                        'text-xl uppercase tracking-wide transition-colors hover:text-text-primary dark:hover:text-text-primary-dark',
+                        item.isActive
+                            ? 'font-semibold text-text-primary dark:text-text-primary-dark'
+                            : 'text-text-secondary dark:text-text-secondary-dark',
+                    ]}
+                >
+                    {item.label}
+                </a>
+            ))}
+        </>
+    ) : (
+        // Desktop menu: horizontal layout
+        <div class="flex items-center gap-6 lg:gap-8">
+            {navItems.map((item) => (
+                <a
+                    href={item.href}
+                    aria-current={item.isActive ? 'page' : undefined}
+                    class:list={[
+                        'text-sm uppercase tracking-wide transition-colors hover:text-text-primary lg:text-base dark:hover:text-text-primary-dark',
+                        item.isActive
+                            ? 'font-semibold text-text-primary dark:text-text-primary-dark'
+                            : 'text-text-secondary dark:text-text-secondary-dark',
+                    ]}
+                >
+                    {item.label}
+                </a>
+            ))}
+        </div>
+    )
+}
