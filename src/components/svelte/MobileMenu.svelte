@@ -17,6 +17,15 @@
  * Tailwind classes applied to the <svg> element. This pattern allows proper
  * sizing and theming through currentColor, and keeps the component self-contained.
  *
+ * Accessibility (A11y) Features:
+ * - All interactive elements (menu button, links) use proper ARIA attributes for screen reader compatibility:
+ *   - The menu button uses `aria-label` to describe its purpose contextually ("Open menu" or "Close menu").
+ *   - The menu button uses `aria-expanded` to indicate menu state to assistive tech.
+ *   - The menu button uses `aria-controls` to reference the controlled menu panel by ID.
+ * - Menu content is structured for keyboard navigation and focus is retained when toggled.
+ * - Menu automatically closes when any contained navigation link is clicked, avoiding focus loss for users.
+ * - The hamburger and close icons are accessible by being strictly decorative and not announced (SVGs are inside a button with descriptive aria-label).
+ *
  * @component
  * @example
  * ```astro
@@ -121,6 +130,20 @@
         class:opacity-0={!isOpen}
         class:pointer-events-none={!isOpen}
         onclick={handleMenuClick}
+        onkeydown={(event) => {
+            // Only respond if the element itself is focused (not a child) and it's Enter/Space.
+            if ((event.key === 'Enter' || event.key === ' ') && event.target === event.currentTarget) {
+                // Svelte will fire click on Enter/Space for button, not div, so call same handler.
+                // Construct a MouseEvent-like object for handler.
+                handleMenuClick({
+                    target: event.target,
+                } as MouseEvent);
+
+                // Prevent scrolling for space key.
+                event.preventDefault();
+            }
+        }}
+        aria-hidden={!isOpen}
     >
         <nav class="mx-auto max-w-7xl px-4 py-8 sm:px-6">
             {#if children}
