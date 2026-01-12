@@ -76,6 +76,26 @@
             closeMenu();
         }
     }
+
+    /**
+     * Effect to disable/enable body scrolling based on menu state.
+     * Adds overflow-hidden to body when menu is open to prevent background scrolling.
+     */
+    $effect(() => {
+        if (isOpen) {
+            // Store original overflow value to restore later.
+            const originalOverflow = document.body.style.overflow;
+            document.body.style.overflow = 'hidden';
+
+            // Cleanup: restore original overflow when menu closes or component unmounts.
+            return () => {
+                document.body.style.overflow = originalOverflow;
+            };
+        }
+
+        // Return no-op cleanup when menu is closed.
+        return () => {};
+    });
 </script>
 
 <div>
