@@ -44,10 +44,10 @@ export interface Props {
     currentPath: string;
 
     /** Whether this is the mobile menu variant (larger text, vertical layout). */
-    mobile?: boolean;
+    mobile: boolean;
 }
 
-const { locale, currentPath, mobile = false } = Astro.props as Props;
+const { locale, currentPath, mobile } = Astro.props as Props;
 const t = getTranslation(locale);
 
 /**
