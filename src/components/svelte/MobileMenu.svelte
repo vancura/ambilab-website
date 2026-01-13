@@ -7,15 +7,22 @@
  * - Animated hamburger/close icon toggle
  * - Slide-down menu with opacity transition
  * - Auto-closes when navigation links are clicked
+ * - Disables page scrolling when open to prevent background interaction
  * - Accessible with proper ARIA attributes
  * - Accepts menu content as children
  *
  * Icons:
- * This component uses inline SVG markup for the hamburger menu and close icons.
- * Unlike Astro components which use the centralized icon system (Icon.astro),
- * Svelte components in this project inline their SVG markup directly with
- * Tailwind classes applied to the <svg> element. This pattern allows proper
- * sizing and theming through currentColor, and keeps the component self-contained.
+ * - This component uses inline SVG markup for the hamburger menu and close icons.
+ * - Unlike Astro components which use the centralized icon system (Icon.astro),
+ *   Svelte components in this project inline their SVG markup directly with
+ *   Tailwind classes applied to the <svg> element. This pattern allows proper
+ *   sizing and theming through currentColor, and keeps the component self-contained.
+ *
+ * Scroll Locking:
+ * - When the menu is opened, document body scrolling is automatically disabled by setting
+ *   `overflow: hidden` on the body element. This prevents users from scrolling the background
+ *   content while the menu is active. The original overflow style is preserved and restored
+ *   when the menu closes or the component unmounts.
  *
  * Accessibility (A11y) Features:
  * - All interactive elements (menu button, links) use proper ARIA attributes for screen reader compatibility:
@@ -24,7 +31,9 @@
  *   - The menu button uses `aria-controls` to reference the controlled menu panel by ID.
  * - Menu content is structured for keyboard navigation and focus is retained when toggled.
  * - Menu automatically closes when any contained navigation link is clicked, avoiding focus loss for users.
+ * - Escape key closes the menu, following standard overlay/modal interaction patterns.
  * - The hamburger and close icons are accessible by being strictly decorative and not announced (SVGs are inside a button with descriptive aria-label).
+ * - Background scroll locking improves focus management by preventing unintended scroll interactions.
  *
  * @component
  * @example
@@ -96,6 +105,30 @@
         // Return no-op cleanup when menu is closed.
         return () => {};
     });
+
+    /**
+     * Effect to handle Escape key press to close the menu.
+     * Adds a global keydown listener when the menu is open.
+     */
+    $effect(() => {
+        if (isOpen) {
+            const handleEscape = (event: KeyboardEvent): void => {
+                if (event.key === 'Escape') {
+                    closeMenu();
+                }
+            };
+
+            document.addEventListener('keydown', handleEscape);
+
+            // Cleanup: remove event listener when menu closes or component unmounts.
+            return () => {
+                document.removeEventListener('keydown', handleEscape);
+            };
+        }
+
+        // Return no-op cleanup when menu is closed.
+        return () => {};
+    });
 </script>
 
 <div>
@@ -150,19 +183,6 @@
         class:opacity-0={!isOpen}
         class:pointer-events-none={!isOpen}
         onclick={handleMenuClick}
-        onkeydown={(event) => {
-            // Only respond if the element itself is focused (not a child) and it's Enter/Space.
-            if ((event.key === 'Enter' || event.key === ' ') && event.target === event.currentTarget) {
-                // Svelte will fire click on Enter/Space for button, not div, so call same handler.
-                // Construct a MouseEvent-like object for handler.
-                handleMenuClick({
-                    target: event.target,
-                } as MouseEvent);
-
-                // Prevent scrolling for space key.
-                event.preventDefault();
-            }
-        }}
         aria-hidden={!isOpen}
     >
         <nav class="mx-auto max-w-7xl px-4 py-8 sm:px-6">
