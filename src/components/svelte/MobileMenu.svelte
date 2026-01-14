@@ -147,10 +147,15 @@
                 'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
             );
 
-            if (focusableElements.length > 0) {
+            if (focusableElements && focusableElements.length > 0 && focusableElements[0]) {
                 focusableElements[0].focus();
             }
-        } else if (!isOpen && menuButtonElement && document.activeElement !== menuButtonElement) {
+        } else if (
+            !isOpen &&
+            menuButtonElement &&
+            typeof menuButtonElement.focus === 'function' &&
+            document.activeElement !== menuButtonElement
+        ) {
             // Return focus to the menu button when closing, but only if focus isn't already there
             menuButtonElement.focus();
         }
@@ -171,12 +176,14 @@
 
                 // Get all focusable elements within the menu and the button.
                 const focusableElements = [
-                    menuButtonElement,
-                    ...Array.from(
-                        menuPanelElement.querySelectorAll<HTMLElement>(
-                            'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
-                        ),
-                    ),
+                    ...(menuButtonElement ? [menuButtonElement] : []),
+                    ...(menuPanelElement
+                        ? Array.from(
+                              menuPanelElement.querySelectorAll<HTMLElement>(
+                                  'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
+                              ),
+                          )
+                        : []),
                 ].filter((el): el is HTMLElement => el !== undefined);
 
                 if (focusableElements.length === 0) {
@@ -190,13 +197,13 @@
                 // Shift+Tab: if on the first element, move to the last.
                 if (event.shiftKey && activeElement === firstElement) {
                     event.preventDefault();
-                    lastElement.focus();
+                    lastElement?.focus();
                 }
 
                 // Tab: if on the last element, move to the first.
                 else if (!event.shiftKey && activeElement === lastElement) {
                     event.preventDefault();
-                    firstElement.focus();
+                    firstElement?.focus();
                 }
             };
 
