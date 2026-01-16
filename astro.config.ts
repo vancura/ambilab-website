@@ -34,7 +34,7 @@ export default defineConfig({
                 borderRadius: '0',
                 borderWidth: '1px',
                 codePaddingInline: '22px',
-                codeFontFamily: 'var(--font-family-mono)',
+                codeFontFamily: 'var(--font-mono)',
                 codeFontSize: '15px',
                 codeLineHeight: '22px',
                 frames: {
