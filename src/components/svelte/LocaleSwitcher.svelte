@@ -109,8 +109,8 @@
             await navigate(targetPath);
         } catch (error) {
             logger.error('Failed to switch locale', error);
-
-            // Reset animating state to allow retry if navigation fails
+        } finally {
+            // Reset animating state to allow retry if navigation fails or completes without navigating
             isAnimating = false;
         }
     };
