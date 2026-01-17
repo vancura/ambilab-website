@@ -78,7 +78,7 @@ Layouts wrap page content:
 ---
 // src/components/astro/PageLayout.astro
 import BaseHead from './BaseHead.astro';
-import Header from './Header.astro';
+import Menu from './Menu.astro';
 import Footer from './Footer.astro';
 
 interface Props {
@@ -95,7 +95,7 @@ const { title, description } = Astro.props;
     <BaseHead {title} {description} />
   </head>
   <body>
-    <Header />
+    <Menu />
     <main>
       <slot />
     </main>

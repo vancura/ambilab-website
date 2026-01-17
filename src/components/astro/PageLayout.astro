@@ -46,7 +46,7 @@ import type { ISEOMetadata } from '@type/seo';
 
 import Footer from './Footer.astro';
 import Head from './Head.astro';
-import Header from './Header.astro';
+import Menu from './Menu.astro';
 
 /**
  * Props for the PageLayout component.
@@ -111,7 +111,7 @@ const currentPath = Astro.url.pathname;
             'bg-page-bg text-text-primary dark:bg-page-bg-dark dark:text-text-primary-dark',
         ]}
     >
-        <Header locale={locale} currentPath={currentPath} translationPath={translationPath} />
+        <Menu locale={locale} currentPath={currentPath} translationPath={translationPath} />
 
         <main id="main-content" class="bg-dots min-h-screen">
             <slot />

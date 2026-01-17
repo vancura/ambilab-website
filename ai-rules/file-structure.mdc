@@ -56,10 +56,10 @@ Document interfaces with JSDoc comments for the interface and each property:
 
 ```typescript
 /**
- * Props for the Header component.
+ * Props for the Menu component.
  */
 export interface Props {
-    /** The locale for the header navigation and translations. */
+    /** The locale for the menu navigation and translations. */
     locale: Locale;
 
     /** The current page path used to highlight the active navigation item. */

@@ -59,7 +59,7 @@
  * <MobileMenu client:load>
  *   <div class="flex flex-col px-4">
  *     <div class="py-4">
- *       <HeaderNav locale="en" currentPath="/blog" mobile={true} />
+ *       <MenuNav locale="en" currentPath="/blog" mobile={true} />
  *     </div>
  *     <div class="flex items-center justify-end gap-2 pb-4 pr-2">
  *       <LocaleSwitcher currentLocale="en" translationPath="/cs" />
@@ -80,7 +80,7 @@
         /**
          * Menu content rendered as children using Svelte 5 Snippet.
          *
-         * Typically contains HeaderNav and control buttons (LocaleSwitcher, ThemeSwitcher).
+         * Typically contains MenuNav and control buttons (LocaleSwitcher, ThemeSwitcher).
          */
         children?: Snippet;
     }

@@ -1,6 +1,6 @@
 ---
 /**
- * Header Component
+ * Menu Component
  *
  * Responsive site header with navigation, branding, and control buttons.
  *
@@ -16,7 +16,7 @@
  * - Desktop horizontal navigation with ARIA landmark
  * - Theme switcher for light/dark mode (ThemeSwitcher component)
  * - Locale switcher for English/Czech (LocaleSwitcher component)
- * - Active navigation highlighting via HeaderNav
+ * - Active navigation highlighting via MenuNav
  * - Translation path support for seamless locale switching
  *
  * Layout Structure:
@@ -54,17 +54,17 @@
  * @example
  * ```astro
  * <!-- Basic usage with current path -->
- * <Header locale="en" currentPath="/blog" />
+ * <Menu locale="en" currentPath="/blog" />
  *
  * <!-- With translation path for locale switching -->
- * <Header
+ * <Menu
  *   locale="en"
  *   currentPath="/blog/hello-world"
  *   translationPath="/blog/ahoj-svete"
  * />
  * ```
  */
-import HeaderNav from '@components/astro/HeaderNav.astro';
+import MenuNav from '@components/astro/MenuNav.astro';
 import LocaleSwitcher from '@components/svelte/LocaleSwitcher.svelte';
 import MobileMenu from '@components/svelte/MobileMenu.svelte';
 import ThemeSwitcher from '@components/svelte/ThemeSwitcher.svelte';
@@ -73,7 +73,7 @@ import { getTranslation } from '@i18n/translations';
 import type { Locale } from '@type/locale';
 
 /**
- * Props for the Header component.
+ * Props for the Menu component.
  */
 export interface Props {
     /**
@@ -92,7 +92,7 @@ export interface Props {
      * The current page path used to highlight the active navigation item.
      *
      * Should be the pathname without locale prefix (e.g., '/blog', not '/en/blog').
-     * This is passed to HeaderNav to determine which navigation item should be
+     * This is passed to MenuNav to determine which navigation item should be
      * marked as active with aria-current="page".
      *
      * Example: For URL `https://ambilab.com/blog/post`, use `/blog/post`
@@ -172,11 +172,11 @@ const t = getTranslation(locale);
 
                 <!--
                     Desktop navigation (hidden on mobile).
-                    Contains HeaderNav with horizontal layout (mobile={false}).
+                    Contains MenuNav with horizontal layout (mobile={false}).
                     Uses semantic nav element with aria-label for accessibility.
                 -->
                 <nav aria-label="Main navigation" class="hidden items-center gap-6 md:flex lg:gap-8">
-                    <HeaderNav locale={locale} currentPath={currentPath} mobile={false} />
+                    <MenuNav locale={locale} currentPath={currentPath} mobile={false} />
                 </nav>
             </div>
 
@@ -200,7 +200,7 @@ const t = getTranslation(locale);
                     <div class="flex flex-col px-4">
                         <!-- Mobile navigation with vertical layout -->
                         <div class="py-4">
-                            <HeaderNav locale={locale} currentPath={currentPath} mobile={true} />
+                            <MenuNav locale={locale} currentPath={currentPath} mobile={true} />
                         </div>
 
                         <!-- Mobile controls aligned to the right -->
