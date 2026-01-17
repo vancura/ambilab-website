@@ -121,7 +121,13 @@
         const handleChange = () => {
             // Only update if user hasn't set a preference (no theme in localStorage)
             if (!localStorage.getItem('theme')) {
-                updateTheme();
+                const prefersDark = mediaQuery.matches;
+
+                if (document?.documentElement) {
+                    document.documentElement.classList.toggle('dark', prefersDark);
+                }
+
+                currentTheme = prefersDark ? 'dark' : 'light';
             }
         };
 
