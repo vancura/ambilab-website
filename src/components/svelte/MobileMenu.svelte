@@ -107,7 +107,7 @@
      * Includes positioning, background, border, and animation setup.
      */
     const baseMenuPanelClasses = [
-        'fixed left-1/2 top-0 w-screen -translate-x-1/2 z-50 md:hidden pt-12',
+        'z-mobile-menu fixed left-1/2 top-0 w-screen -translate-x-1/2 md:hidden pt-12',
         'bg-page-bg border-t border-border-default dark:bg-page-bg-dark dark:border-border-default-dark',
         'motion-safe:duration-333 motion-safe:transition-[clip-path]',
     ].join(' ');
