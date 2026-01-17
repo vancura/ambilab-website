@@ -24,12 +24,12 @@ Server-rendered components located in [`src/components/astro/`](../src/component
 
 ### Layout Components
 
-| Component      | File               | Purpose                                          |
-| -------------- | ------------------ | ------------------------------------------------ |
-| **PageLayout** | `PageLayout.astro` | Main page wrapper with header, footer, and slots |
-| **Header**     | `Header.astro`     | Site header with navigation and theme switcher   |
-| **HeaderNav**  | `HeaderNav.astro`  | Navigation menu with active state highlighting   |
-| **Footer**     | `Footer.astro`     | Site footer with links and social media          |
+| Component      | File               | Purpose                                        |
+| -------------- | ------------------ | ---------------------------------------------- |
+| **PageLayout** | `PageLayout.astro` | Main page wrapper with menu, footer, and slots |
+| **Menu**       | `Menu.astro`       | Site menu with navigation and theme switcher   |
+| **MenuNav**    | `MenuNav.astro`    | Navigation menu with active state highlighting |
+| **Footer**     | `Footer.astro`     | Site footer with links and social media        |
 
 ### Head Components
 

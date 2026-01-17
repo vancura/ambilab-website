@@ -1,7 +1,7 @@
 ---
 import { getRoute, isRouteActive } from '@config/routes';
 /**
- * HeaderNav Component
+ * MenuNav Component
  *
  * Main navigation menu with active state highlighting and responsive variants.
  *
@@ -38,17 +38,17 @@ import { getRoute, isRouteActive } from '@config/routes';
  * @example
  * ```astro
  * <!-- Desktop navigation (horizontal) -->
- * <HeaderNav locale="en" currentPath="/blog" mobile={false} />
+ * <MenuNav locale="en" currentPath="/blog" mobile={false} />
  *
  * <!-- Mobile navigation (vertical) -->
- * <HeaderNav locale="en" currentPath="/blog" mobile={true} />
+ * <MenuNav locale="en" currentPath="/blog" mobile={true} />
  * ```
  */
 import { getTranslation } from '@i18n/translations';
 import type { Locale } from '@type/locale';
 
 /**
- * Props for the HeaderNav component.
+ * Props for the MenuNav component.
  */
 export interface Props {
     /**

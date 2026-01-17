@@ -237,7 +237,7 @@ individual components.
 
 ### Layout Components
 
-- `Header.astro` - Header borders and backgrounds
+- `Menu.astro` - Menu borders and backgrounds
 - `Footer.astro` - Footer borders, text, and links
 - `PageLayout.astro` - Page background and text
 - `ErrorPage.astro` - Error page styling
