@@ -247,6 +247,7 @@ individual components.
 - `Button.svelte` - Button variants (primary, secondary, outline)
 - `CookieBanner.svelte` - Banner styling
 - `NewsletterForm.svelte` - Form colors and states
+- `MobileMenu.svelte` - Mobile menu panel and dimmer
 - `ThemeSwitcher.svelte` - Theme switcher styling
 
 ### Content Components

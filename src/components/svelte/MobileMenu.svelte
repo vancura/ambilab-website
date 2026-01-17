@@ -34,10 +34,12 @@
  * - Focus management:
  *   - When menu opens, focus moves to the first focusable element
  *   - When menu closes, focus returns to the button
- * - Focus trap: keyboard navigation (Tab/Shift+Tab) cycles through focusable elements
+ * - Focus trap: keyboard navigation (Tab/Shift+Tab) cycles through focusable
+ *   elements
  * - Menu auto-closes when navigation links are clicked, avoiding focus loss
  * - Escape key closes the menu (standard overlay/modal pattern)
- * - Icons are decorative and not announced (inside button with descriptive aria-label)
+ * - Icons are decorative and not announced (inside button with descriptive
+ *   aria-label)
  * - Background scroll locking prevents unintended scroll interactions
  * - Respects prefers-reduced-motion: animations disabled when requested
  *
@@ -80,7 +82,8 @@
         /**
          * Menu content rendered as children using Svelte 5 Snippet.
          *
-         * Typically contains MenuNav and control buttons (LocaleSwitcher, ThemeSwitcher).
+         * Typically contains MenuNav and control buttons (LocaleSwitcher,
+         * ThemeSwitcher).
          */
         children?: Snippet;
     }
@@ -101,7 +104,8 @@
 
     /**
      * CSS selector for focusable elements.
-     * Extracted to reduce duplication and ensure consistency across focus management effects.
+     * Extracted to reduce duplication and ensure consistency across focus
+     * management effects.
      */
     const focusableSelector =
         'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -120,7 +124,7 @@
     ].join(' ');
 
     /**
-     * Dynamic CSS classes for the menu panel based on open/closed state.
+     * Dynamic CSS classes for the menu panel based on the open / closed state.
      * Applies clip-path animation and pointer events.
      */
     let menuPanelClass = $derived(
@@ -146,7 +150,8 @@
 
     /**
      * Closes the mobile menu.
-     * Used by various event handlers (link clicks, Escape key, resize, dimmer click).
+     * Used by various event handlers (link clicks, Escape key, resize, dimmer
+     * click).
      */
     function closeMenu(): void {
         isOpen = false;
@@ -161,20 +166,20 @@
     function handleMenuClick(event: MouseEvent): void {
         const target = event.target as HTMLElement;
 
-        // Check if the click target is within a link element
+        // Check if the click target is within a link element.
         if (target.closest('a')) {
             closeMenu();
         }
     }
 
     /**
-     * Effect to manage body scroll locking based on menu state.
+     * Effect to manage body scroll locking based on the menu state.
      *
      * When the menu opens:
      * - Stores the original overflow style
      * - Sets overflow: hidden on body to prevent background scrolling
      *
-     * When the menu closes or component unmounts:
+     * When the menu closes or the component unmounts:
      * - Restores the original overflow style
      *
      * This improves UX by preventing users from accidentally scrolling
@@ -182,17 +187,18 @@
      */
     $effect(() => {
         if (isOpen) {
-            // Store the original overflow value to restore later
+            // Store the original overflow value to restore later.
             const originalOverflow = document.body.style.overflow;
             document.body.style.overflow = 'hidden';
 
-            // Cleanup: restore the original overflow when the menu closes or component unmounts
+            // Cleanup: restore the original overflow when the menu closes or
+            // the component unmounts.
             return () => {
                 document.body.style.overflow = originalOverflow;
             };
         }
 
-        // Return no-op cleanup when the menu is closed
+        // Return no-op cleanup when the menu is closed.
         return () => {};
     });
 
@@ -201,9 +207,9 @@
      *
      * When the menu is open:
      * - Adds a global keydown listener
-     * - Closes the menu when Escape key is pressed
+     * - Closes the menu when the Escape key is pressed
      *
-     * When the menu closes or component unmounts:
+     * When the menu closes or the component unmounts:
      * - Removes the event listener
      *
      * This follows standard modal/overlay interaction patterns and
@@ -219,13 +225,14 @@
 
             document.addEventListener('keydown', handleEscape);
 
-            // Cleanup: remove event listener when menu closes or component unmounts
+            // Cleanup: remove event listener when menu closes or component
+            // unmounts.
             return () => {
                 document.removeEventListener('keydown', handleEscape);
             };
         }
 
-        // Return no-op cleanup when the menu is closed
+        // Return no-op cleanup when the menu is closed.
         return () => {};
     });
 
@@ -240,11 +247,12 @@
      * - Returns focus to the menu button (if focus isn't already there)
      * - Prevents focus loss and maintains keyboard navigation context
      *
-     * This is a critical accessibility feature for keyboard and screen reader users.
+     * This is a critical accessibility feature for keyboard and screen reader
+     * users.
      */
     $effect(() => {
         if (isOpen && menuPanelElement) {
-            // Find the first focusable element in the menu
+            // Find the first focusable element in the menu.
             const focusableElements = menuPanelElement.querySelectorAll<HTMLElement>(focusableSelector);
 
             if (focusableElements && focusableElements.length > 0 && focusableElements[0]) {
@@ -256,7 +264,8 @@
             typeof menuButtonElement.focus === 'function' &&
             document.activeElement !== menuButtonElement
         ) {
-            // Return focus to the menu button when closing, but only if focus isn't already there
+            // Return focus to the menu button when closing, but only if the
+            // focus isn't already there.
             menuButtonElement.focus();
         }
     });
@@ -266,29 +275,30 @@
      *
      * When the menu is open:
      * - Traps keyboard navigation (Tab/Shift+Tab) within the menu
-     * - Cycles focus through focusable elements (button + menu items)
+     * - Cycles focus through focusable elements (button and menu items)
      * - Prevents focus from escaping to background content
      *
      * How it works:
-     * - Tab at last element: cycles to first element
-     * - Shift+Tab at first element: cycles to last element
-     * - Only traps Tab key, other keys work normally
+     * - Tab at the last element: cycles to the first element
+     * - Shift+Tab at the first element: cycles to the last element
+     * - Only traps the Tab key, other keys work normally
      *
-     * When the menu closes or component unmounts:
+     * When the menu closes or the component unmounts:
      * - Removes the event listener
      *
      * This is a critical accessibility feature that prevents keyboard users
-     * from accidentally navigating to background content while the menu is open.
+     * from accidentally navigating to background content while the menu is
+     * open.
      */
     $effect(() => {
         if (isOpen && menuPanelElement) {
             const handleFocusTrap = (event: KeyboardEvent): void => {
-                // Only trap the Tab key
+                // Only trap the Tab key.
                 if (event.key !== 'Tab') {
                     return;
                 }
 
-                // Get all focusable elements within the menu and the button
+                // Get all focusable elements within the menu and the button.
                 const focusableElements = [
                     ...(menuButtonElement ? [menuButtonElement] : []),
                     ...(menuPanelElement
@@ -304,13 +314,13 @@
                 const lastElement = focusableElements[focusableElements.length - 1];
                 const activeElement = document.activeElement as HTMLElement;
 
-                // Shift+Tab: if on the first element, cycle to the last
+                // Shift+Tab: if on the first element, cycle to the last.
                 if (event.shiftKey && activeElement === firstElement) {
                     event.preventDefault();
                     lastElement?.focus();
                 }
 
-                // Tab: if on the last element, cycle to the first
+                // Tab: if on the last element, cycle to the first.
                 else if (!event.shiftKey && activeElement === lastElement) {
                     event.preventDefault();
                     firstElement?.focus();
@@ -319,13 +329,14 @@
 
             document.addEventListener('keydown', handleFocusTrap);
 
-            // Cleanup: remove event listener when menu closes or component unmounts
+            // Cleanup: remove event listener when menu closes or component
+            // unmounts.
             return () => {
                 document.removeEventListener('keydown', handleFocusTrap);
             };
         }
 
-        // Return no-op cleanup when the menu is closed
+        // Return no-op cleanup when the menu is closed.
         return () => {};
     });
 
@@ -335,7 +346,8 @@
      * When the window is resized:
      * - Automatically closes the menu if it's open
      * - Prevents layout issues when switching between mobile and desktop views
-     * - Uses debouncing (150ms) to avoid excessive calls during continuous resizing
+     * - Uses debouncing (150ms) to avoid excessive calls during continuous
+     *   resizing
      *
      * When the component unmounts:
      * - Removes the event listener
@@ -353,7 +365,8 @@
 
         window.addEventListener('resize', handleResize);
 
-        // Cleanup: remove event listener and cancel any pending debounced calls
+        // Cleanup: remove event listener and cancel any pending debounced
+        // calls.
         return () => {
             window.removeEventListener('resize', handleResize);
             handleResize.cancel();
