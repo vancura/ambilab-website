@@ -24,12 +24,12 @@ Server-rendered components located in [`src/components/astro/`](../src/component
 
 ### Layout Components
 
-| Component      | File               | Purpose                                        |
-| -------------- | ------------------ | ---------------------------------------------- |
-| **PageLayout** | `PageLayout.astro` | Main page wrapper with menu, footer, and slots |
-| **Menu**       | `Menu.astro`       | Site menu with navigation and theme switcher   |
-| **MenuNav**    | `MenuNav.astro`    | Navigation menu with active state highlighting |
-| **Footer**     | `Footer.astro`     | Site footer with links and social media        |
+| Component      | File               | Purpose                                                |
+| -------------- | ------------------ | ------------------------------------------------------ |
+| **PageLayout** | `PageLayout.astro` | Main page wrapper with menu, footer, and slots         |
+| **Menu**       | `Menu.astro`       | Sticky site header with navigation and controls        |
+| **MenuNav**    | `MenuNav.astro`    | Locale-aware navigation with active state highlighting |
+| **Footer**     | `Footer.astro`     | Site footer with links and social media                |
 
 ### Head Components
 
@@ -63,8 +63,9 @@ Interactive components with client-side hydration, located in [`src/components/s
 | Component          | File                    | Purpose                                                   |
 | ------------------ | ----------------------- | --------------------------------------------------------- |
 | **Button**         | `Button.svelte`         | Styled button with variants (primary, secondary, outline) |
-| **LocaleSwitcher** | `LocaleSwitcher.svelte` | Language toggle (English/Czech) with View Transitions     |
-| **ThemeSwitcher**  | `ThemeSwitcher.svelte`  | Dark mode toggle with localStorage persistence            |
+| **LocaleSwitcher** | `LocaleSwitcher.svelte` | Language toggle with locale cookie and View Transitions   |
+| **ThemeSwitcher**  | `ThemeSwitcher.svelte`  | Theme toggle with localStorage persistence and sync       |
+| **MobileMenu**     | `MobileMenu.svelte`     | Mobile menu button with slide-down panel and focus trap   |
 | **GoToTop**        | `GoToTop.svelte`        | Scroll-to-top button with debounced scroll detection      |
 
 ### Forms and Content

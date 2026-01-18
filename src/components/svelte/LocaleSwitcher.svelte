@@ -2,7 +2,7 @@
     /**
      * LocaleSwitcher Component
      *
-     * Toggle button for switching between English and Czech locales.
+     * Toggle the button for switching between English and Czech locales.
      *
      * Updates the locale cookie and navigates to the translated version
      * of the current page using Astro's View Transitions for smooth navigation.
@@ -10,7 +10,8 @@
      * Features:
      * - Toggles between English (en) and Czech (cs) locales
      * - Sets locale cookie for persistence across page loads
-     * - Uses translation path if available, otherwise navigates to current path
+     * - Uses a translation path if available, otherwise navigates to current
+     *   path
      * - Smooth View Transitions navigation for seamless UX
      * - Prevents multiple simultaneous switches with loading state
      * - Displays target locale name with arrow indicator
@@ -26,7 +27,7 @@
      * Styling:
      * - Uses semantic color tokens (text-secondary, text-primary)
      * - Includes hover and focus states for accessibility
-     * - Displays arrow indicator (&rarr;) pointing to target locale
+     * - Displays arrow indicator (&rarr;) pointing to the target locale
      * - Disabled state with reduced opacity during transition
      *
      * @component
@@ -62,20 +63,25 @@
          * Optional path to the translated version of the current page.
          *
          * If provided, navigation will go to this path when switching locales.
-         * If not provided, the component will navigate to the same path in the target locale.
+         * If not provided, the component will navigate to the same path in the
+         * target locale.
          *
-         * Example: If on `/blog/hello-world` (en) with translationPath `/blog/ahoj-svete`,
-         * clicking the switcher navigates to `/blog/ahoj-svete` (cs).
+         * Example: If on `/blog/hello-world` (en) with translationPath
+         * `/blog/ahoj-svete`, clicking the switcher navigates to
+         * `/blog/ahoj-svete` (cs).
          */
         translationPath?: string | undefined;
     }
 
     let { currentLocale, translationPath }: Props = $props();
 
-    /** Whether a locale switch is currently in progress. Prevents multiple simultaneous switches. */
+    /**
+     * Whether a locale switch is currently in progress. Prevents multiple
+     * simultaneous switches.
+     */
     let isAnimating = $state(false);
 
-    /** The target locale to switch to (opposite of current locale). */
+    /** The target locale to switch to (opposite of the current locale). */
     const otherLocale = $derived<Locale>(currentLocale === 'en' ? 'cs' : 'en');
 
     /** Configuration for the target locale (includes code and display name). */
@@ -88,11 +94,11 @@
      * then navigates to the translated page using Astro's View Transitions.
      *
      * Prevents multiple simultaneous switches with an isAnimating flag.
-     * Always resets isAnimating in finally block to ensure proper state
+     * Always resets isAnimating in finally block to ensure a proper state
      * regardless of navigation success, failure, or same-path resolution.
      */
     const handleLocaleSwitch = async (): Promise<void> => {
-        // Prevent multiple simultaneous switches
+        // Prevent multiple simultaneous switches.
         if (isAnimating) {
             return;
         }
@@ -100,18 +106,21 @@
         isAnimating = true;
 
         try {
-            // Set locale cookie to persist user's choice across page loads
+            // Set locale cookie to persist user's choice across page loads.
             document.cookie = setLocaleCookie(otherLocale);
 
-            // Use translation path if available, otherwise stay on current path
+            // Use a translation path if available, otherwise stay on the
+            // current path.
             const targetPath = translationPath || window.location.pathname;
 
-            // Use Astro's navigate function to trigger View Transitions for smooth navigation
+            // Use Astro's navigate function to trigger View Transitions for
+            // smooth navigation.
             await navigate(targetPath);
         } catch (error) {
             logger.error('Failed to switch locale', error);
         } finally {
-            // Reset animating state to allow retry if navigation fails or completes without navigating
+            // Reset animating state to allow retry if navigation fails or
+            // completes without navigating.
             isAnimating = false;
         }
     };

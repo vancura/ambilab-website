@@ -18,8 +18,10 @@
      * - Consistent styling with other header controls (uppercase, hover states)
      *
      * Icons:
-     * - This component uses inline SVG markup for theme icons in pixel art style.
-     * - Unlike Astro components which use the centralized icon system (Icon.astro),
+     * - This component uses inline SVG markup for theme icons in pixel-art
+     *   style.
+     * - Unlike Astro components which use the centralized icon system
+     *   (Icon.astro),
      *   Svelte components in this project inline their SVG markup directly.
      * - Icons are rendered with currentColor for automatic theme color support.
      *
@@ -70,7 +72,7 @@
      * This ensures the component state matches the actual DOM state.
      */
     const updateTheme = () => {
-        // Check the actual class on the element, not system preference
+        // Check the actual class on the element, not system preference.
         if (typeof document !== 'undefined' && document.documentElement) {
             currentTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
         }
@@ -106,16 +108,16 @@
      * if no user preference exists in localStorage.
      */
     $effect(() => {
-        // Run only in a browser environment
+        // Run only in a browser environment.
         if (typeof window === 'undefined') {
             return;
         }
 
-        // Immediately sync theme state from DOM
+        // Immediately sync the theme state from DOM.
         updateTheme();
         mounted = true;
 
-        // Listen for system theme changes
+        // Listen for system theme changes.
         const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
         /**
@@ -126,7 +128,8 @@
          * to reflect the new theme without requiring a page reload.
          */
         const handleChange = () => {
-            // Only update if user hasn't set a preference (no theme in localStorage)
+            // Only update if the user hasn't set a preference (no theme in
+            // localStorage).
             if (!localStorage.getItem('theme')) {
                 const prefersDark = mediaQuery.matches;
 
@@ -140,7 +143,7 @@
 
         mediaQuery.addEventListener('change', handleChange);
 
-        // Cleanup listener on unmount
+        // Cleanup listener on unmounting.
         return () => {
             mediaQuery.removeEventListener('change', handleChange);
         };

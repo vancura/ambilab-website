@@ -22,7 +22,7 @@ import { getRoute, isRouteActive } from '@config/routes';
  * - Blog: Links to blog index, prefix match for /blog and /blog/*
  *
  * Navigation Matching Strategy:
- * - Locale is domain-based (ambilab.com vs. ambilab.cz), so currentPath
+ * - Locale is domain-based (ambilab.com vs. ambilab.cz), so the currentPath
  *   never contains /en/ or /cs/ prefixes
  * - Astro does not add trailing slashes by default to canonical URLs
  * - Blog uses prefix matching to highlight when viewing any blog page
@@ -54,14 +54,17 @@ export interface Props {
     /**
      * The locale for navigation labels and route generation.
      *
-     * Used to fetch translated navigation labels and generate locale-aware routes.
+     * Used to fetch translated navigation labels and generate locale-aware
+     * routes.
      */
     locale: Locale;
 
     /**
      * The current page path used to determine which navigation item is active.
      *
-     * Should be the pathname without locale prefix (e.g., '/blog', not '/en/blog').
+     * Should be the pathname without a locale prefix (e.g., '/blog', not
+     * '/en/blog').
+     *
      * This is because locale detection is domain-based, not path-based.
      */
     currentPath: string;
@@ -69,7 +72,7 @@ export interface Props {
     /**
      * Whether this is the mobile menu variant.
      *
-     * - `true`: Vertical layout with full-width links (for mobile menu)
+     * - `true`: Vertical layout with full-width links (for the mobile menu)
      * - `false`: Horizontal layout with compact links (for desktop header)
      */
     mobile: boolean;
@@ -92,7 +95,8 @@ const t = getTranslation(locale);
  * - Home & About: Exact match (e.g., currentPath === '/')
  * - Blog: Prefix match (e.g., currentPath starts with '/blog')
  *
- * This allows blog navigation to stay highlighted when viewing individual posts.
+ * This allows blog navigation to stay highlighted when viewing individual
+ * posts.
  */
 const navItems = [
     {
@@ -100,11 +104,13 @@ const navItems = [
         label: t.nav.home,
         isActive: isRouteActive(currentPath, 'home'),
     },
+
     {
         href: getRoute('about', locale),
         label: t.nav.about,
         isActive: isRouteActive(currentPath, 'about'),
     },
+
     {
         href: getRoute('blog', locale),
         label: t.nav.blog,
@@ -117,7 +123,8 @@ const navItems = [
  *
  * Active State (isActive = true):
  * - Solid background with text-primary color
- * - Inverted text colors (white on dark bg in light mode, black on light bg in dark mode)
+ * - Inverted text colors (white on dark bg in light mode, black on light bg in
+ *   dark mode)
  * - Creates a "button-like" appearance for the active page
  *
  * Inactive State (isActive = false):
@@ -125,7 +132,8 @@ const navItems = [
  * - Hover/focus: transitions to primary text color
  * - Uses modern CSS nesting syntax [&:hover,&:focus] for state variants
  *
- * All colors use semantic design tokens for consistent theming across light/dark modes.
+ * All colors use semantic design tokens for consistent theming across
+ * light/dark modes.
  *
  * @param isActive - Whether the navigation item is currently active
  * @returns The CSS class string for the navigation item
@@ -139,7 +147,7 @@ const getNavItemClasses = (isActive: boolean): string => {
 
 {
     mobile ? (
-        // Mobile menu: vertical layout with larger text
+        // Mobile menu: vertical layout with larger text.
         <div class="flex flex-col">
             {navItems.map((item) => (
                 <a
@@ -152,7 +160,7 @@ const getNavItemClasses = (isActive: boolean): string => {
             ))}
         </div>
     ) : (
-        // Desktop menu: horizontal layout
+        // Desktop menu: horizontal layout.
         <div class="flex items-center gap-2">
             {navItems.map((item) => (
                 <a
