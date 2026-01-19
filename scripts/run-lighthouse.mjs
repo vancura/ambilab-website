@@ -22,6 +22,9 @@ import process from 'node:process';
 const SERVER_URL = process.env.SERVER_URL || 'http://localhost:4321';
 const WAIT_TIMEOUT = Number.parseInt(process.env.WAIT_TIMEOUT || '30000', 10);
 
+const SIGINT_EXIT_CODE = 130;
+const SIGTERM_EXIT_CODE = 143;
+
 let serverProcess = null;
 
 async function waitForServer(url, timeout) {
@@ -41,7 +44,7 @@ async function waitForServer(url, timeout) {
         await new Promise((resolve) => setTimeout(resolve, checkInterval));
     }
 
-    throw new Error(`Server did not start within ${timeout}ms`);
+    throw new Error(`Server didn't start within ${timeout}ms`);
 }
 
 function runCommand(command, args, options = {}) {
@@ -53,10 +56,10 @@ function runCommand(command, args, options = {}) {
         });
 
         proc.on('close', (code) => {
-            if (code !== 0) {
-                reject(new Error(`Command failed with exit code ${code}`));
-            } else {
+            if (code === 0) {
                 resolve();
+            } else {
+                reject(new Error(`Command failed with exit code ${code}`));
             }
         });
 
@@ -71,7 +74,7 @@ async function main() {
         console.log('Building project...');
         await runCommand('pnpm', ['build']);
 
-        console.log('Starting preview server...');
+        console.log('Starting preview server…');
         serverProcess = spawn('pnpm', ['preview'], {
             stdio: ['ignore', 'pipe', 'pipe'],
             shell: true,
@@ -85,19 +88,19 @@ async function main() {
             console.error(`[preview] ${data.toString().trim()}`);
         });
 
-        console.log(`Waiting for server at ${SERVER_URL}...`);
+        console.log(`Waiting for the server at ${SERVER_URL}...`);
         await waitForServer(SERVER_URL, WAIT_TIMEOUT);
 
-        console.log('Running Lighthouse CI collect...');
+        console.log('Running Lighthouse CI collect…');
         await runCommand('pnpm', ['perf:collect', `--url=${SERVER_URL}`]);
 
-        console.log('Running Lighthouse CI assert...');
+        console.log('Running Lighthouse CI assert…');
         await runCommand('pnpm', ['perf:assert']);
 
-        console.log('Uploading Lighthouse CI results...');
+        console.log('Uploading Lighthouse CI results…');
         await runCommand('pnpm', ['perf:upload']);
 
-        console.log('Lighthouse CI completed successfully!');
+        console.log('Lighthouse CI completed successfully.');
         process.exit(0);
     } catch (error) {
         console.error('Lighthouse CI failed:', error.message);
@@ -115,7 +118,7 @@ process.on('SIGINT', () => {
         serverProcess.kill();
     }
 
-    process.exit(130);
+    process.exit(SIGINT_EXIT_CODE);
 });
 
 process.on('SIGTERM', () => {
@@ -123,7 +126,11 @@ process.on('SIGTERM', () => {
         serverProcess.kill();
     }
 
-    process.exit(143);
+    process.exit(SIGTERM_EXIT_CODE);
 });
 
-main();
+main().catch((error) => {
+    console.error('Unhandled error:', error);
+
+    process.exit(1);
+});
