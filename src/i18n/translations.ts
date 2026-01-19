@@ -10,6 +10,7 @@ export interface Translations {
         home: string;
         about: string;
         blog: string;
+        rss: string;
     };
 
     buttons: {
@@ -24,6 +25,7 @@ export interface Translations {
         allRightsReserved: string;
         description: string;
         navigation: string;
+        followAmbilab: string;
     };
 
     newsletter: {
@@ -86,6 +88,7 @@ export const translations: Record<Locale, Translations> = {
             home: 'Home',
             about: 'About',
             blog: 'Blog',
+            rss: 'RSS Feed',
         },
 
         buttons: {
@@ -100,6 +103,7 @@ export const translations: Record<Locale, Translations> = {
             allRightsReserved: 'All rights reserved',
             description: 'A web-based pixel art game engine and editor for kids to learn programming.',
             navigation: 'Navigation',
+            followAmbilab: 'Follow Ambilab',
         },
 
         newsletter: {
@@ -160,6 +164,7 @@ export const translations: Record<Locale, Translations> = {
             home: 'Domů',
             about: 'O projektu',
             blog: 'Blog',
+            rss: 'RSS kanál',
         },
 
         buttons: {
@@ -174,6 +179,7 @@ export const translations: Record<Locale, Translations> = {
             allRightsReserved: 'Všechna práva vyhrazena',
             description: 'Webová pixel art herní engine a editor pro děti, aby se učily programovat.',
             navigation: 'Navigace',
+            followAmbilab: 'Sledujte Ambilab',
         },
 
         newsletter: {
