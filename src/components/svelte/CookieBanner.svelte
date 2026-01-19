@@ -29,7 +29,9 @@
     const handleDismiss = () => {
         try {
             localStorage.setItem(COMPONENT_CONFIG.cookieBanner.dismissedKey, 'true');
-        } catch {}
+        } catch {
+            // Silent fail: banner hides regardless of storage success.
+        }
         isVisible = false;
     };
 </script>
