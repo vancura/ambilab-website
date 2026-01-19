@@ -40,7 +40,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
         const pathname = url.pathname.replace(/\/$/, '') || '/';
 
         if (pathname === '/404' || pathname === '/500' || pathname === '/503') {
-            const status = pathname === '/404' ? 404 : 503;
+            const status = pathname === '/404' ? 404 : pathname === '/500' ? 500 : 503;
             const errorResponse = new Response('Error', { status });
 
             applySecurityHeaders(errorResponse.headers, {
