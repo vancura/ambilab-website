@@ -64,20 +64,26 @@
             anchor.addEventListener('click', (e) => {
                 e.preventDefault();
 
-                smoothScrollTo({ targetId: id })
+                void smoothScrollTo({ targetId: id })
                     .then(({ success, element }) => {
                         if (!success && element) {
                             logger.warn(`Smooth scroll failed for #${id}, falling back to immediate scroll`);
+
                             element.scrollIntoView({ behavior: 'auto' });
                         }
 
                         history.pushState(null, '', `#${id}`);
 
-                        navigator.clipboard.writeText(window.location.href).catch(() => {});
+                        return;
                     })
                     .catch((err) => {
                         logger.error(`Failed to scroll to #${id}`, err);
                     });
+
+                // Handle clipboard copy separately.
+                void navigator.clipboard.writeText(window.location.href).catch(() => {
+                    // Silently ignore clipboard errors.
+                });
             });
 
             return anchor;
