@@ -109,8 +109,7 @@ function readSourceRules(sourceDir) {
         const content = readFileSync(join(rulesDir, file), 'utf-8');
 
         const name = file.replace('.mdc', '');
-
-        const contentClean = content.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '');
+        const contentClean = content.replace(/^\uFEFF?/, '').replace(/^\s*---\r?\n[\s\S]*?\r?\n---\r?\n?/, '');
 
         return { name, filename: file, content, contentClean };
     });
