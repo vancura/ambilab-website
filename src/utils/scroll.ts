@@ -106,8 +106,13 @@ export const smoothScrollTo = async ({
             resolved = true;
 
             cleanupScrollMonitor(monitor, handleScrollEnd);
-            onComplete?.();
             resolve({ success, element });
+
+            try {
+                onComplete?.();
+            } catch {
+                // Swallow to avoid leaving the Promise unresolved.
+            }
         };
 
         const handleScrollEnd = () => resolveOnce(true);
