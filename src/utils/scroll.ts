@@ -20,7 +20,7 @@ const createScrollMonitor = (
     onStable: () => void,
     stabilityThreshold: number,
     pollInterval: number,
-): { monitor: ReturnType<typeof setInterval>; isStable: () => boolean } => {
+): { monitor: ReturnType<typeof setInterval> } => {
     let lastScrollY = window.scrollY;
     let stableCount = 0;
 
@@ -43,10 +43,7 @@ const createScrollMonitor = (
         }
     }, pollInterval);
 
-    return {
-        monitor,
-        isStable: () => stableCount >= stableCountRequired,
-    };
+    return { monitor };
 };
 
 const isNearTarget = (target: number, threshold: number): boolean => {
