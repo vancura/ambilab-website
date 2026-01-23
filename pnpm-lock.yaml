@@ -7,7 +7,7 @@ settings:
 overrides:
   vite-node: ^5.2.0
   esbuild: ^0.25.0
-  wrangler: ^4.59.1
+  wrangler: ^4.59.2
 
 importers:
 
@@ -135,7 +135,7 @@ importers:
         specifier: ^9.0.3
         version: 9.0.3
       wrangler:
-        specifier: ^4.59.1
+        specifier: ^4.59.2
         version: 4.59.3(@cloudflare/workers-types@4.20260101.0)
 
 packages:
