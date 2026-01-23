@@ -101,6 +101,11 @@
     "perf": "node scripts/run-lighthouse.mjs",
     "perf:collect": "lhci collect",
     "perf:assert": "lhci assert",
-    "perf:upload": "lhci upload"
+    "perf:upload": "lhci upload",
+    "clean": "node scripts/clean.mjs",
+    "clean:all": "node scripts/clean.mjs --all",
+    "fix:all": "pnpm format && pnpm lint:fix && pnpm knip:fix",
+    "check:quick": "pnpm format:check && pnpm lint",
+    "validate:all": "pnpm preflight && pnpm validate && pnpm security:audit"
   }
 }
