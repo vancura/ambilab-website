@@ -5,12 +5,15 @@
 export class AmbiLabError extends Error {
     constructor(
         message: string,
-        public readonly code?: string,
+        public readonly code: string | undefined = undefined,
         public readonly statusCode: number = 500,
     ) {
         super(message);
         this.name = this.constructor.name;
-        Error.captureStackTrace(this, this.constructor);
+
+        if (typeof Error.captureStackTrace === 'function') {
+            Error.captureStackTrace(this, this.constructor);
+        }
     }
 }
 
@@ -24,39 +27,39 @@ export class LocaleError extends AmbiLabError {
 }
 
 export class ContentError extends AmbiLabError {
-    constructor(message: string, contentId?: string) {
+    constructor(message: string, contentId: string | undefined = undefined) {
         super(`Content error: ${message}`, 'CONTENT_ERROR', 404);
         this.contentId = contentId;
     }
 
-    public readonly contentId?: string;
+    public readonly contentId: string | undefined;
 }
 
 export class ValidationError extends AmbiLabError {
-    constructor(message: string, field?: string) {
+    constructor(message: string, field: string | undefined = undefined) {
         super(`Validation error: ${message}`, 'VALIDATION_ERROR', 400);
         this.field = field;
     }
 
-    public readonly field?: string;
+    public readonly field: string | undefined;
 }
 
 export class ConfigurationError extends AmbiLabError {
-    constructor(message: string, configKey?: string) {
+    constructor(message: string, configKey: string | undefined = undefined) {
         super(`Configuration error: ${message}`, 'CONFIG_ERROR', 500);
         this.configKey = configKey;
     }
 
-    public readonly configKey?: string;
+    public readonly configKey: string | undefined;
 }
 
 export class NetworkError extends AmbiLabError {
-    constructor(message: string, url?: string) {
+    constructor(message: string, url: string | undefined = undefined) {
         super(`Network error: ${message}`, 'NETWORK_ERROR', 503);
         this.url = url;
     }
 
-    public readonly url?: string;
+    public readonly url: string | undefined;
 }
 
 /**
