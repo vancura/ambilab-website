@@ -11,11 +11,20 @@
 
 set -euo pipefail
 
+# Ensure jq is available
+if ! command -v jq &> /dev/null; then
+    echo '{"followup_message": "Error: jq is required but not installed"}' >&2
+    exit 0
+fi
+
 # Read the input payload from stdin
 INPUT=$(cat)
 
 # Parse the status and loop count from the input
-STATUS=$(echo "$INPUT" | jq -r '.status // "unknown"')
+STATUS=$(echo "$INPUT" | jq -r '.status // "unknown"') || {
+    echo '{"followup_message": "Error: Failed to parse JSON input"}' >&2
+    exit 0
+}
 LOOP_COUNT=$(echo "$INPUT" | jq -r '.loop_count // 0')
 
 # Maximum iterations to prevent infinite loops

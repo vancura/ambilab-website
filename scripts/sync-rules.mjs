@@ -196,6 +196,13 @@ function syncCursorConfig() {
         const hookFiles = readdirSync(hooksSrcDir);
         for (const file of hookFiles) {
             const srcPath = join(hooksSrcDir, file);
+
+            // Skip directories, only copy files.
+            // eslint-disable-next-line security/detect-non-literal-fs-filename
+            if (!lstatSync(srcPath).isFile()) {
+                continue;
+            }
+
             const destPath = join(hooksDestDir, file);
 
             copyFileSync(srcPath, destPath);
