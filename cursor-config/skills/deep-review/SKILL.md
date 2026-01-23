@@ -21,7 +21,7 @@ pushing significant changes or creating pull requests.
    - All automated checks must pass before AI review
 
 2. **Run security audit**
-   - Execute `pnpm security:audit` (npm audit)
+   - Execute `pnpm security:audit` (pnpm audit)
    - Report any vulnerabilities found (moderate and above)
    - Note: Pre-push hook blocks on high/critical; `/deep-review` reports all for awareness
 
