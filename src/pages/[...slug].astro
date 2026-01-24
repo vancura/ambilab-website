@@ -146,7 +146,7 @@ if (renderType === 'blog-index') {
                                 return (
                                     <article class="border-b border-border-default pb-8 last:border-b-0 dark:border-border-default-dark">
                                         <a href={postUrl} class="group">
-                                            <h2 class="mb-2 text-2xl font-bold group-hover:text-link-hover dark:group-hover:text-link-hover-dark">
+                                            <h2 class="mb-2 text-2xl font-bold group-[&:hover,&:focus]:text-link-hover dark:group-[&:hover,&:focus]:text-link-hover-dark">
                                                 {post.data.title}
                                             </h2>
                                         </a>
@@ -172,7 +172,7 @@ if (renderType === 'blog-index') {
 
                                         <a
                                             href={postUrl}
-                                            class="inline-flex items-center font-medium text-link hover:text-link-hover dark:text-link-dark dark:hover:text-link-hover-dark"
+                                            class="[&:hover,&:focus]:text-link-hover dark:[&:hover,&:focus]:text-link-hover-dark inline-flex items-center font-medium text-link dark:text-link-dark"
                                         >
                                             {t.buttons.readMore} →
                                         </a>

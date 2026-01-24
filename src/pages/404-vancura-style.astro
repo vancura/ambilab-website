@@ -63,7 +63,7 @@ import '@/styles/global.css';
                     <div class="flex-shrink-0">
                         <a
                             href="/"
-                            class="text-sm font-medium uppercase tracking-wider text-white hover:text-neutral-300 sm:text-base"
+                            class="[&:hover,&:focus]:text-neutral-300 text-sm font-medium uppercase tracking-wider text-white sm:text-base"
                         >
                             Václav Vančura
                         </a>
@@ -72,13 +72,13 @@ import '@/styles/global.css';
                     <nav id="desktop-nav" class="hidden items-center gap-6 md:flex lg:gap-8">
                         <a
                             href="/design"
-                            class="text-sm uppercase tracking-wide text-neutral-400 hover:text-white lg:text-base"
+                            class="[&:hover,&:focus]:text-white text-sm uppercase tracking-wide text-neutral-400 lg:text-base"
                         >
                             Design
                         </a>
                         <a
                             href="/blog"
-                            class="text-sm uppercase tracking-wide text-neutral-400 hover:text-white lg:text-base"
+                            class="[&:hover,&:focus]:text-white text-sm uppercase tracking-wide text-neutral-400 lg:text-base"
                         >
                             Blog
                         </a>
@@ -87,7 +87,7 @@ import '@/styles/global.css';
                     <button
                         id="mobile-menu-button"
                         type="button"
-                        class="p-2 text-neutral-400 hover:text-white md:hidden"
+                        class="[&:hover,&:focus]:text-white p-2 text-neutral-400 md:hidden"
                         aria-label="Toggle menu"
                     >
                         <svg
@@ -123,10 +123,18 @@ import '@/styles/global.css';
         >
             <nav class="mx-auto max-w-7xl px-4 py-8 sm:px-6">
                 <div class="flex flex-col gap-6">
-                    <a href="/design" class="text-xl uppercase tracking-wide text-neutral-400 hover:text-white">
+                    <a
+                        href="/design"
+                        class="[&:hover,&:focus]:text-white text-xl uppercase tracking-wide text-neutral-400"
+                    >
                         Design
                     </a>
-                    <a href="/blog" class="text-xl uppercase tracking-wide text-neutral-400 hover:text-white"> Blog </a>
+                    <a
+                        href="/blog"
+                        class="[&:hover,&:focus]:text-white text-xl uppercase tracking-wide text-neutral-400"
+                    >
+                        Blog
+                    </a>
                 </div>
             </nav>
         </div>
@@ -150,7 +158,7 @@ import '@/styles/global.css';
 
                 <a
                     href="/"
-                    class="inline-block rounded-full border-2 border-white px-7 py-3 text-xs font-medium uppercase tracking-[0.15em] text-white hover:bg-white hover:text-neutral-900 sm:px-8 sm:text-sm"
+                    class="[&:hover,&:focus]:bg-white [&:hover,&:focus]:text-neutral-900 inline-block rounded-full border-2 border-white px-7 py-3 text-xs font-medium uppercase tracking-[0.15em] text-white sm:px-8 sm:text-sm"
                 >
                     Go Back Home
                 </a>
@@ -172,19 +180,19 @@ import '@/styles/global.css';
                     <nav class="flex flex-col gap-3 sm:gap-4">
                         <a
                             href="/"
-                            class="text-sm uppercase tracking-wide text-neutral-400 hover:text-white sm:text-base"
+                            class="[&:hover,&:focus]:text-white text-sm uppercase tracking-wide text-neutral-400 sm:text-base"
                         >
                             Home
                         </a>
                         <a
                             href="/design"
-                            class="text-sm uppercase tracking-wide text-neutral-400 hover:text-white sm:text-base"
+                            class="[&:hover,&:focus]:text-white text-sm uppercase tracking-wide text-neutral-400 sm:text-base"
                         >
                             Design
                         </a>
                         <a
                             href="/blog"
-                            class="text-sm uppercase tracking-wide text-neutral-400 hover:text-white sm:text-base"
+                            class="[&:hover,&:focus]:text-white text-sm uppercase tracking-wide text-neutral-400 sm:text-base"
                         >
                             Blog
                         </a>
@@ -195,7 +203,7 @@ import '@/styles/global.css';
                             href="https://linkedin.com"
                             target="_blank"
                             rel="noopener noreferrer"
-                            class="text-sm uppercase tracking-wide text-neutral-400 hover:text-white sm:text-base"
+                            class="[&:hover,&:focus]:text-white text-sm uppercase tracking-wide text-neutral-400 sm:text-base"
                         >
                             LinkedIn
                         </a>
@@ -203,7 +211,7 @@ import '@/styles/global.css';
                             href="https://github.com"
                             target="_blank"
                             rel="noopener noreferrer"
-                            class="text-sm uppercase tracking-wide text-neutral-400 hover:text-white sm:text-base"
+                            class="[&:hover,&:focus]:text-white text-sm uppercase tracking-wide text-neutral-400 sm:text-base"
                         >
                             GitHub
                         </a>
@@ -211,7 +219,7 @@ import '@/styles/global.css';
                             href="https://mastodon.social"
                             target="_blank"
                             rel="noopener noreferrer"
-                            class="text-sm uppercase tracking-wide text-neutral-400 hover:text-white sm:text-base"
+                            class="[&:hover,&:focus]:text-white text-sm uppercase tracking-wide text-neutral-400 sm:text-base"
                         >
                             Mastodon
                         </a>

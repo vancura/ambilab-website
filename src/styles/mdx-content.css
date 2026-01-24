@@ -6,7 +6,7 @@
     --color-table-border: #e5e7eb; /* gray.200 */
 
     & a:not(.anchor) {
-        @apply relative font-medium text-link underline underline-offset-4 hover:text-link-hover dark:text-link-dark dark:hover:text-link-hover-dark;
+        @apply relative font-medium text-link underline underline-offset-4 [&:hover,&:focus]:text-link-hover dark:text-link-dark dark:[&:hover,&:focus]:text-link-hover-dark;
 
         &[href^='http']::after,
         &[href^='https']::after {

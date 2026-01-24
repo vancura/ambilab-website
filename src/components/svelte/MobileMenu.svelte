@@ -166,7 +166,7 @@
     <button
         bind:this={menuButtonElement}
         type="button"
-        class="[&:hover,&:focus]:bg-surface-hover dark:[&:hover,&:focus]:bg-surface-hover-dark cursor-pointer text-text-secondary hover:text-text-primary md:hidden dark:text-text-secondary-dark dark:hover:text-text-primary-dark"
+        class="[&:hover,&:focus]:bg-active dark:[&:hover,&:focus]:bg-active-dark [&:hover,&:focus]:text-text-primary dark:[&:hover,&:focus]:text-text-primary-dark cursor-pointer text-text-secondary md:hidden dark:text-text-secondary-dark"
         aria-label={isOpen ? 'Close menu' : 'Open menu'}
         aria-expanded={isOpen}
         aria-controls="mobile-menu"
