@@ -24,6 +24,18 @@
         } catch {
             isVisible = true;
         }
+
+        return () => {
+            document.documentElement.style.removeProperty('--cookie-banner-height');
+        };
+    });
+
+    $effect(() => {
+        if (isVisible) {
+            document.documentElement.style.setProperty('--cookie-banner-height', '80px');
+        } else {
+            document.documentElement.style.removeProperty('--cookie-banner-height');
+        }
     });
 
     const handleDismiss = () => {
