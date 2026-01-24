@@ -38,7 +38,7 @@
 
 {#if isVisible}
     <div
-        class="z-(--z-cookie-banner) bg-cookie-banner-bg text-cookie-banner-text dark:bg-cookie-banner-bg-dark dark:text-cookie-banner-text-dark fixed bottom-0 left-0 right-0 px-4 pb-3 pt-2 sm:pt-3 md:py-7"
+        class="z-(--z-cookie-banner) bg-cookie-banner-bg text-cookie-banner-text dark:bg-cookie-banner-bg-dark dark:text-cookie-banner-text-dark fixed bottom-0 left-0 right-0 select-none px-4 pb-3 pt-2 sm:pt-3 md:py-7"
     >
         <div
             class="container mx-auto flex flex-col items-start justify-between gap-1 sm:max-w-[608px] sm:flex-row sm:items-center md:max-w-[736px] lg:max-w-[896px]"
