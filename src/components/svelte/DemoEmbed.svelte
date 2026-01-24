@@ -138,7 +138,7 @@
                     href={validatedSrc}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="inline-flex items-center gap-2 rounded-lg bg-button-primary px-4 py-2 text-sm font-medium text-button-primary-text hover:bg-button-primary-hover focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 focus:ring-offset-page-bg dark:bg-button-primary-dark dark:text-button-primary-text-dark dark:hover:bg-button-primary-hover-dark dark:focus:ring-focus-ring-dark dark:focus:ring-offset-page-bg-dark"
+                    class="[&:hover,&:focus]:bg-button-primary-hover dark:[&:hover,&:focus]:bg-button-primary-hover-dark inline-flex items-center gap-2 rounded-lg bg-button-primary px-4 py-2 text-sm font-medium text-button-primary-text focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 focus:ring-offset-page-bg dark:bg-button-primary-dark dark:text-button-primary-text-dark dark:focus:ring-focus-ring-dark dark:focus:ring-offset-page-bg-dark"
                 >
                     Open Demo in New Tab
 

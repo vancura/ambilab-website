@@ -14,8 +14,6 @@ export default {
 
                 surface: 'var(--color-surface)',
                 'surface-dark': 'var(--color-surface-dark)',
-                'surface-hover': 'var(--color-surface-hover)',
-                'surface-hover-dark': 'var(--color-surface-hover-dark)',
                 'surface-code': 'var(--color-surface-code)',
                 'surface-code-dark': 'var(--color-surface-code-dark)',
 
@@ -49,6 +47,9 @@ export default {
 
                 'focus-ring': 'var(--color-focus-ring)',
                 'focus-ring-dark': 'var(--color-focus-ring-dark)',
+
+                active: 'var(--color-active)',
+                'active-dark': 'var(--color-active-dark)',
 
                 'info-bg': 'var(--color-info-bg)',
                 'info-bg-dark': 'var(--color-info-bg-dark)',
