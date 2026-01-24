@@ -32,5 +32,15 @@ const { code, title, description, homeButtonText, homeLink = '/', locale } = Ast
         </p>
 
         <Button client:load href={homeLink}>{homeButtonText}</Button>
+        <hr />
+        <Button client:load href={homeLink} size="sm">{homeButtonText}</Button>
+        <hr />
+        <Button client:load variant="secondary" href={homeLink}>{homeButtonText}</Button>
+        <hr />
+        <Button client:load variant="secondary" href={homeLink} size="sm">{homeButtonText}</Button>
+        <hr />
+        <Button client:load variant="outline" href={homeLink}>{homeButtonText}</Button>
+        <hr />
+        <Button client:load variant="outline" href={homeLink} size="sm">{homeButtonText}</Button>
     </div>
 </PageLayout>
