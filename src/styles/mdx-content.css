@@ -1,18 +1,10 @@
 @reference '../styles/global.css';
 
-:root {
+.mdx-content {
     --color-table-header-bg: #f9fafb; /* gray.50 */
     --color-table-header-border: #d1d5db; /* gray.300 */
     --color-table-border: #e5e7eb; /* gray.200 */
-}
 
-.dark {
-    --color-table-header-bg-dark: #111827; /* gray.900 */
-    --color-table-header-border-dark: #374151; /* gray.700 */
-    --color-table-border-dark: #1f2937; /* gray.800 */
-}
-
-.mdx-content {
     & a:not(.anchor) {
         @apply relative font-medium text-link underline underline-offset-4 hover:text-link-hover dark:text-link-dark dark:hover:text-link-hover-dark;
 
@@ -133,17 +125,6 @@
         }
     }
 
-    .dark & table {
-        & th {
-            border-color: var(--color-table-header-border-dark);
-            background-color: var(--color-table-header-bg-dark);
-        }
-
-        & td {
-            border-color: var(--color-table-border-dark);
-        }
-    }
-
     & hr {
         @apply my-8 border-t border-border-default dark:border-border-default-dark;
     }
@@ -192,4 +173,16 @@
     & sup {
         @apply align-super;
     }
+}
+
+.dark .mdx-content {
+    --color-table-header-bg: #111827; /* gray.900 */
+    --color-table-header-border: #374151; /* gray.700 */
+    --color-table-border: #1f2937; /* gray.800 */
+}
+
+.dark .mdx-content {
+    --color-table-header-bg: #111827; /* gray.900 */
+    --color-table-header-border: #374151; /* gray.700 */
+    --color-table-border: #1f2937; /* gray.800 */
 }
