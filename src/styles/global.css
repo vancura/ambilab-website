@@ -160,7 +160,7 @@ body {
      * - dlig: Discretionary ligatures
      * - zero: Slashed zero for clarity
      * - tnum: Tabular numbers for alignment in tables
-     * - cv01, cv06, cv08, cv10, cv13: Character variants for improved readability
+     * - cv01, cv06, cv08, cv09, cv10, cv13: Character variants for improved readability
      *
      * Disabled features (0):
      * - calt: Contextual alternates (disabled for consistency)
