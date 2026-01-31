@@ -1,6 +1,7 @@
 <script lang="ts">
     import { toggleDarkMode } from '@utils/dom';
     import { createLogger } from '@utils/logger';
+    import { onMount } from 'svelte';
 
     const logger = createLogger({ prefix: 'ThemeSwitcher' });
 
@@ -12,7 +13,7 @@
     } as const;
 
     let currentTheme = $state<'light' | 'dark'>('light');
-    let mounted = $state(false);
+    let mounted = $state(true); // Start visible for SSR
 
     const updateTheme = () => {
         if (typeof document !== 'undefined' && document.documentElement) {
@@ -36,14 +37,8 @@
         }
     };
 
-    $effect(() => {
-        if (typeof window === 'undefined') {
-            return undefined;
-        }
-
+    onMount(() => {
         updateTheme();
-
-        mounted = true;
 
         const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
