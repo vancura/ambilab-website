@@ -6,7 +6,7 @@
   //   pnpm exec wrangler pages dev dist         # Test edge functions locally
   //   pnpm exec wrangler pages deploy dist      # Manual deployment
 
-  "name": "ambilab-website",
+  "name": "website",
   "compatibility_date": "2025-12-20",
   "pages_build_output_dir": "./dist"
 }

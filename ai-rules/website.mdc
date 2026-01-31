@@ -67,7 +67,7 @@ All code must pass strict TypeScript checks:
 ### Project Structure
 
 ```text
-ambilab-website/
+website/
   functions/              # Cloudflare Pages edge functions (advanced mode)
   public/                 # Static assets (favicons, OG images)
   src/

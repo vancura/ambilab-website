@@ -1,16 +1,16 @@
 {
-  "name": "ambilab-website",
+  "name": "website",
   "version": "1.0.0",
   "type": "module",
   "description": "A bilingual (English/Czech) marketing website and blog for Ambilab.",
-  "author": "Václav Vančura",
+  "author": "Ambilab",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vancura/ambilab-website.git"
+    "url": "https://github.com/ambilab/website.git"
   },
   "homepage": "https://ambilab.com",
   "bugs": {
-    "url": "https://github.com/vancura/ambilab-website/issues"
+    "url": "https://github.com/ambilab/website/issues"
   },
   "packageManager": "pnpm@10.26.2",
   "engines": {
