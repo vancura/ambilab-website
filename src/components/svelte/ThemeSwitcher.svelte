@@ -13,7 +13,6 @@
     } as const;
 
     let currentTheme = $state<'light' | 'dark'>('light');
-    let mounted = $state(true); // Start visible for SSR
 
     const updateTheme = () => {
         if (typeof document !== 'undefined' && document.documentElement) {
@@ -65,8 +64,6 @@
 <button
     onclick={handleThemeToggle}
     class="[&:hover,&:focus]:text-text-primary dark:[&:hover,&:focus]:text-text-primary-dark [&:hover,&:focus]:bg-active dark:[&:hover,&:focus]:bg-active-dark -mr-[6px] flex cursor-pointer items-center text-text-secondary dark:text-text-secondary-dark"
-    class:opacity-0={!mounted}
-    class:opacity-100={mounted}
     aria-label="Toggle theme"
     title={currentTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
 >
