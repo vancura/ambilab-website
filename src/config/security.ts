@@ -14,22 +14,18 @@ export const STATIC_SECURITY_HEADERS = {
 } as const;
 
 export interface CSPConfig {
-    nonce: string;
     isDev?: boolean;
 }
 
 export function buildCSP(config: CSPConfig): string {
-    const { nonce, isDev = false } = config;
+    const { isDev = false } = config;
 
-    // Dev allows unsafe-inline for HMR tooling.
-    const scriptSrc = isDev
-        ? `'self' https://plausible.io 'unsafe-inline'`
-        : `'self' https://plausible.io 'nonce-${nonce}'`;
+    // Astro doesn't support CSP nonces for hydration scripts yet, so we use unsafe-inline
+    // for both dev and prod. Nonce generation is still available for inline scripts in templates.
+    const scriptSrc = `'self' https://plausible.io 'unsafe-inline'`;
 
-    // unsafe-hashes allow inline style attributes.
-    const styleSrc = isDev
-        ? `'self' https://fonts.vancura.dev 'unsafe-inline' 'unsafe-hashes'`
-        : `'self' https://fonts.vancura.dev 'nonce-${nonce}' 'unsafe-hashes'`;
+    // unsafe-inline and unsafe-hashes allow inline styles and style attributes.
+    const styleSrc = `'self' https://fonts.vancura.dev 'unsafe-inline' 'unsafe-hashes'`;
 
     // Dev allows WebSocket connections for HMR.
     const connectSrc = isDev

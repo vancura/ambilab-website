@@ -1,6 +1,7 @@
 <script lang="ts">
     import { toggleDarkMode } from '@utils/dom';
     import { createLogger } from '@utils/logger';
+    import { onMount } from 'svelte';
 
     const logger = createLogger({ prefix: 'ThemeSwitcher' });
 
@@ -12,7 +13,6 @@
     } as const;
 
     let currentTheme = $state<'light' | 'dark'>('light');
-    let mounted = $state(false);
 
     const updateTheme = () => {
         if (typeof document !== 'undefined' && document.documentElement) {
@@ -36,14 +36,8 @@
         }
     };
 
-    $effect(() => {
-        if (typeof window === 'undefined') {
-            return undefined;
-        }
-
+    onMount(() => {
         updateTheme();
-
-        mounted = true;
 
         const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
@@ -70,8 +64,6 @@
 <button
     onclick={handleThemeToggle}
     class="[&:hover,&:focus]:text-text-primary dark:[&:hover,&:focus]:text-text-primary-dark [&:hover,&:focus]:bg-active dark:[&:hover,&:focus]:bg-active-dark -mr-[6px] flex cursor-pointer items-center text-text-secondary dark:text-text-secondary-dark"
-    class:opacity-0={!mounted}
-    class:opacity-100={mounted}
     aria-label="Toggle theme"
     title={currentTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
 >

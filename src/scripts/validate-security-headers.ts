@@ -44,17 +44,19 @@ function validateProductionCSP(): ValidationResult[] {
     const results: ValidationResult[] = [];
 
     try {
-        const testNonce = 'test-nonce-123';
-        const prodCSP = buildCSP({ nonce: testNonce, isDev: false });
+        const prodCSP = buildCSP({ isDev: false });
 
-        const hasNonce = prodCSP.includes(`'nonce-${testNonce}'`);
+        // NOTE: We intentionally use 'unsafe-inline' instead of nonces because
+        // Astro's hydration system doesn't support CSP nonces for dynamically
+        // injected scripts. This is a known limitation.
+        const hasUnsafeInline = prodCSP.includes("'unsafe-inline'");
 
         results.push(
             createResult(
-                hasNonce,
-                hasNonce
-                    ? '[PASS] Production CSP: Nonce properly embedded'
-                    : '[FAIL] Production CSP: Nonce not properly embedded',
+                hasUnsafeInline,
+                hasUnsafeInline
+                    ? '[PASS] Production CSP: Contains unsafe-inline (required for Astro hydration)'
+                    : '[FAIL] Production CSP: Missing unsafe-inline (required for Astro hydration)',
             ),
         );
 
@@ -68,17 +70,6 @@ function validateProductionCSP(): ValidationResult[] {
                     : '[FAIL] Production CSP: Missing upgrade-insecure-requests',
             ),
         );
-
-        const hasUnsafeInline = prodCSP.includes("'unsafe-inline'");
-
-        results.push(
-            createResult(
-                !hasUnsafeInline,
-                hasUnsafeInline
-                    ? "[FAIL] Production CSP: Shouldn't contain unsafe-inline"
-                    : "[PASS] Production CSP: Doesn't contain unsafe-inline",
-            ),
-        );
     } catch (error) {
         results.push(createResult(false, `[FAIL] Production CSP validation: ${error}`));
     }
@@ -90,8 +81,7 @@ function validateDevelopmentCSP(): ValidationResult[] {
     const results: ValidationResult[] = [];
 
     try {
-        const testNonce = 'test-nonce-123';
-        const devCSP = buildCSP({ nonce: testNonce, isDev: true });
+        const devCSP = buildCSP({ isDev: true });
 
         const hasUnsafeInline = devCSP.includes("'unsafe-inline'");
 

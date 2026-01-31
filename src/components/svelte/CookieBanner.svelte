@@ -12,18 +12,21 @@
 
     const t = $derived(getTranslation(locale));
 
-    let isVisible = $state(false);
+    let isVisible = $state(true); // Start visible for SSR
+    let hydrated = $state(false);
 
     onMount(() => {
         try {
             const dismissed = localStorage.getItem(COMPONENT_CONFIG.cookieBanner.dismissedKey);
 
-            if (!dismissed) {
-                isVisible = true;
+            if (dismissed) {
+                isVisible = false;
             }
         } catch {
-            isVisible = true;
+            // If localStorage fails, keep it visible
         }
+
+        hydrated = true;
 
         return () => {
             document.documentElement.style.removeProperty('--cookie-banner-height');
@@ -31,10 +34,12 @@
     });
 
     $effect(() => {
-        if (isVisible) {
-            document.documentElement.style.setProperty('--cookie-banner-height', '80px');
-        } else {
-            document.documentElement.style.removeProperty('--cookie-banner-height');
+        if (typeof document !== 'undefined' && hydrated) {
+            if (isVisible) {
+                document.documentElement.style.setProperty('--cookie-banner-height', '80px');
+            } else {
+                document.documentElement.style.removeProperty('--cookie-banner-height');
+            }
         }
     });
 
