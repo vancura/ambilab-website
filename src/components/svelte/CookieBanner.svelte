@@ -15,6 +15,12 @@
     let isVisible = $state(true); // Start visible for SSR
     let hydrated = $state(false);
 
+    function resetCookieBannerProperties() {
+        document.documentElement.style.removeProperty('--cookie-banner-height');
+        document.documentElement.style.removeProperty('--cookie-banner-height-sm');
+        document.documentElement.style.removeProperty('--cookie-banner-height-md');
+    }
+
     onMount(() => {
         try {
             const dismissed = localStorage.getItem(COMPONENT_CONFIG.cookieBanner.dismissedKey);
@@ -29,7 +35,7 @@
         hydrated = true;
 
         return () => {
-            document.documentElement.style.removeProperty('--cookie-banner-height');
+            resetCookieBannerProperties();
         };
     });
 
@@ -40,9 +46,7 @@
                 document.documentElement.style.setProperty('--cookie-banner-height-sm', '48px');
                 document.documentElement.style.setProperty('--cookie-banner-height-md', '80px');
             } else {
-                document.documentElement.style.removeProperty('--cookie-banner-height');
-                document.documentElement.style.removeProperty('--cookie-banner-height-sm');
-                document.documentElement.style.removeProperty('--cookie-banner-height-md');
+                resetCookieBannerProperties();
             }
         }
     });
