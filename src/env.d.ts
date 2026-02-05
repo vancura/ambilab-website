@@ -7,9 +7,7 @@ declare module '*?raw' {
     export default content;
 }
 
-interface ImportMetaEnv {
-    readonly BUTTONDOWN_API_KEY?: string;
-}
+type ImportMetaEnv = object;
 
 // biome-ignore lint/correctness/noUnusedVariables: Required by Astro for type augmentation
 interface ImportMeta {
