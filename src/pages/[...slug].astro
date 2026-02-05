@@ -24,10 +24,11 @@ let Content: any;
 let locale: Locale = detectedLocale;
 let siteUrl = Astro.url.origin;
 let permalink = '';
+let content: Awaited<ReturnType<typeof loadLocaleContent>> | undefined;
 
 try {
     // Load all content collections in parallel once (major performance optimization)
-    const content = await loadLocaleContent(detectedLocale);
+    content = await loadLocaleContent(detectedLocale);
 
     if (isBlogIndex) {
         sortedBlogPosts = sortBlogPostsByDate(content.blogPosts);
@@ -100,6 +101,7 @@ if (renderType === 'blog-index') {
             description={t.blog.description}
             permalink={permalink}
             locale={locale}
+            pageMap={content?.pageMap}
             {...(translationPath ? { translationPath } : {})}
         >
             <div class="container mx-auto px-4 py-12">
@@ -162,6 +164,7 @@ if (renderType === 'blog-index') {
             description={entry.data.description}
             permalink={permalink}
             locale={locale}
+            pageMap={content?.pageMap}
             {...(translationPath ? { translationPath } : {})}
         >
             <article class="container mx-auto px-4 py-12">
@@ -181,6 +184,7 @@ if (renderType === 'blog-index') {
             author={entry.data.author}
             tags={entry.data.tags}
             content={entry.body}
+            pageMap={content?.pageMap}
             {...(translationPath ? { translationPath } : {})}
         >
             <Content />
