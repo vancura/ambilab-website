@@ -36,23 +36,16 @@ function validateEmail(email: unknown): ValidationResult {
 }
 
 async function logButtondownError(response: Response): Promise<void> {
-    logger.error(`Buttondown API error: Status ${response.status}`);
+    logger.error(`Buttondown API error: Status ${response.status} ${response.statusText}`);
 
     try {
         const errorText = await response.text();
-        logger.error(`Buttondown API raw response: ${errorText}`);
-
         const errorData = JSON.parse(errorText) as { message?: string; error?: string; [key: string]: unknown };
         const errorMessage = errorData.message || errorData.error;
 
-        if (errorMessage) {
-            logger.error(`Buttondown API error message: ${errorMessage}`);
-        }
-
-        // Log full error data for debugging
-        logger.error(`Buttondown API full error data: ${JSON.stringify(errorData)}`);
-    } catch (parseError) {
-        logger.error(`Failed to parse Buttondown error response: ${parseError}`);
+        logger.error(`Buttondown API error message: ${errorMessage ?? 'Unknown error'}`);
+    } catch {
+        logger.error('Failed to parse Buttondown error response as JSON');
     }
 }
 
