@@ -4,10 +4,10 @@ import PageLayout from '@components/astro/PageLayout.astro';
 import { DEFAULT_LOCALE } from '@i18n/config';
 import { getTranslation } from '@i18n/translations';
 import type { Locale } from '@type/locale';
+import { findBlogPost, findPage, loadLocaleContent, normalizeSlug, sortBlogPostsByDate } from '@utils/content-loader';
 import { formatDate } from '@utils/formatDate';
 import { createLogger } from '@utils/logger';
 import type { CollectionEntry } from 'astro:content';
-import { getCollection } from 'astro:content';
 
 const logger = createLogger({ prefix: 'ContentPage' });
 const detectedLocale = Astro.locals.locale ?? DEFAULT_LOCALE;
@@ -26,64 +26,36 @@ let siteUrl = Astro.url.origin;
 let permalink = '';
 
 try {
+    // Load all content collections in parallel once (major performance optimization)
+    const content = await loadLocaleContent(detectedLocale);
+
     if (isBlogIndex) {
-        const blogPosts = await getCollection(
-            'blog',
-            (entry: CollectionEntry<'blog'>) => !entry.data.draft && entry.data.locale === detectedLocale,
-        );
-
-        sortedBlogPosts = blogPosts.sort(
-            (a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) =>
-                b.data.pubDate.getTime() - a.data.pubDate.getTime(),
-        );
-
+        sortedBlogPosts = sortBlogPostsByDate(content.blogPosts);
         permalink = `${siteUrl}/blog`;
         renderType = 'blog-index';
     } else if (isBlogPost) {
-        const blogPosts = await getCollection(
-            'blog',
-            (entry: CollectionEntry<'blog'>) => !entry.data.draft && entry.data.locale === detectedLocale,
-        );
-
-        entry = blogPosts.find((e: CollectionEntry<'blog'>) => {
-            const entrySlug = e.id.replace(/\.(mdx|md)$/, '').replace(/^[^/]+\//, '');
-
-            return entrySlug === actualSlug;
-        });
+        entry = findBlogPost(actualSlug, content);
 
         if (entry) {
             const rendered = await entry.render();
+            const entrySlug = normalizeSlug(entry.id);
 
             Content = rendered.Content;
             locale = entry.data.locale;
-
-            const entrySlug = entry.id.replace(/\.(mdx|md)$/, '').replace(/^[^/]+\//, '');
-
             permalink = `${siteUrl}/blog/${entrySlug}`;
             renderType = 'blog-post';
         } else {
             renderType = 'not-found';
         }
     } else {
-        const pages = await getCollection(
-            'pages',
-            (entry: CollectionEntry<'pages'>) => entry.data.locale === detectedLocale,
-        );
-
-        entry = pages.find((e: CollectionEntry<'pages'>) => {
-            const entrySlug = e.id.replace(/\.(mdx|md)$/, '').replace(/^[^/]+\//, '');
-
-            return entrySlug === actualSlug;
-        });
+        entry = findPage(actualSlug, content);
 
         if (entry) {
             const rendered = await entry.render();
+            const entrySlug = normalizeSlug(entry.id);
 
             Content = rendered.Content;
             locale = entry.data.locale;
-
-            const entrySlug = entry.id.replace(/\.(mdx|md)$/, '').replace(/^[^/]+\//, '');
-
             permalink = `${siteUrl}/${entrySlug === 'index' ? '' : entrySlug}`;
             renderType = 'page';
         } else {
@@ -140,7 +112,7 @@ if (renderType === 'blog-index') {
                     ) : (
                         <div class="space-y-8">
                             {sortedBlogPosts.map((post) => {
-                                const postSlug = post.id.replace(/\.(mdx|md)$/, '').replace(/^[^/]+\//, '');
+                                const postSlug = normalizeSlug(post.id);
                                 const postUrl = `/blog/${postSlug}`;
 
                                 return (

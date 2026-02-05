@@ -2,8 +2,7 @@
 import { getRoute, isRouteActive } from '@config/routes';
 import { getTranslation } from '@i18n/translations';
 import type { Locale } from '@type/locale';
-import type { CollectionEntry } from 'astro:content';
-import { getCollection } from 'astro:content';
+import { loadLocaleContent } from '@utils/content-loader';
 
 export interface Props {
     locale: Locale;
@@ -15,14 +14,10 @@ const { locale, currentPath, mobile } = Astro.props as Props;
 
 const t = getTranslation(locale);
 
-const pages = await getCollection('pages', (entry: CollectionEntry<'pages'>) => entry.data.locale === locale);
+const content = await loadLocaleContent(locale);
 
 const getPageTitle = (slug: string): string | undefined => {
-    const page = pages.find((p: CollectionEntry<'pages'>) => {
-        const entrySlug = p.id.replace(/\.(mdx|md)$/, '').replace(/^[^/]+\//, '');
-
-        return entrySlug === slug;
-    });
+    const page = content.pageMap.get(slug);
 
     return page?.data.menuTitle ?? page?.data.title;
 };
