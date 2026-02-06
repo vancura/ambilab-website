@@ -19,8 +19,8 @@
     --color-surface-code-dark: theme('colors.gray.800');
 
     /* Semantic Colors - Borders */
-    --color-border-default: theme('colors.zinc.300');
-    --color-border-default-dark: theme('colors.zinc.800');
+    --color-border-default: theme('colors.zinc.400');
+    --color-border-default-dark: theme('colors.zinc.700');
     --color-border-medium: theme('colors.gray.300');
     --color-border-medium-dark: theme('colors.gray.700');
     --color-border-subtle: theme('colors.gray.400');
