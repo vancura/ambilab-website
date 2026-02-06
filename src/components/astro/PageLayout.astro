@@ -67,6 +67,6 @@ const pageMap = providedPageMap ?? (await loadLocaleContent(locale)).pageMap;
 
         <CookieBanner client:idle locale={locale} />
 
-        <RhythmDebug client:idle />
+        {import.meta.env.DEV && <RhythmDebug client:idle />}
     </body>
 </html>
