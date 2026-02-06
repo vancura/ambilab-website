@@ -111,9 +111,11 @@
 
     /* Vertical rhythm (8px grid) */
     --spacing-rhythm: 8px;
-    --line-height-rhythm-3: 24px; /* 3x8: body text, h4 */
-    --line-height-rhythm-4: 32px; /* 4x8: prose-lg body, h3 */
-    --line-height-rhythm-5: 40px; /* 5x8: h1, h2 */
+
+    /* Line heights for vertical rhythm - define as utilities */
+    --line-height-rhythm-3: 24px;
+    --line-height-rhythm-4: 32px;
+    --line-height-rhythm-5: 40px;
 
     /* Dot pattern background */
     --bg-dots-image: radial-gradient(circle, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
@@ -146,16 +148,18 @@
 
 /* Vertical Rhythm Debug Overlay */
 @layer utilities {
-    .debug-rhythm {
-        background-image:
-            linear-gradient(to bottom, rgba(255, 0, 0, 0.25) 0 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(255, 0, 0, 0.1) 0 1px, transparent 1px);
-        background-size:
-            100% calc(var(--spacing-rhythm) * 4),
-            100% var(--spacing-rhythm);
-        background-position:
-            0 calc(var(--spacing-rhythm) * -2),
-            0 calc(var(--spacing-rhythm) * -2);
+    @media (min-width: theme('screens.md')) {
+        .debug-rhythm {
+            background-image:
+                linear-gradient(to bottom, rgba(255, 0, 0, 0.25) 0 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 0, 0, 0.1) 0 1px, transparent 1px);
+            background-size:
+                100% calc(var(--spacing-rhythm) * 4),
+                100% var(--spacing-rhythm);
+            background-position:
+                0 calc(var(--spacing-rhythm) * -2),
+                0 calc(var(--spacing-rhythm) * -2);
+        }
     }
 }
 
