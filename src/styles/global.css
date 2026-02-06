@@ -132,6 +132,14 @@
     .bg-dots {
         background-image: var(--bg-dots-image);
         background-size: 8px 8px;
+
+        /**
+         * Background position: 0 3.5px
+         *
+         * This half-pixel vertical shift (3.5px = 8px / 2 - 0.5px) better aligns
+         * the dots to the 8px rhythm grid. Adjusted for visual harmony with the
+         * vertical rhythm system.
+         */
         background-position: 0 3.5px;
     }
 }
@@ -143,11 +151,11 @@
             linear-gradient(to bottom, rgba(255, 0, 0, 0.25) 0 1px, transparent 1px),
             linear-gradient(to bottom, rgba(255, 0, 0, 0.1) 0 1px, transparent 1px);
         background-size:
-            100% 32px,
-            100% 8px;
+            100% calc(var(--spacing-rhythm) * 4),
+            100% var(--spacing-rhythm);
         background-position:
-            0 -16px,
-            0 -16px;
+            0 calc(var(--spacing-rhythm) * -2),
+            0 calc(var(--spacing-rhythm) * -2);
     }
 }
 
@@ -165,7 +173,17 @@
 html {
     /*noinspection CssNoGenericFontName*/
     font-family: var(--font-sans);
-    line-height: 1.5; /* 24px = 3x8 grid, defines 1rlh */
+
+    /**
+     * Unitless line-height: 1.5
+     *
+     * 24px = 3x8 grid, defines 1rlh at default 16px root font size.
+     * Note: This value is relative to font-size. If font-size changes
+     * (e.g., responsive typography, user settings), the computed line-height
+     * will scale proportionally. The rhythm grid overlay uses fixed pixel
+     * values (8px/32px) and will not automatically align if font-size changes.
+     */
+    line-height: 1.5;
 }
 
 body {
