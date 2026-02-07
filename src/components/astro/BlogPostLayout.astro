@@ -88,9 +88,7 @@ const readingTime = calculateReadingTime(content);
                 tags.length > 0 && (
                     <div class="mt-4 flex flex-wrap items-center gap-2">
                         {tags.map((tag) => (
-                            <span class="rounded-full bg-tag-bg px-3 py-1 text-xs font-medium text-tag-text">
-                                {tag}
-                            </span>
+                            <span class="bg-tag-bg px-3 py-1 text-xs font-medium text-tag-text">{tag}</span>
                         ))}
                     </div>
                 )
