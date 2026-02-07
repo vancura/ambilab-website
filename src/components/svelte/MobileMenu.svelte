@@ -87,6 +87,8 @@
         if (typeof document !== 'undefined' && menuButtonElement) {
             isKeyboardMode = isOpen && document.activeElement === menuButtonElement;
         }
+
+        return undefined;
     });
 
     $effect(() => {
@@ -101,6 +103,8 @@
                 document.body.style.overflow = originalOverflow;
             };
         }
+
+        return undefined;
     });
 
     $effect(() => {
@@ -118,6 +122,8 @@
                 document.removeEventListener('keydown', handleEscape);
             };
         }
+
+        return undefined;
     });
 
     $effect(() => {
@@ -139,8 +145,8 @@
                     return;
                 }
 
-                const firstElement = focusableElements[0];
-                const lastElement = focusableElements[focusableElements.length - 1];
+                const firstElement = focusableElements[0]!;
+                const lastElement = focusableElements[focusableElements.length - 1]!;
                 const activeElement = document.activeElement as HTMLElement;
 
                 if (event.shiftKey && activeElement === firstElement) {
@@ -162,6 +168,8 @@
                 document.removeEventListener('keydown', handleFocusTrap);
             };
         }
+
+        return undefined;
     });
 
     $effect(() => {
@@ -193,6 +201,8 @@
                 });
             };
         }
+
+        return undefined;
     });
 
     $effect(() => {
@@ -208,7 +218,7 @@
             const handleButtonLeave = (): void => {
                 disableKeyboardMode();
 
-                if (document.activeElement === menuButtonElement) {
+                if (menuButtonElement && document.activeElement === menuButtonElement) {
                     menuButtonElement.blur();
                 }
             };
@@ -217,10 +227,14 @@
             menuButtonElement.addEventListener('mouseleave', handleButtonLeave);
 
             return () => {
-                menuButtonElement.removeEventListener('mouseenter', handleButtonEnter);
-                menuButtonElement.removeEventListener('mouseleave', handleButtonLeave);
+                if (menuButtonElement) {
+                    menuButtonElement.removeEventListener('mouseenter', handleButtonEnter);
+                    menuButtonElement.removeEventListener('mouseleave', handleButtonLeave);
+                }
             };
         }
+
+        return undefined;
     });
 
     $effect(() => {
@@ -231,7 +245,10 @@
 
                 const activeElement = document.activeElement as HTMLElement;
 
-                if (menuPanelElement.contains(activeElement) || activeElement === menuButtonElement) {
+                if (
+                    menuPanelElement &&
+                    (menuPanelElement.contains(activeElement) || activeElement === menuButtonElement)
+                ) {
                     activeElement.blur();
                 }
             };
@@ -239,16 +256,20 @@
             menuPanelElement.addEventListener('mouseleave', handleMenuLeave);
 
             return () => {
-                menuPanelElement.removeEventListener('mouseleave', handleMenuLeave);
+                if (menuPanelElement) {
+                    menuPanelElement.removeEventListener('mouseleave', handleMenuLeave);
+                }
             };
         }
+
+        return undefined;
     });
 
     $effect(() => {
         if (!isOpen && menuContainerElement && menuButtonElement) {
             // Blurs the menu button when mouse leaves the container while menu is closed.
             const handleContainerLeave = (): void => {
-                if (document.activeElement === menuButtonElement) {
+                if (menuButtonElement && document.activeElement === menuButtonElement) {
                     menuButtonElement.blur();
                 }
             };
@@ -256,9 +277,13 @@
             menuContainerElement.addEventListener('mouseleave', handleContainerLeave);
 
             return () => {
-                menuContainerElement.removeEventListener('mouseleave', handleContainerLeave);
+                if (menuContainerElement) {
+                    menuContainerElement.removeEventListener('mouseleave', handleContainerLeave);
+                }
             };
         }
+
+        return undefined;
     });
 
     $effect(() => {
