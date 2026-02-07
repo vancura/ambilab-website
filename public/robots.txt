@@ -15,6 +15,7 @@ Disallow: /api/
 # Sitemaps for both domains
 # Main comprehensive sitemap (all content)
 Sitemap: https://ambilab.com/sitemap.xml
+Sitemap: https://ambilab.cz/sitemap.xml
 
 # Locale-specific sitemaps
 Sitemap: https://ambilab.com/en/sitemap.xml
