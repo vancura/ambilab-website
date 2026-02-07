@@ -35,22 +35,28 @@ export async function generateRssFeed(
         const description = t.footer.description;
 
         // Ensure we have a valid site URL
-        const siteUrl = context.site?.toString() || SITE.URL;
-        if (!siteUrl.startsWith('http')) {
-            throw new Error(`Invalid site URL: ${siteUrl}`);
+        const rawSiteUrl = context.site?.toString() || SITE.URL;
+        let siteUrl: URL;
+        try {
+            siteUrl = new URL(rawSiteUrl);
+            if (siteUrl.protocol !== 'http:' && siteUrl.protocol !== 'https:') {
+                throw new Error(`Invalid protocol: ${siteUrl.protocol}`);
+            }
+        } catch {
+            throw new Error(`Invalid site URL: ${rawSiteUrl}`);
         }
 
         return rss({
             title: `${SITE.NAME} - ${localeLabel}`,
             description,
-            site: siteUrl,
+            site: siteUrl.toString(),
             items: recentPosts.map((post) => ({
                 title: post.data.title,
                 description: post.data.description,
                 pubDate: post.data.pubDate,
                 link: getBlogPostLink(post.id),
                 categories: post.data.tags,
-                author: post.data.author ?? SITE.AUTHOR,
+                author: post.data.author.trim() || SITE.AUTHOR,
             })),
             customData: `<language>${languageCode}</language>`,
             xmlns: {
