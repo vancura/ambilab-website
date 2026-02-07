@@ -45,12 +45,4 @@
     });
 </script>
 
-<img
-    src={imageSrc}
-    {alt}
-    width={imageWidth}
-    height={imageHeight}
-    sizes={responsiveSizes}
-    class="rounded-lg {className}"
-    {loading}
-/>
+<img src={imageSrc} {alt} width={imageWidth} height={imageHeight} sizes={responsiveSizes} class={className} {loading} />

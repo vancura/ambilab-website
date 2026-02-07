@@ -85,15 +85,15 @@
     & p code,
     & li code,
     & td code {
-        @apply rounded bg-surface-code px-1.5 py-0.5 font-mono text-sm text-text-primary;
+        @apply bg-surface-code px-1.5 py-0.5 font-mono text-sm text-text-primary;
     }
 
     & pre {
-        @apply my-6 overflow-x-auto rounded-lg;
+        @apply my-6 overflow-x-auto;
     }
 
     & img {
-        @apply my-4 h-auto max-w-full rounded-lg;
+        @apply my-4 h-auto max-w-full;
     }
 
     & figure {
@@ -154,15 +154,15 @@
     }
 
     & mark {
-        @apply rounded bg-warning-highlight px-1;
+        @apply bg-warning-highlight px-1;
     }
 
     & kbd {
-        @apply rounded border border-border-medium bg-surface-code px-2 py-1 font-mono text-sm shadow-sm;
+        @apply border border-border-medium bg-surface-code px-2 py-1 font-mono text-sm shadow-sm;
     }
 
     & details {
-        @apply my-4 rounded-lg border border-border-default p-4;
+        @apply my-4 border border-border-default p-4;
 
         & summary {
             @apply cursor-pointer select-none font-semibold;
