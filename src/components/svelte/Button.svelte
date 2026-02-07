@@ -5,6 +5,8 @@
         variant?: 'primary' | 'secondary' | 'outline';
         size?: 'md' | 'sm';
         href?: string;
+        target?: string;
+        rel?: string;
         type?: 'button' | 'submit' | 'reset';
         disabled?: boolean;
         class?: string;
@@ -16,6 +18,8 @@
         variant = 'primary',
         size = 'md',
         href,
+        target,
+        rel,
         type = 'button',
         disabled = false,
         class: className = '',
@@ -80,7 +84,7 @@
 </script>
 
 {#if href}
-    <a {href} class={classes} role="button" onkeydown={handleKeydown} {onclick}>
+    <a {href} {target} {rel} class={classes} role="button" onkeydown={handleKeydown} {onclick}>
         {@render children?.()}
     </a>
 {:else}
