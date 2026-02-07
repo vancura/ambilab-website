@@ -24,6 +24,9 @@ export default {
                 'link-hover': 'var(--color-link-hover)',
                 'link-active': 'var(--color-link-active)',
 
+                'card-bg': 'var(--color-card-bg)',
+                'card-text': 'var(--color-card-text)',
+
                 'button-primary-bg': 'var(--color-button-primary-bg)',
                 'button-primary-bg-hover': 'var(--color-button-primary-bg-hover)',
                 'button-primary-text': 'var(--color-button-primary-text)',
