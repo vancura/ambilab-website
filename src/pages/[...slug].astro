@@ -6,15 +6,18 @@ import { getTranslation } from '@i18n/translations';
 import { normalizeSlug } from '@utils/content-loader';
 import { resolveContent } from '@utils/content-resolver';
 import { formatDate } from '@utils/formatDate';
+import { createLogger } from '@utils/logger';
 import { parseRoute } from '@utils/route-parser';
 
+const logger = createLogger({ prefix: '[...slug]' });
 const detectedLocale = Astro.locals.locale ?? DEFAULT_LOCALE;
 const route = parseRoute(Astro.params.slug);
 
 let resolvedContent;
 try {
     resolvedContent = await resolveContent(route, detectedLocale, Astro.url.origin);
-} catch {
+} catch (err) {
+    logger.error('Failed to resolve content', { route, detectedLocale, error: err });
     return Astro.redirect('/500');
 }
 
