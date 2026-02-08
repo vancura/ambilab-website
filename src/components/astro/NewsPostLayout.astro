@@ -1,6 +1,8 @@
 ---
 import '@/styles/mdx-content.css';
 
+import Button from '@components/svelte/Button.svelte';
+import { getRoute } from '@config/routes';
 import { getTranslation } from '@i18n/translations';
 import { calculateReadingTime } from '@i18n/utils';
 import type { Locale } from '@type/locale';
@@ -35,8 +37,11 @@ const {
     pageMap,
     ...seoProps
 } = Astro.props as Props;
+
 const t = getTranslation(locale);
 const readingTime = calculateReadingTime(content);
+const displayTitle = title.replace(/ ￭ Ambilab$/, '');
+const newsUrl = `${getRoute('news', locale)}`;
 ---
 
 <PageLayout
@@ -48,48 +53,54 @@ const readingTime = calculateReadingTime(content);
     {...translationPath ? { translationPath } : {}}
     {...seoProps}
 >
-    <article class="container mx-auto px-4 py-12">
-        <header class="mb-12">
-            <h1 class="mb-4 text-4xl font-bold md:text-5xl">{title}</h1>
+    <article class="container mx-auto px-4">
+        <header class="mx-auto -mt-[2px] mb-8 max-w-[764px] pt-3 md:mb-12 md:pt-[29px] lg:max-w-[896px]">
+            <Button client:load href={newsUrl} variant="secondary" size="sm">&larr; {t.news.title}</Button>
 
-            <div class="flex flex-wrap items-center gap-4 text-sm text-text-muted">
-                <div class="flex items-center gap-2">
-                    <time datetime={pubDate.toISOString()}>
-                        {t.news.publishedOn}
-                        {formatDate(pubDate, locale)}
-                    </time>
+            <h1
+                class="-ml-[1.5px] mb-[6px] block w-full pt-[8px] text-[36px] leading-[36px] sm:text-[40px] sm:leading-[40px] md:-ml-[4px] md:mb-[9px] md:pt-[11px] md:text-[73px] md:font-light md:leading-[72px] md:tracking-tight"
+            >
+                {displayTitle}
+            </h1>
+
+            <div class="-ml-px font-mono text-[11px] uppercase leading-3 antialiased">
+                <div class="flex flex-wrap items-center gap-4">
+                    <div class="flex items-center gap-2">
+                        <time datetime={pubDate.toISOString()}>
+                            {t.news.publishedOn}
+                            {formatDate(pubDate, locale)}
+                        </time>
+                    </div>
+
+                    {
+                        updatedDate && (
+                            <div class="flex items-center gap-2">
+                                <time datetime={updatedDate.toISOString()}>
+                                    {t.news.updatedOn} {formatDate(updatedDate, locale)}
+                                </time>
+                            </div>
+                        )
+                    }
+                </div>
+                <div>
+                    {t.news.readingTime}:
+                    {readingTime}
+                    {t.news.minutesShort}
                 </div>
 
                 {
-                    updatedDate && (
-                        <div class="flex items-center gap-2">
-                            <time datetime={updatedDate.toISOString()}>
-                                {t.news.updatedOn} {formatDate(updatedDate, locale)}
-                            </time>
+                    tags.length > 0 && (
+                        <div class="flex flex-wrap items-center gap-2">
+                            {tags.map((tag) => (
+                                <span>#{tag}</span>
+                            ))}
                         </div>
                     )
                 }
-
-                <div class="flex items-center gap-2">
-                    <span>
-                        {readingTime}
-                        {t.news.minutesShort}
-                    </span>
-                </div>
             </div>
-
-            {
-                tags.length > 0 && (
-                    <div class="mt-4 flex flex-wrap items-center gap-2">
-                        {tags.map((tag) => (
-                            <span class="bg-tag-bg px-3 py-1 text-xs font-medium text-tag-text">{tag}</span>
-                        ))}
-                    </div>
-                )
-            }
         </header>
 
-        <div class="mdx-content prose prose-lg mx-auto max-w-3xl dark:prose-invert">
+        <div class="mdx-content 2xl:px-76 prose prose-lg mx-auto mb-12 dark:prose-invert lg:mb-14 lg:px-12 xl:px-44">
             <slot />
         </div>
     </article>

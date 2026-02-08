@@ -334,6 +334,7 @@ h3 {
 
     font-variant-numeric: lining-nums;
     text-transform: uppercase;
+    text-wrap: balance;
 }
 
 /* Focus styles for accessibility */
