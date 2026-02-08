@@ -6,19 +6,19 @@ export const ROUTES = {
         cs: '/',
     },
 
-    about: {
-        en: '/about',
-        cs: '/o-projektu',
+    projects: {
+        en: '/projects',
+        cs: '/projekty',
     },
 
-    blog: {
-        en: '/blog',
-        cs: '/blog',
+    news: {
+        en: '/news',
+        cs: '/news',
     },
 
     rss: {
-        en: '/en/rss.xml',
-        cs: '/cs/rss.xml',
+        en: '/en/news.xml',
+        cs: '/cs/news.xml',
     },
 } as const;
 
@@ -36,7 +36,7 @@ export function isRouteActive(path: string, route: keyof typeof ROUTES): boolean
     return Object.values(ROUTES[route]).some((routePath) => {
         const normalizedRoutePath = normalizePath(routePath);
 
-        if (route === 'blog') {
+        if (route === 'news') {
             return normalizedPath === normalizedRoutePath || normalizedPath.startsWith(`${normalizedRoutePath}/`);
         }
 

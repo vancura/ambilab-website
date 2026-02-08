@@ -8,8 +8,8 @@ export interface Translations {
 
     nav: {
         home: string;
-        about: string;
-        blog: string;
+        projects: string;
+        news: string;
         rss: string;
     };
 
@@ -43,7 +43,7 @@ export interface Translations {
         button: string;
     };
 
-    blog: {
+    news: {
         publishedOn: string;
         updatedOn: string;
         readingTime: string;
@@ -87,8 +87,8 @@ export const translations: Record<Locale, Translations> = {
 
         nav: {
             home: 'Home',
-            about: 'About',
-            blog: 'Blog',
+            projects: 'Projects',
+            news: 'News',
             rss: 'RSS Feed',
         },
 
@@ -102,7 +102,7 @@ export const translations: Record<Locale, Translations> = {
         footer: {
             copyright: 'Copyright',
             allRightsReserved: 'All rights reserved',
-            description: 'A bilingual (English/Czech) marketing website and blog for Ambilab.',
+            description: 'What pink drop port tired new north highway ugly art finished happy.',
             navigation: 'Navigation',
             followAmbilab: 'Follow Us:',
         },
@@ -122,14 +122,14 @@ export const translations: Record<Locale, Translations> = {
             button: 'Got it',
         },
 
-        blog: {
+        news: {
             publishedOn: 'Published on',
             updatedOn: 'Updated on',
             readingTime: 'Reading time',
             minutesShort: 'min',
             tags: 'Tags',
             author: 'Author',
-            title: 'Blog',
+            title: 'News',
             description: 'Latest articles and updates from Ambilab',
             allPosts: 'All posts',
             noPosts: 'No posts available yet.',
@@ -164,8 +164,8 @@ export const translations: Record<Locale, Translations> = {
 
         nav: {
             home: 'Domů',
-            about: 'O projektu',
-            blog: 'Blog',
+            projects: 'Projekty',
+            news: 'Novinky',
             rss: 'RSS kanál',
         },
 
@@ -199,14 +199,14 @@ export const translations: Record<Locale, Translations> = {
             button: 'Rozumím',
         },
 
-        blog: {
+        news: {
             publishedOn: 'Publikováno',
             updatedOn: 'Aktualizováno',
             readingTime: 'Doba čtení',
             minutesShort: 'min',
             tags: 'Štítky',
             author: 'Autor',
-            title: 'Blog',
+            title: 'Novinky',
             description: 'Nejnovější články a aktuality z Ambilabu',
             allPosts: 'Všechny příspěvky',
             noPosts: 'Zatím nejsou k dispozici žádné příspěvky.',

@@ -33,7 +33,7 @@
         @apply -ml-[1.5px] mb-[16px] mt-[27px];
         @apply text-[36px] leading-[36px];
         @apply sm:-ml-[2px] sm:mt-[30px] sm:text-[40px] sm:leading-[40px];
-        @apply md:-ml-[4px] md:mb-[12px] md:mt-[34px] md:text-[73px] md:font-light md:leading-[72px] md:tracking-tight;
+        @apply md:-ml-[4px] md:mb-[12px] md:mt-[33px] md:text-[73px] md:font-light md:leading-[72px] md:tracking-tight;
     }
 
     & h2 {

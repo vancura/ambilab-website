@@ -57,8 +57,8 @@
     };
 </script>
 
-<div class="stickie-with-shadows -mx-[16px] select-none bg-stickie-bg px-[16px] py-[16px] text-stickie-text">
-    <h3 class="mt-px! md:mt-[2px]! mb-2!">{t.newsletter.title}</h3>
+<div class="stickie-with-shadows -mx-[16px] select-none bg-stickie-bg px-[16px] pb-[17px] pt-[16px] text-stickie-text">
+    <h3 class="mt-0! mb-2!">{t.newsletter.title}</h3>
 
     <p class="text-balance">
         {t.newsletter.description}
@@ -74,7 +74,11 @@
             class="flex-1 border-2 border-stickie-text px-4 py-2 focus:border-stickie-text focus:bg-stickie-text focus:text-white focus:outline-none focus:ring-focus-ring disabled:opacity-50"
         />
 
-        <Button type="submit" class="[&:hover,&:focus]:bg-stickie-text bg-stickie-text" disabled={status === 'loading'}>
+        <Button
+            type="submit"
+            class="[&:hover,&:focus]:bg-stickie-text bg-stickie-text text-white"
+            disabled={status === 'loading'}
+        >
             {#if status === 'loading'}
                 {t.newsletter.subscribing}
             {:else}
