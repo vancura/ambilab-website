@@ -1,6 +1,7 @@
 ---
 import { getRoute } from '@config/routes';
 import { SITE } from '@config/site';
+import { getTranslationLocale } from '@i18n/utils';
 import type { Locale } from '@type/locale';
 import type { ISEOMetadata } from '@type/seo';
 import { ClientRouter } from 'astro:transitions';
@@ -28,6 +29,8 @@ const plausibleScriptCz = import.meta.env.PUBLIC_PLAUSIBLE_SCRIPT_CZ;
 const isComDomain = currentDomain === 'ambilab.com' || currentDomain.endsWith('.ambilab.com');
 const isCzDomain = currentDomain === 'ambilab.cz' || currentDomain.endsWith('.ambilab.cz');
 const plausibleScript = isComDomain ? plausibleScriptCom : isCzDomain ? plausibleScriptCz : undefined;
+
+const translationLocale = getTranslationLocale(locale);
 ---
 
 <ClientRouter />
@@ -172,7 +175,7 @@ const plausibleScript = isComDomain ? plausibleScriptCom : isCzDomain ? plausibl
 <link
     rel="alternate"
     type="application/rss+xml"
-    href={getRoute('rss', locale === 'en' ? 'cs' : 'en')}
+    href={getRoute('rss', translationLocale)}
     title={`${SITE.NAME} RSS (${locale === 'en' ? 'Čeština' : 'English'})`}
 />
 

@@ -1,4 +1,5 @@
 import { getRoute } from '@config/routes';
+import { getTranslationLocale } from '@i18n/utils';
 import type { Locale } from '@type/locale';
 import { findNewsPost, findPage, loadLocaleContent, normalizeSlug, sortNewsPostsByDate } from '@utils/content-loader';
 import { createLogger } from '@utils/logger';
@@ -83,7 +84,7 @@ async function resolveNewsIndex(locale: Locale, siteUrl: string): Promise<NewsIn
     const content = await loadLocaleContent(locale);
     const sortedNewsPosts = sortNewsPostsByDate(content.newsPosts);
     const permalink = buildPermalink(siteUrl, 'news-index', 'index', locale);
-    const translationLocale: Locale = locale === 'en' ? 'cs' : 'en';
+    const translationLocale = getTranslationLocale(locale);
 
     return {
         type: 'news-index',
@@ -106,7 +107,7 @@ async function resolveNewsPost(slug: string, locale: Locale, siteUrl: string): P
     const rendered = await entry.render();
     const entrySlug = normalizeSlug(entry.id);
     const permalink = buildPermalink(siteUrl, 'news-post', entrySlug, locale);
-    const translationLocale: Locale = locale === 'en' ? 'cs' : 'en';
+    const translationLocale = getTranslationLocale(locale);
     const translationPath = buildTranslationPath('news-post', entrySlug, translationLocale, entry);
 
     return {
@@ -131,7 +132,7 @@ async function resolvePage(slug: string, locale: Locale, siteUrl: string): Promi
     const rendered = await entry.render();
     const entrySlug = normalizeSlug(entry.id);
     const permalink = buildPermalink(siteUrl, 'page', entrySlug, locale);
-    const translationLocale: Locale = locale === 'en' ? 'cs' : 'en';
+    const translationLocale = getTranslationLocale(locale);
     const translationPath = buildTranslationPath('page', entrySlug, translationLocale, entry);
 
     return {
