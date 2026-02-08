@@ -56,7 +56,7 @@ export async function generateRssFeed(
                 pubDate: post.data.pubDate,
                 link: getNewsPostLink(post.id),
                 categories: post.data.tags,
-                author: post.data.author.trim() || SITE.AUTHOR,
+                author: SITE.AUTHOR,
             })),
             customData: `<language>${languageCode}</language>`,
             xmlns: {

@@ -49,7 +49,6 @@ export interface Translations {
         readingTime: string;
         minutesShort: string;
         tags: string;
-        author: string;
         title: string;
         description: string;
         allPosts: string;
@@ -128,7 +127,6 @@ export const translations: Record<Locale, Translations> = {
             readingTime: 'Reading time',
             minutesShort: 'min',
             tags: 'Tags',
-            author: 'Author',
             title: 'News',
             description: 'Latest articles and updates from Ambilab',
             allPosts: 'All posts',
@@ -205,7 +203,6 @@ export const translations: Record<Locale, Translations> = {
             readingTime: 'Doba čtení',
             minutesShort: 'min',
             tags: 'Štítky',
-            author: 'Autor',
             title: 'Novinky',
             description: 'Nejnovější články a aktuality z Ambilabu',
             allPosts: 'Všechny příspěvky',
