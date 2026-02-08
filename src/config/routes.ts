@@ -13,7 +13,7 @@ export const ROUTES = {
 
     news: {
         en: '/news',
-        cs: '/news',
+        cs: '/novinky',
     },
 
     rss: {
@@ -35,7 +35,7 @@ export const PAGE_SLUGS: Record<keyof typeof ROUTES, Record<Locale, string>> = {
 
     news: {
         en: 'news',
-        cs: 'news',
+        cs: 'novinky',
     },
 
     rss: {

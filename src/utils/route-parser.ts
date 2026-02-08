@@ -9,7 +9,7 @@ export interface ParsedRoute {
 export function parseRoute(slug: string | undefined): ParsedRoute {
     const requestPath = slug || 'index';
 
-    if (requestPath === 'news') {
+    if (requestPath === 'news' || requestPath === 'novinky') {
         return {
             type: 'news-index',
             slug: 'index',
@@ -17,8 +17,8 @@ export function parseRoute(slug: string | undefined): ParsedRoute {
         };
     }
 
-    if (requestPath.startsWith('news/')) {
-        const postSlug = requestPath.replace('news/', '');
+    if (requestPath.startsWith('news/') || requestPath.startsWith('novinky/')) {
+        const postSlug = requestPath.replace(/^(news|novinky)\//, '');
 
         if (!postSlug) {
             return {
