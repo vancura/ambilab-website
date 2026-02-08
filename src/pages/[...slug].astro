@@ -1,11 +1,11 @@
 ---
+import NewsList from '@components/astro/NewsList.astro';
 import NewsPostLayout from '@components/astro/NewsPostLayout.astro';
+import NewsSection from '@components/astro/NewsSection.astro';
 import PageLayout from '@components/astro/PageLayout.astro';
 import { DEFAULT_LOCALE } from '@i18n/config';
 import { getTranslation } from '@i18n/translations';
-import { normalizeSlug } from '@utils/content-loader';
 import { resolveContent } from '@utils/content-resolver';
-import { formatDate } from '@utils/formatDate';
 import { createLogger } from '@utils/logger';
 import { parseRoute } from '@utils/route-parser';
 
@@ -31,68 +31,26 @@ const t = getTranslation(detectedLocale);
 {
     resolvedContent.type === 'news-index' ? (
         <PageLayout
-            title={`${t.news.title} | Ambilab`}
+            title={`${t.news.title} ￭ Ambilab`}
             description={t.news.description}
             permalink={resolvedContent.permalink}
             locale={resolvedContent.locale}
             pageMap={resolvedContent.content.pageMap}
             translationPath={resolvedContent.translationPath}
         >
-            <div class="container mx-auto px-4 py-12">
-                <div class="mx-auto max-w-4xl">
-                    <h1 class="mb-4 text-4xl font-bold">{t.news.title}</h1>
-                    <p class="mb-12 text-xl text-text-muted">{t.news.description}</p>
+            <div class="container mx-auto px-4">
+                <div class="mx-auto max-w-[764px] md:mb-12 lg:max-w-[896px]">
+                    <h1 class="-ml-[1.5px] mb-4 block w-full pt-[27px] text-[36px] leading-[36px] sm:pt-[30px] sm:text-[40px] sm:leading-[40px] md:-ml-[4px] md:mb-[16px] md:pt-[33px] md:text-[73px] md:font-light md:leading-[72px] md:tracking-tight">
+                        {t.news.title}
+                    </h1>
 
-                    {resolvedContent.sortedNewsPosts.length === 0 ? (
-                        <p class="text-text-muted">{t.news.noPosts}</p>
-                    ) : (
-                        <div class="space-y-8">
-                            {resolvedContent.sortedNewsPosts.map((post) => {
-                                const postSlug = normalizeSlug(post.id);
-                                const postUrl = `/news/${postSlug}`;
-
-                                return (
-                                    <article class="border-b border-border-default pb-8 last:border-b-0">
-                                        <a href={postUrl} class="group">
-                                            <h2 class="mb-2 text-2xl font-bold group-[&:hover,&:focus]:text-link-hover">
-                                                {post.data.title}
-                                            </h2>
-                                        </a>
-
-                                        <div class="mb-3 flex items-center gap-4 text-sm text-text-muted">
-                                            <time datetime={post.data.pubDate.toISOString()}>
-                                                {formatDate(post.data.pubDate, resolvedContent.locale)}
-                                            </time>
-                                            {post.data.tags.length > 0 && (
-                                                <div class="flex flex-wrap gap-2">
-                                                    {post.data.tags.map((tag: string) => (
-                                                        <span class="bg-tag-bg px-3 py-1 text-xs text-tag-text">
-                                                            {tag}
-                                                        </span>
-                                                    ))}
-                                                </div>
-                                            )}
-                                        </div>
-
-                                        <p class="mb-4 text-text-secondary">{post.data.description}</p>
-
-                                        <a
-                                            href={postUrl}
-                                            class="[&:hover,&:focus]:text-link-hover inline-flex items-center font-medium text-link"
-                                        >
-                                            {t.buttons.readMore} →
-                                        </a>
-                                    </article>
-                                );
-                            })}
-                        </div>
-                    )}
+                    <NewsList posts={resolvedContent.sortedNewsPosts} locale={resolvedContent.locale} />
                 </div>
             </div>
         </PageLayout>
     ) : resolvedContent.type === 'page' ? (
         <PageLayout
-            title={`${resolvedContent.entry.data.title} | Ambilab`}
+            title={`${resolvedContent.entry.data.title} ￭ Ambilab`}
             description={resolvedContent.entry.data.description}
             permalink={resolvedContent.permalink}
             locale={resolvedContent.locale}
@@ -104,16 +62,23 @@ const t = getTranslation(detectedLocale);
                     <resolvedContent.Content />
                 </div>
             </article>
+
+            {route.slug === 'index' && (
+                <div class="container mx-auto px-4 pb-[36px] sm:pb-[40px] md:pb-[48px]">
+                    <div class="mx-auto max-w-4xl">
+                        <NewsSection locale={resolvedContent.locale} limit={3} />
+                    </div>
+                </div>
+            )}
         </PageLayout>
     ) : (
         <NewsPostLayout
-            title={`${resolvedContent.entry.data.title} | Ambilab`}
+            title={`${resolvedContent.entry.data.title} ￭ Ambilab`}
             description={resolvedContent.entry.data.description}
             permalink={resolvedContent.permalink}
             locale={resolvedContent.locale}
             pubDate={resolvedContent.entry.data.pubDate}
             updatedDate={resolvedContent.entry.data.updatedDate}
-            author={resolvedContent.entry.data.author}
             tags={resolvedContent.entry.data.tags}
             content={resolvedContent.entry.body}
             pageMap={resolvedContent.content.pageMap}

@@ -134,7 +134,6 @@ const NewsPostSchema = z.object({
   description: z.string().max(160),
   locale: z.enum(['en', 'cs']),
   pubDate: z.coerce.date(),
-  author: z.string().default('Ambilab'),
   tags: z.array(z.string()).default([]),
   draft: z.boolean().default(false),
 });

@@ -61,6 +61,7 @@
         @apply mb-4;
         @apply text-[14px] leading-[20px];
         @apply md:leading-(--line-height-rhythm-2) md:text-base;
+        @apply lg:max-w-[736px];
     }
 
     & ul,

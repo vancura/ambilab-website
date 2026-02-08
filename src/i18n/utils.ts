@@ -2,6 +2,8 @@ import type { Locale } from '@type/locale';
 
 import { DEFAULT_LOCALE, DOMAIN_LOCALE_MAP, isValidLocale } from './config';
 
+export const getTranslationLocale = (locale: Locale): Locale => (locale === 'en' ? 'cs' : 'en');
+
 export const detectLocaleFromHostname = (hostname: string): Locale => {
     const key = hostname.toLowerCase().replace(/^www\./, '');
     const locale = DOMAIN_LOCALE_MAP[key];

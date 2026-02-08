@@ -1,6 +1,6 @@
 <script lang="ts">
     import { LOCALE_CONFIGS } from '@i18n/config';
-    import { setLocaleCookie } from '@i18n/utils';
+    import { getTranslationLocale, setLocaleCookie } from '@i18n/utils';
     import type { Locale } from '@type/locale';
     import { createLogger } from '@utils/logger';
     import { navigate } from 'astro:transitions/client';
@@ -16,7 +16,7 @@
 
     let isAnimating = $state(false);
 
-    const otherLocale = $derived<Locale>(currentLocale === 'en' ? 'cs' : 'en');
+    const otherLocale = $derived<Locale>(getTranslationLocale(currentLocale));
 
     const otherConfig = $derived(LOCALE_CONFIGS[otherLocale]);
 
@@ -44,7 +44,7 @@
 <button
     onclick={handleLocaleSwitch}
     disabled={isAnimating}
-    class="[&:hover,&:focus]:text-text-primary [&:hover,&:focus]:bg-active flex hidden cursor-pointer items-center px-2 pb-[4px] pt-[3.5px] uppercase text-text-secondary disabled:opacity-50"
+    class="[&:hover,&:focus]:text-text-primary [&:hover,&:focus]:bg-active flex cursor-pointer items-center px-2 pb-[4px] pt-[3.5px] uppercase text-text-secondary disabled:opacity-50"
     aria-label="Switch language"
 >
     <span>&rarr; {otherConfig.name}</span>
