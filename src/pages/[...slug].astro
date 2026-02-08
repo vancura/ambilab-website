@@ -31,7 +31,7 @@ const t = getTranslation(detectedLocale);
 {
     resolvedContent.type === 'news-index' ? (
         <PageLayout
-            title={`${t.news.title} | Ambilab`}
+            title={`${t.news.title} ￭ Ambilab`}
             description={t.news.description}
             permalink={resolvedContent.permalink}
             locale={resolvedContent.locale}
@@ -48,7 +48,7 @@ const t = getTranslation(detectedLocale);
         </PageLayout>
     ) : resolvedContent.type === 'page' ? (
         <PageLayout
-            title={`${resolvedContent.entry.data.title} | Ambilab`}
+            title={`${resolvedContent.entry.data.title} ￭ Ambilab`}
             description={resolvedContent.entry.data.description}
             permalink={resolvedContent.permalink}
             locale={resolvedContent.locale}
@@ -71,7 +71,7 @@ const t = getTranslation(detectedLocale);
         </PageLayout>
     ) : (
         <NewsPostLayout
-            title={`${resolvedContent.entry.data.title} | Ambilab`}
+            title={`${resolvedContent.entry.data.title} ￭ Ambilab`}
             description={resolvedContent.entry.data.description}
             permalink={resolvedContent.permalink}
             locale={resolvedContent.locale}
