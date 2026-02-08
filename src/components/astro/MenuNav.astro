@@ -29,6 +29,12 @@ const navItems = [
     },
 
     {
+        href: getRoute('news', locale),
+        label: getPageTitle(PAGE_SLUGS.news[locale]) ?? t.nav.news,
+        isActive: isRouteActive(currentPath, 'news'),
+    },
+
+    {
         href: getRoute('projects', locale),
         label: getPageTitle(PAGE_SLUGS.projects[locale]) ?? t.nav.projects,
         isActive: isRouteActive(currentPath, 'projects'),
