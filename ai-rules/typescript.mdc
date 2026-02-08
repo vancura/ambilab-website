@@ -67,7 +67,7 @@ Use async/await, load in parallel when possible:
 
 ```typescript
 const [posts, pages] = await Promise.all([
-  getCollection('news, ({ data }) => data.locale === locale),
+  getCollection('news', ({ data }) => data.locale === locale),
   getCollection('pages', ({ data }) => data.locale === locale),
 ]);
 ```
