@@ -26,7 +26,7 @@ const newsUrl = getRoute('news', locale);
     <div class="mt-8">
         {
             showViewAll && sortedPosts.length > 0 && (
-                <Button client:load href={newsUrl} variant="secondary">
+                <Button href={newsUrl} variant="secondary">
                     {t.news.allPosts} →
                 </Button>
             )
